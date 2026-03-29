@@ -118,23 +118,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div class="header">
   <div style="font-size:1.8rem;">📊</div>
   <h1>Auto-Invoicing Dashboard</h1>
-</div>
-
-<!-- Nav -->
-<div class="main-nav">
-  <button class="active">Customer List</button>
-</div>
-
-<!-- Year bar + toggles -->
-<div class="year-bar">
-  <label>📅 Filter by Year:</label>
-  <select id="year-filter" onchange="switchYear(this.value)">
-    <option value="2026" selected>2026</option>
-    <option value="2025">2025</option>
-  </select>
-  <span class="year-badge" id="year-badge">Showing: 2026</span>
-  <span class="hint">All metrics and lists reflect the selected year.</span>
-  <div style="margin-left:auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+  <div style="margin-left:auto;display:flex;gap:16px;align-items:center;">
     <div class="toggle-group">
       <span>✉️ Email:</span>
       <div class="toggle-btns">
@@ -153,10 +137,20 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
   </div>
 </div>
 
-<!-- Alert -->
-<div class="alert-banner">
-  ⚠️ <strong id="not-contacted-alert">14 customers</strong>&nbsp;with expired subscriptions have not yet been contacted. <a href="#">View List →</a>
+
+
+<!-- Year bar + toggles -->
+<div class="year-bar">
+  <label>📅 Filter by Year:</label>
+  <select id="year-filter" onchange="switchYear(this.value)">
+    <option value="2026" selected>2026</option>
+    <option value="2025">2025</option>
+  </select>
+  <span class="year-badge" id="year-badge">Showing: 2026</span>
+  <span class="hint">All metrics and lists reflect the selected year.</span>
 </div>
+
+
 
 <!-- Page body -->
 <div class="page-body">
@@ -767,7 +761,6 @@ function switchYear(yr){
   currentYear = yr;
   const d = yearData[yr];
   document.getElementById('year-badge').textContent = 'Showing: '+yr;
-  document.getElementById('not-contacted-alert').textContent = d.kpi.notContacted+' customers';
   // Overview
   document.getElementById('ov-total').textContent         = d.kpi.total;
   document.getElementById('ov-email-total').textContent   = d.kpi.emailTotal;
