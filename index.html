@@ -430,9 +430,9 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div class="modal-overlay" id="config-modal">
   <div class="modal-box" style="width:580px;max-width:95vw;max-height:90vh;overflow-y:auto;">
     <div class="modal-header"><h3>⚙️ Auto-Invoicing Configuration</h3><button class="modal-close" onclick="closeConfig()">✕</button></div>
-    <div style="display:flex;border-bottom:2px solid #eee;">
-      <button id="cfg-tab-email" onclick="switchCfgTab('email')" style="flex:1;padding:11px;border:none;background:#2c3e8c;color:#fff;font-weight:bold;cursor:pointer;">✉️ EMAIL</button>
-      <button id="cfg-tab-sms"   onclick="switchCfgTab('sms')"   style="flex:1;padding:11px;border:none;background:#888;color:#fff;font-weight:bold;cursor:pointer;">💬 SMS/TEXT</button>
+    <div style="display:flex;border-bottom:2px solid #eee;background:#1a2560;">
+      <button id="cfg-tab-email" onclick="switchCfgTab('email')" style="flex:1;padding:11px;border:none;border-bottom:3px solid #fff;background:#fff;color:#2c3e8c;font-weight:bold;cursor:pointer;">✉️ EMAIL</button>
+      <button id="cfg-tab-sms"   onclick="switchCfgTab('sms')"   style="flex:1;padding:11px;border:none;border-bottom:3px solid transparent;background:#888;color:#fff;font-weight:bold;cursor:pointer;">💬 SMS/TEXT</button>
     </div>
     <div id="cfg-email" style="padding:20px;">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:14px;">
@@ -839,10 +839,16 @@ function applyColFilter(type){
 function openConfig()  { document.getElementById('config-modal').style.display='flex'; }
 function closeConfig() { document.getElementById('config-modal').style.display='none'; }
 function switchCfgTab(tab){
-  document.getElementById('cfg-email').style.display        = tab==='email'?'block':'none';
-  document.getElementById('cfg-sms').style.display          = tab==='sms'  ?'block':'none';
-  document.getElementById('cfg-tab-email').style.background = tab==='email'?'#2c3e8c':'#888';
-  document.getElementById('cfg-tab-sms').style.background   = tab==='sms'  ?'#2c3e8c':'#888';
+  document.getElementById('cfg-email').style.display = tab==='email'?'block':'none';
+  document.getElementById('cfg-sms').style.display   = tab==='sms'  ?'block':'none';
+  const eBtn = document.getElementById('cfg-tab-email');
+  const sBtn = document.getElementById('cfg-tab-sms');
+  eBtn.style.background    = tab==='email' ? '#fff' : '#888';
+  eBtn.style.color         = tab==='email' ? '#2c3e8c' : '#fff';
+  eBtn.style.borderBottom  = tab==='email' ? '3px solid #fff' : '3px solid transparent';
+  sBtn.style.background    = tab==='sms'   ? '#fff' : '#888';
+  sBtn.style.color         = tab==='sms'   ? '#2c3e8c' : '#fff';
+  sBtn.style.borderBottom  = tab==='sms'   ? '3px solid #fff' : '3px solid transparent';
 }
 
 // ── Email preview ────────────────────────────────────────────────
