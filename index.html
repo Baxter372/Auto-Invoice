@@ -114,16 +114,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 
   <!-- LEFT -->
   <div>
-    <!-- Year filter — left column only -->
-    <div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-      <label style="font-weight:bold;color:#2c3e8c;font-size:0.88rem;">📅 Filter by Year:</label>
-      <select id="year-filter" onchange="switchYear(this.value)" style="padding:5px 12px;border:2px solid #2c3e8c;border-radius:4px;font-size:0.85rem;font-weight:bold;color:#2c3e8c;background:#f0f4ff;cursor:pointer;">
-        <option value="2026" selected>2026</option>
-        <option value="2025">2025</option>
-      </select>
-      <span class="year-badge" id="year-badge">Showing: 2026</span>
-      <span style="font-size:0.78rem;color:#999;">All metrics and lists reflect the selected year.</span>
-    </div>
+
     <div class="list-mode-bar">
       <span>📋 View:</span>
       <label style="color:#2c3e8c;"><input type="radio" name="listMode" value="sent" checked onchange="switchListMode('sent')" style="accent-color:#2c3e8c;"> Sent Delivery List</label>
@@ -140,6 +131,11 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       </div>
     </div>
     <div class="filter-bar">
+      <label style="font-weight:bold;color:#2c3e8c;font-size:0.85rem;white-space:nowrap;">📅 Year:</label>
+      <select id="year-filter" onchange="switchYear(this.value)" style="padding:7px 10px;border:2px solid #2c3e8c;border-radius:4px;font-size:0.82rem;font-weight:bold;color:#2c3e8c;background:#f0f4ff;cursor:pointer;max-width:90px;">
+        <option value="2026" selected>2026</option>
+        <option value="2025">2025</option>
+      </select>
       <input type="text" placeholder="Enter Business or Customer Name">
       <select><option>Select Date Range</option><option>Last 7 Days</option><option>Last 30 Days</option><option>Last 90 Days</option></select>
       <button class="btn-apply">Apply</button>
