@@ -423,14 +423,14 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <thead>
 <tr>
 <th class="sortable" onclick="sortTable('email',0)" style="text-align:center;">Status<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',1)">Recipient<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',2)">Send Date<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',3)">Subject<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',4)">Type<span class="sort-icon"></span></th>
-<th>Opened</th>
-<th>Clicked</th>
-<th class="sortable" onclick="sortTable('email',7)">Sent Qty<span class="sort-icon"></span></th>
-<th>Action</th>
+<th style="text-align:left;" class="sortable" onclick="sortTable('email',1)">Recipient<span class="sort-icon"></span></th>
+<th style="text-align:center;" class="sortable" onclick="sortTable('email',2)">Send Date<span class="sort-icon"></span></th>
+<th style="text-align:left;" class="sortable" onclick="sortTable('email',3)">Subject<span class="sort-icon"></span></th>
+<th style="text-align:center;" class="sortable" onclick="sortTable('email',4)">Type<span class="sort-icon"></span></th>
+<th style="text-align:center;">Opened</th>
+<th style="text-align:center;">Clicked</th>
+<th style="text-align:center;" class="sortable" onclick="sortTable('email',7)">Sent Qty<span class="sort-icon"></span></th>
+<th style="text-align:center;">Action</th>
 </tr>
 <tr class="filter-row-tr" id="email-filter-row">
 <th><select onchange="applyColFilter('email')"><option value="">All</option><option>Sent</option><option>Failed</option><option>Pending</option></select></th>
@@ -454,13 +454,13 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <thead>
 <tr>
 <th class="sortable" onclick="sortTable('sms',0)" style="text-align:center;">Status<span class="sort-icon"></span></th>
-              <th class="sortable" onclick="sortTable('sms',1)">Recipient<span class="sort-icon"></span></th>
-              <th class="sortable" onclick="sortTable('sms',2)">Send Date<span class="sort-icon"></span></th>
-              <th class="sortable" onclick="sortTable('sms',3)">Segments<span class="sort-icon"></span></th>
-              <th class="sortable" onclick="sortTable('sms',4)">Club Cost<span class="sort-icon"></span></th>
-              <th class="sortable" onclick="sortTable('sms',5)">Sent Qty<span class="sort-icon"></span></th>
+              <th style="text-align:left;" class="sortable" onclick="sortTable('sms',1)">Recipient<span class="sort-icon"></span></th>
+              <th style="text-align:center;" class="sortable" onclick="sortTable('sms',2)">Send Date<span class="sort-icon"></span></th>
+              <th style="text-align:center;" class="sortable" onclick="sortTable('sms',3)">Segments<span class="sort-icon"></span></th>
+              <th style="text-align:center;" class="sortable" onclick="sortTable('sms',4)">Club Cost<span class="sort-icon"></span></th>
+              <th style="text-align:center;" class="sortable" onclick="sortTable('sms',5)">Sent Qty<span class="sort-icon"></span></th>
 
-<th>Action</th>
+<th style="text-align:center;">Action</th>
 </tr>
 <tr class="filter-row-tr" id="sms-filter-row">
 <th><select onchange="applyColFilter('sms')"><option value="">All</option><option>Delivered</option><option>Failed</option><option>Pending</option><option>Opted Out</option></select></th>
@@ -1107,7 +1107,7 @@ function renderTables(){
   window._eRows = curMode==='scheduled' ? scheduledEmailRows : (isFiltered ? ignoredEmailRows : d.emailRows);
   window._sRows = curMode==='scheduled' ? scheduledSmsRows  : (isFiltered ? ignoredSmsRows  : d.smsRows);
   document.getElementById('email-tbody').innerHTML = window._eRows.map((r,i)=>
-    `<tr>${r.map((c,idx)=>`<td${idx===1 ? ' style="text-align:left"' : ''}>${c}</td>`).join('')}<td><a href="#" onclick="openEmailPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`
+    `<tr>${r.map((c,idx)=>`<td${(idx===1 || idx===3) ? ' style="text-align:left"' : ''}>${c}</td>`).join('')}<td><a href="#" onclick="openEmailPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`
   ).join('');
   document.getElementById('sms-tbody').innerHTML = window._sRows.map((r,i)=>{
     const cost = (r[3]*RATE).toFixed(4);
