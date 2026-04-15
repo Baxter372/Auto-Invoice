@@ -506,6 +506,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
 <thead style="background:#eef2ff;">
 <tr>
+<th style="padding:12px 20px; text-align:center; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">VIEW</th>
 <th style="padding:12px 20px; text-align:center; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">TYPE</th>
 <th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">TITLE</th>
 <th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">SUBJECT</th>
@@ -513,25 +514,31 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 </tr>
 </thead>
 <tbody>
+<tr style="border-bottom:1px solid #eee; background:#f4f7ff;">
+<td style="text-align:center; padding:16px;"><input type="radio" name="email_tpl_view" checked onclick="previewEmailTpl('auto-invoice')" style="accent-color:#3f51b5; transform:scale(1.2); cursor:pointer;"/></td>
+<td style="text-align:center; padding:16px;color:#555;font-weight:bold;">Auto-Invoice (default)</td>
+<td style="text-align:left; padding:16px;color:#555;font-weight:bold;">Auto-Invoice</td>
+<td style="text-align:left; padding:16px;color:#555;">Auto Invoice Renewal Reminder</td>
+<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;"></i></td>
+</tr>
+
 <tr style="border-bottom:1px solid #eee;">
+<td style="text-align:center; padding:16px;"><input type="radio" name="email_tpl_view" onclick="previewEmailTpl('2024-renewal-notification')" style="accent-color:#3f51b5; transform:scale(1.2); cursor:pointer;"/></td>
 <td style="text-align:center; padding:16px;color:#555;">Renewal Reminder</td>
 <td style="text-align:left; padding:16px;color:#555;">2024 Renewal Notification</td>
 <td style="text-align:left; padding:16px;color:#555;">2024 Flag Subscription Renewal Notification</td>
 <td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;margin-right:12px;"></i> <i data-lucide="trash-2" style="width:18px;height:18px;color:#e74c3c;cursor:pointer;"></i></td>
 </tr>
 <tr style="border-bottom:1px solid #eee;">
+<td style="text-align:center; padding:16px;"><input type="radio" name="email_tpl_view" onclick="previewEmailTpl('2025-renewals')" style="accent-color:#3f51b5; transform:scale(1.2); cursor:pointer;"/></td>
 <td style="text-align:center; padding:16px;color:#555;">TEST Template</td>
 <td style="text-align:left; padding:16px;color:#555;">2025 renewals</td>
 <td style="text-align:left; padding:16px;color:#555;">Don't miss on holiday flags folks</td>
 <td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;margin-right:12px;"></i> <i data-lucide="trash-2" style="width:18px;height:18px;color:#e74c3c;cursor:pointer;"></i></td>
 </tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="text-align:center; padding:16px;color:#555;">Auto-Invoice</td>
-<td style="text-align:left; padding:16px;color:#555;">Auto-Invoice</td>
-<td style="text-align:left; padding:16px;color:#555;">Auto Invoice Renewal Reminder</td>
-<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;"></i></td>
-</tr>
+
 <tr>
+<td style="text-align:center; padding:16px;"><input type="radio" name="email_tpl_view" onclick="previewEmailTpl('automatic-subscription-renewal-notification')" style="accent-color:#3f51b5; transform:scale(1.2); cursor:pointer;"/></td>
 <td style="text-align:center; padding:16px;color:#555;">Auto-Pay</td>
 <td style="text-align:left; padding:16px;color:#555;">Automatic Subscription Renewal Notification</td>
 <td style="text-align:left; padding:16px;color:#555;">Automatic Subscription Renewal Notification</td>
@@ -588,7 +595,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div id="preview-email-card" style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
 <h3 style="margin:0 0 10px 0;font-size:0.95rem;color:#3f51b5;border-bottom:2px solid #eef2ff;padding-bottom:6px;display:flex;align-items:center;gap:6px;"><i data-lucide="mail" style="width:16px;height:16px;"></i> Default Email Preview</h3>
 <div style="border:1px solid #eee;border-radius:4px;overflow:hidden;background:#f9f9f9;height:800px;">
-<iframe srcdoc='&lt;!DOCTYPE html&gt;
+<iframe id="email-preview-iframe" srcdoc='&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8"&gt;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
@@ -1345,6 +1352,143 @@ function closeSmsPreview(){ document.getElementById('sms-preview-modal').style.d
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
   lucide.createIcons();
+
+// Template Mock Data & logic
+const emailTemplatesHTML = {
+  'auto-invoice': '&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+&lt;style type="text/css"&gt;body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } body { margin: 0 !important; padding: 0 !important; width: 100% !important; background: transparent; } table { border-collapse: collapse !important; } img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; } a { text-decoration: none; } .pay-online-btn:hover { background-color: #3B38B4 !important; } .pay-online-btn:hover a { color: #ffffff !important; } .action-tile:hover { background-color: #EEEEFF !important; } @media screen and (max-width: 600px) { .wrapper { width: 100% !important; padding: 10px !important; } .content-table { width: 100% !important; } .mobile-center { text-align: center !important; } .statement-table { width: 100% !important; } .action-column { display: table-cell !important; width: 50% !important; text-align: center !important; padding: 0 5px !important; } }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body style="background:#f0f2f5; font-family:Arial,sans-serif;"&gt;
+&lt;table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: transparent;" width="100%"&gt;
+	&lt;tbody&gt;
+		&lt;tr&gt;
+			&lt;td align="center" style="padding: 10px 5px;"&gt;
+			&lt;table border="0" cellpadding="0" cellspacing="0" class="wrapper" role="presentation" style="background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);" width="100%"&gt;
+				&lt;tbody&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 20px 20px 15px 20px;"&gt;
+						&lt;p style="margin: 0; font-size: 14px; color: #555555; line-height: 1.6;"&gt;&lt;img alt="USA Flag" height="14" src="https://app.helpingwithflags.com/images/us-flag.png" style="display: inline; vertical-align: middle; margin-right: 6px;" width="22" /&gt;Thank you for your past participation in our &lt;strong&gt;Holiday Flag Program&lt;/strong&gt;. Your donation helps local community charities.&lt;/p&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 10px 20px 5px 20px;"&gt;
+						&lt;h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #3B38B4; font-style: italic;"&gt;Payment Reminder&lt;/h2&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 5px 20px 20px 20px;"&gt;
+						&lt;p style="margin: 0; font-size: 13px; color: #333333;"&gt;Your annual holiday flag subscription is now due&lt;/p&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 0 20px 15px 20px;"&gt;
+						&lt;p style="margin: 0; font-size: 13px; color: #333333; line-height: 1.6;"&gt;&lt;strong&gt;To:&lt;/strong&gt; John Doe&lt;br /&gt;
+						&lt;strong&gt;Address:&lt;/strong&gt; 123 Main St, Anytown&lt;/p&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 0 20px 20px 20px;"&gt;
+						&lt;table border="0" cellpadding="0" cellspacing="0" class="statement-table" role="presentation" style="border: 1px solid #dddddd;" width="100%"&gt;
+							&lt;tbody&gt;
+								&lt;tr&gt;
+									&lt;td style="background-color: #d9d9d9; color: #333333; padding: 10px 12px; font-size: 13px; font-weight: bold; width: 60%;"&gt;Statement Period&lt;/td&gt;
+									&lt;td style="background-color: #d9d9d9; color: #333333; padding: 10px 12px; font-size: 13px; font-weight: bold; text-align: center;"&gt;Current Balance&lt;/td&gt;
+								&lt;/tr&gt;
+								&lt;tr&gt;
+									&lt;td style="padding: 10px 12px; font-size: 13px; color: #333333;"&gt;Jan - Dec 2026&lt;/td&gt;
+									&lt;td style="padding: 10px 12px; font-size: 13px; color: #333333; text-align: center; font-weight: bold;"&gt;$50.00&lt;/td&gt;
+								&lt;/tr&gt;
+							&lt;/tbody&gt;
+						&lt;/table&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 10px 20px 10px 20px;"&gt;
+						&lt;table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"&gt;
+							&lt;tbody&gt;
+								&lt;tr&gt;
+									&lt;td class="pay-online-btn" style="background-color: #EEEEFF; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"&gt;&lt;a class="button-link" href="#" style="display: inline-block; padding: 10px 30px; font-size: 14px; color: #3B38B4; text-decoration: none; font-weight: bold;" target="_blank"&gt;Pay Online &lt;/a&gt;&lt;/td&gt;
+								&lt;/tr&gt;
+							&lt;/tbody&gt;
+						&lt;/table&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td align="center" style="padding: 10px 20px; border-top: 1px dotted #ccc;"&gt;
+							&lt;a href="#" style="color: #3f51b5; font-size: 13px; text-decoration: underline;"&gt;Pay by Check&lt;/a&gt; &lt;span style="color: #555; font-size: 13px;"&gt;(less secure and slower)&lt;/span&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td align="center" style="padding: 10px 20px; border-top: 1px dotted #ccc;"&gt;
+							&lt;i style="color: #333; font-size: 13px;"&gt;For details, see attached Invoice&lt;/i&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td align="center" style="padding: 15px 20px; border-top: 1px dotted #ccc;"&gt;
+							&lt;table align="center" border="0" cellpadding="0" cellspacing="10" role="presentation"&gt;
+								&lt;tr&gt;
+									&lt;td align="center" style="border: 1px dotted #ccc; padding: 10px 15px;"&gt;
+										&lt;img src="https://cdn-icons-png.flaticon.com/512/3050/3050519.png" width="32" style="display:block;margin-bottom:6px;opacity:0.6;"/&gt;
+										&lt;a href="#" style="font-size: 12px; color: #0088cc; text-decoration: none; font-weight: bold;"&gt;Sign In&lt;/a&gt;
+									&lt;/td&gt;
+									&lt;td align="center" style="border: 1px dotted #ccc; padding: 10px 15px;"&gt;
+										&lt;img src="https://cdn-icons-png.flaticon.com/512/263/263065.png" width="28" style="display:block;margin-bottom:8px;opacity:0.4;"/&gt;
+										&lt;a href="#" style="font-size: 12px; color: #0088cc; text-decoration: none; font-weight: bold;"&gt;Cancel&lt;/a&gt;
+									&lt;/td&gt;
+								&lt;/tr&gt;
+							&lt;/table&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+				&lt;/tbody&gt;
+			&lt;/table&gt;
+			&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+			&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 20px; border-top: 1px dotted #ccc; border-bottom: 1px solid #ddd; padding: 15px 0; background-color: #f8f9fa;"&gt;
+				&lt;tr&gt;
+					&lt;td align="center" style="padding: 15px 0;"&gt;
+						&lt;a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;"&gt;Unsubscribe&lt;/a&gt;
+						&lt;span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"&gt;&lt;/span&gt;
+						&lt;a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;"&gt;Cancel Subscription&lt;/a&gt;
+						&lt;span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"&gt;&lt;/span&gt;
+						&lt;a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;"&gt;Privacy &amp; Cookies&lt;/a&gt;
+						&lt;span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"&gt;&lt;/span&gt;
+						&lt;a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;"&gt;Help&lt;/a&gt;
+					&lt;/td&gt;
+				&lt;/tr&gt;
+			&lt;/table&gt;
+			
+			&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 15px; padding-bottom: 40px;"&gt;
+				&lt;tr&gt;
+					&lt;td align="center" style="padding: 10px 0;"&gt;
+						&lt;strong style="color: #333; font-size: 13px; margin-bottom: 10px; display: block;"&gt;CONTACT&lt;/strong&gt;
+						&lt;div style="color: #555; font-size: 13px; line-height: 1.6;"&gt;
+							Friends of Fairview&lt;br&gt;
+							(214) 383-8012&lt;br&gt;
+							500 State HWY 5
+						&lt;/div&gt;
+					&lt;/td&gt;
+				&lt;/tr&gt;
+			&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;',
+  '2024-renewal-notification': '<div style="padding:40px;text-align:center;font-family:sans-serif;"><h3>2024 Renewal Notification</h3><p>Your 2024 flag subscription is due for renewal.</p></div>',
+  '2025-renewals': '<div style="padding:40px;text-align:center;font-family:sans-serif;"><h3>2025 Renewals</h3><p>Don\'t miss out on holiday flags for 2025.</p></div>',
+  'automatic-subscription-renewal-notification': '<div style="padding:40px;text-align:center;font-family:sans-serif;"><h3>Auto-Pay Notice</h3><p>Your card on file will be charged automatically.</p></div>'
+};
+
+function previewEmailTpl(key){
+  const iframe = document.getElementById('email-preview-iframe');
+  if(iframe && emailTemplatesHTML[key]) {
+      iframe.srcdoc = emailTemplatesHTML[key];
+  } else if(iframe) {
+      iframe.srcdoc = '<div style="padding:40px;text-align:center;font-family:sans-serif;color:#888;">Preview not available for this template yet.</div>';
+  }
+}
 </script>
 </div></div></body>
 </html>
