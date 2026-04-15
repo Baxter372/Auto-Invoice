@@ -458,7 +458,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <th class="sortable" onclick="sortTable('sms',3)">Segments<span class="sort-icon"></span></th>
 <th class="sortable" onclick="sortTable('sms',4)">Club Cost<span class="sort-icon"></span></th>
 <th class="sortable" onclick="sortTable('sms',5)">Sent Qty<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('sms',6)">Club<span class="sort-icon"></span></th>
+
 <th>Action</th>
 </tr>
 <tr class="filter-row-tr" id="sms-filter-row">
@@ -468,7 +468,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <th><select onchange="applyColFilter('sms')"><option value="">All</option><option>1</option><option>2</option><option>3</option></select></th>
 <th></th>
 <th><select onchange="applyColFilter('sms')"><option value="">All</option><option>1</option><option>2</option><option>3</option></select></th>
-<th><input oninput="applyColFilter('sms')" placeholder="Club..." type="text"/></th>
+
 <th></th>
 </tr>
 </thead>
@@ -1018,7 +1018,7 @@ const yearData = {
       ['03/20/2026','<span class="badge sent">Sent</span>','James Whitfield<br><small>jwhitfield@work.com</small>','Renew Subscription','Renewal','—','—','2'],
     ],
     smsRows: [
-      ['03/25/2026','<span class="badge sent">Delivered</span>','John Smith<br><small>(214) 555-0182</small>',1,'1','Dallas Flag Club'],
+      ['03/25/2026','<span class="badge sent">Delivered</span>','John Smith<br><small>(214) 555-0182</small>',1,'1'],
       ['03/25/2026','<span class="badge failed">Failed</span>','Linda Garza<br><small>(972) 555-0344</small>',1,'1','Plano Flags'],
       ['03/24/2026','<span class="badge sent">Delivered</span>','Mike Torres<br><small>(469) 555-0217</small>',2,'2','Arlington Flags'],
       ['03/24/2026','<span class="badge pending">Pending</span>','Sara Nguyen<br><small>(817) 555-0093</small>',1,'1','Fort Worth Flags'],
@@ -1069,7 +1069,7 @@ const scheduledEmailRows = [
   ['04/02/2026','<span class="badge pending">Scheduled</span>','Kevin Brooks<br><small>kbrooks@hotmail.com</small>','Final Notice','Final','—','—','3'],
 ];
 const scheduledSmsRows = [
-  ['03/30/2026','<span class="badge pending">Scheduled</span>','Robert Chen<br><small>(214) 555-0192</small>',1,'1','Dallas Flag Club'],
+  ['03/30/2026','<span class="badge pending">Scheduled</span>','Robert Chen<br><small>(214) 555-0192</small>',1,'1'],
   ['03/30/2026','<span class="badge pending">Scheduled</span>','Alicia Monroe<br><small>(972) 555-0417</small>',2,'2','Plano Flags'],
   ['03/31/2026','<span class="badge pending">Scheduled</span>','Sunrise Flag Co.<br><small>(469) 555-0284</small>',1,'1','Arlington Flags'],
   ['03/31/2026','<span class="badge pending">Scheduled</span>','David Patel<br><small>(817) 555-0339</small>',1,'3','Fort Worth Flags'],
@@ -1082,7 +1082,7 @@ const ignoredEmailRows = [
   ['03/06/2026','<span class="badge failed">No Response</span>','DFW Flag Co.<br><small>billing@dfwflag.com</small>','Final Notice','Final','—','—','3'],
 ];
 const ignoredSmsRows = [
-  ['03/10/2026','<span class="badge failed">No Response</span>','Patricia Odom<br><small>(469) 555-0329</small>',1,'3','Arlington Flags'],
+  ['03/10/2026','<span class="badge failed">No Response</span>','Patricia Odom<br><small>(469) 555-0329</small>',1,'3'],
   ['03/08/2026','<span class="badge failed">No Response</span>','DFW Flag Co.<br><small>(972) 555-0781</small>',1,'3','Plano Flags'],
   ['03/06/2026','<span class="badge failed">No Response</span>','James Whitfield<br><small>(214) 555-0508</small>',1,'3','Dallas Flag Club'],
 ];
