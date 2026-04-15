@@ -422,19 +422,20 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <table id="email-table">
 <thead>
 <tr>
-<th class="sortable" onclick="sortTable('email',0)">Send Date<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',1)">Status<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',2)">Recipient<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('email',0)">Status<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('email',1)">Recipient<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('email',2)">Send Date<span class="sort-icon"></span></th>
 <th class="sortable" onclick="sortTable('email',3)">Subject<span class="sort-icon"></span></th>
 <th class="sortable" onclick="sortTable('email',4)">Type<span class="sort-icon"></span></th>
-<th>Opened</th><th>Clicked</th>
+<th>Opened</th>
+<th>Clicked</th>
 <th class="sortable" onclick="sortTable('email',7)">Sent Qty<span class="sort-icon"></span></th>
 <th>Action</th>
 </tr>
 <tr class="filter-row-tr" id="email-filter-row">
-<th><input oninput="applyColFilter('email')" placeholder="Date..." type="text"/></th>
 <th><select onchange="applyColFilter('email')"><option value="">All</option><option>Sent</option><option>Failed</option><option>Pending</option></select></th>
 <th><input oninput="applyColFilter('email')" placeholder="Name/Email..." type="text"/></th>
+<th><input oninput="applyColFilter('email')" placeholder="Date..." type="text"/></th>
 <th><input oninput="applyColFilter('email')" placeholder="Subject..." type="text"/></th>
 <th><select onchange="applyColFilter('email')"><option value="">All</option><option>Expiration</option><option>Renewal</option><option>Final</option></select></th>
 <th><select onchange="applyColFilter('email')"><option value="">All</option><option>Yes</option><option>—</option></select></th>
@@ -1006,16 +1007,16 @@ const yearData = {
     emailSent: { customers:'10', open:'60%', openSub:'6 of 10 opened', ctr:'30%', ctrSub:'3 of 10 clicked', bounce:'10%', pending:'1', failed:'2', unsub:'0', avgpay:'2.1 days' },
     smsSent: { segments:15, monthcost:'$0.7350', monthsub:'Mar 2026', yearcost:'$8.8200', yearsub:'2026 YTD', customers:'10', delivrate:'70%', delivSub:'7 of 10 delivered', failed:'1', optout:'1', avgpay:'1.8 days' },
     emailRows: [
-      ['03/25/2026','<span class="badge sent">Sent</span>','John Smith<br><small>john.smith@email.com</small>','Subscription Expired','Expiration','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','1'],
-      ['03/25/2026','<span class="badge failed">Failed</span>','Linda Garza<br><small>lgarza_old@yahoo.com</small>','Subscription Expired','Expiration','—','—','1'],
-      ['03/24/2026','<span class="badge sent">Sent</span>','Mike Torres<br><small>mtorres@gmail.com</small>','Renew Subscription','Renewal','<span class="badge opened">Yes</span>','—','2'],
-      ['03/24/2026','<span class="badge sent">Sent</span>','Sara Nguyen<br><small>sara.nguyen@outlook.com</small>','Subscription Expired','Expiration','—','—','1'],
-      ['03/23/2026','<span class="badge pending">Pending</span>','DFW Flag Co.<br><small>billing@dfwflag.com</small>','Final Notice','Final','—','—','3'],
-      ['03/23/2026','<span class="badge sent">Sent</span>','Carlos Rivera<br><small>crivera@hotmail.com</small>','Renew Subscription','Renewal','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','2'],
-      ['03/22/2026','<span class="badge failed">Failed</span>','Lone Star Events<br><small>info@lonestarevents.net</small>','Subscription Expired','Expiration','—','—','1'],
-      ['03/22/2026','<span class="badge sent">Sent</span>','Patricia Odom<br><small>podom@gmail.com</small>','Final Notice','Final','<span class="badge opened">Yes</span>','—','3'],
-      ['03/21/2026','<span class="badge sent">Sent</span>','Texas Flag Supply<br><small>orders@txflagsupply.com</small>','Subscription Expired','Expiration','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','1'],
-      ['03/20/2026','<span class="badge sent">Sent</span>','James Whitfield<br><small>jwhitfield@work.com</small>','Renew Subscription','Renewal','—','—','2'],
+      ['<span class="badge sent">Sent</span>','John Smith<br><small>john.smith@email.com</small>','03/25/2026','Subscription Expired','Expiration','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','1'],
+      ['<span class="badge failed">Failed</span>','Linda Garza<br><small>lgarza_old@yahoo.com</small>','03/25/2026','Subscription Expired','Expiration','—','—','1'],
+      ['<span class="badge sent">Sent</span>','Mike Torres<br><small>mtorres@gmail.com</small>','03/24/2026','Renew Subscription','Renewal','<span class="badge opened">Yes</span>','—','2'],
+      ['<span class="badge sent">Sent</span>','Sara Nguyen<br><small>sara.nguyen@outlook.com</small>','03/24/2026','Subscription Expired','Expiration','—','—','1'],
+      ['<span class="badge pending">Pending</span>','DFW Flag Co.<br><small>billing@dfwflag.com</small>','03/23/2026','Final Notice','Final','—','—','3'],
+      ['<span class="badge sent">Sent</span>','Carlos Rivera<br><small>crivera@hotmail.com</small>','03/23/2026','Renew Subscription','Renewal','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','2'],
+      ['<span class="badge failed">Failed</span>','Lone Star Events<br><small>info@lonestarevents.net</small>','03/22/2026','Subscription Expired','Expiration','—','—','1'],
+      ['<span class="badge sent">Sent</span>','Patricia Odom<br><small>podom@gmail.com</small>','03/22/2026','Final Notice','Final','<span class="badge opened">Yes</span>','—','3'],
+      ['<span class="badge sent">Sent</span>','Texas Flag Supply<br><small>orders@txflagsupply.com</small>','03/21/2026','Subscription Expired','Expiration','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','1'],
+      ['<span class="badge sent">Sent</span>','James Whitfield<br><small>jwhitfield@work.com</small>','03/20/2026','Renew Subscription','Renewal','—','—','2'],
     ],
     smsRows: [
       ['<span class="badge sent">Delivered</span>','John Smith<br><small>(214) 555-0182</small>','03/25/2026',1,'1'],
@@ -1060,13 +1061,13 @@ const yearData = {
 };
 
 const scheduledEmailRows = [
-  ['03/30/2026','<span class="badge pending">Scheduled</span>','Robert Chen<br><small>rchen@gmail.com</small>','Subscription Expired','Expiration','—','—','1'],
-  ['03/30/2026','<span class="badge pending">Scheduled</span>','Alicia Monroe<br><small>amonroe@outlook.com</small>','Renew Subscription','Renewal','—','—','2'],
-  ['03/31/2026','<span class="badge pending">Scheduled</span>','Sunrise Flag Co.<br><small>info@sunriseflag.com</small>','Subscription Expired','Expiration','—','—','1'],
-  ['03/31/2026','<span class="badge pending">Scheduled</span>','David Patel<br><small>dpatel@work.com</small>','Final Notice','Final','—','—','3'],
-  ['04/01/2026','<span class="badge pending">Scheduled</span>','Maria Castillo<br><small>mcastillo@gmail.com</small>','Subscription Expired','Expiration','—','—','1'],
-  ['04/01/2026','<span class="badge pending">Scheduled</span>','TX Banner Supply<br><small>orders@txbanner.com</small>','Renew Subscription','Renewal','—','—','2'],
-  ['04/02/2026','<span class="badge pending">Scheduled</span>','Kevin Brooks<br><small>kbrooks@hotmail.com</small>','Final Notice','Final','—','—','3'],
+  ['<span class="badge pending">Scheduled</span>','Robert Chen<br><small>rchen@gmail.com</small>','03/30/2026','Subscription Expired','Expiration','—','—','1'],
+  ['<span class="badge pending">Scheduled</span>','Alicia Monroe<br><small>amonroe@outlook.com</small>','03/30/2026','Renew Subscription','Renewal','—','—','2'],
+  ['<span class="badge pending">Scheduled</span>','Sunrise Flag Co.<br><small>info@sunriseflag.com</small>','03/31/2026','Subscription Expired','Expiration','—','—','1'],
+  ['<span class="badge pending">Scheduled</span>','David Patel<br><small>dpatel@work.com</small>','03/31/2026','Final Notice','Final','—','—','3'],
+  ['<span class="badge pending">Scheduled</span>','Maria Castillo<br><small>mcastillo@gmail.com</small>','04/01/2026','Subscription Expired','Expiration','—','—','1'],
+  ['<span class="badge pending">Scheduled</span>','TX Banner Supply<br><small>orders@txbanner.com</small>','04/01/2026','Renew Subscription','Renewal','—','—','2'],
+  ['<span class="badge pending">Scheduled</span>','Kevin Brooks<br><small>kbrooks@hotmail.com</small>','04/02/2026','Final Notice','Final','—','—','3'],
 ];
 const scheduledSmsRows = [
   ['<span class="badge pending">Scheduled</span>','Robert Chen<br><small>(214) 555-0192</small>','03/30/2026',1,'1'],
@@ -1077,9 +1078,9 @@ const scheduledSmsRows = [
   ['<span class="badge pending">Scheduled</span>','Kevin Brooks<br><small>(972) 555-0748</small>','04/02/2026',1,'3'],
 ];
 const ignoredEmailRows = [
-  ['03/10/2026','<span class="badge failed">No Response</span>','Patricia Odom<br><small>podom@gmail.com</small>','Final Notice','Final','—','—','3'],
-  ['03/08/2026','<span class="badge failed">No Response</span>','Linda Garza<br><small>lgarza_old@yahoo.com</small>','Final Notice','Final','—','—','3'],
-  ['03/06/2026','<span class="badge failed">No Response</span>','DFW Flag Co.<br><small>billing@dfwflag.com</small>','Final Notice','Final','—','—','3'],
+  ['<span class="badge failed">No Response</span>','Patricia Odom<br><small>podom@gmail.com</small>','03/10/2026','Final Notice','Final','—','—','3'],
+  ['<span class="badge failed">No Response</span>','Linda Garza<br><small>lgarza_old@yahoo.com</small>','03/08/2026','Final Notice','Final','—','—','3'],
+  ['<span class="badge failed">No Response</span>','DFW Flag Co.<br><small>billing@dfwflag.com</small>','03/06/2026','Final Notice','Final','—','—','3'],
 ];
 const ignoredSmsRows = [
   ['<span class="badge failed">No Response</span>','Patricia Odom<br><small>(469) 555-0329</small>','03/10/2026',1,'3'],
