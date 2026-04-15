@@ -1355,127 +1355,127 @@ function closeSmsPreview(){ document.getElementById('sms-preview-modal').style.d
 
 // Template Mock Data & logic
 const emailTemplatesHTML = {
-  'auto-invoice': `&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset="UTF-8"&gt;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
-&lt;style type="text/css"&gt;body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } body { margin: 0 !important; padding: 0 !important; width: 100% !important; background: transparent; } table { border-collapse: collapse !important; } img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; } a { text-decoration: none; } .pay-online-btn:hover { background-color: #3B38B4 !important; } .pay-online-btn:hover a { color: #ffffff !important; } .action-tile:hover { background-color: #EEEEFF !important; } @media screen and (max-width: 600px) { .wrapper { width: 100% !important; padding: 10px !important; } .content-table { width: 100% !important; } .mobile-center { text-align: center !important; } .statement-table { width: 100% !important; } .action-column { display: table-cell !important; width: 50% !important; text-align: center !important; padding: 0 5px !important; } }&lt;/style&gt;
-&lt;/head&gt;
-&lt;body style="background:#f0f2f5; font-family:Arial,sans-serif;"&gt;
-&lt;table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: transparent;" width="100%"&gt;
-	&lt;tbody&gt;
-		&lt;tr&gt;
-			&lt;td align="center" style="padding: 10px 5px;"&gt;
-			&lt;table border="0" cellpadding="0" cellspacing="0" class="wrapper" role="presentation" style="background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);" width="100%"&gt;
-				&lt;tbody&gt;
-					&lt;tr&gt;
-						&lt;td style="padding: 20px 20px 15px 20px;"&gt;
-						&lt;p style="margin: 0; font-size: 14px; color: #555555; line-height: 1.6;"&gt;&lt;img alt="USA Flag" height="14" src="https://app.helpingwithflags.com/images/us-flag.png" style="display: inline; vertical-align: middle; margin-right: 6px;" width="22" /&gt;Thank you for your past participation in our &lt;strong&gt;Holiday Flag Program&lt;/strong&gt;. Your donation helps local community charities.&lt;/p&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-					&lt;tr&gt;
-						&lt;td style="padding: 10px 20px 5px 20px;"&gt;
-						&lt;h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #3B38B4; font-style: italic;"&gt;Payment Reminder&lt;/h2&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-					&lt;tr&gt;
-						&lt;td style="padding: 5px 20px 20px 20px;"&gt;
-						&lt;p style="margin: 0; font-size: 13px; color: #333333;"&gt;Your annual holiday flag subscription is now due&lt;/p&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-					&lt;tr&gt;
-						&lt;td style="padding: 0 20px 15px 20px;"&gt;
-						&lt;p style="margin: 0; font-size: 13px; color: #333333; line-height: 1.6;"&gt;&lt;strong&gt;To:&lt;/strong&gt; John Doe&lt;br /&gt;
-						&lt;strong&gt;Address:&lt;/strong&gt; 123 Main St, Anytown&lt;/p&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-					&lt;tr&gt;
-						&lt;td style="padding: 0 20px 20px 20px;"&gt;
-						&lt;table border="0" cellpadding="0" cellspacing="0" class="statement-table" role="presentation" style="border: 1px solid #dddddd;" width="100%"&gt;
-							&lt;tbody&gt;
-								&lt;tr&gt;
-									&lt;td style="background-color: #d9d9d9; color: #333333; padding: 10px 12px; font-size: 13px; font-weight: bold; width: 60%;"&gt;Statement Period&lt;/td&gt;
-									&lt;td style="background-color: #d9d9d9; color: #333333; padding: 10px 12px; font-size: 13px; font-weight: bold; text-align: center;"&gt;Current Balance&lt;/td&gt;
-								&lt;/tr&gt;
-								&lt;tr&gt;
-									&lt;td style="padding: 10px 12px; font-size: 13px; color: #333333;"&gt;Jan - Dec 2026&lt;/td&gt;
-									&lt;td style="padding: 10px 12px; font-size: 13px; color: #333333; text-align: center; font-weight: bold;"&gt;$50.00&lt;/td&gt;
-								&lt;/tr&gt;
-							&lt;/tbody&gt;
-						&lt;/table&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-					&lt;tr&gt;
-						&lt;td style="padding: 10px 20px 10px 20px;"&gt;
-						&lt;table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"&gt;
-							&lt;tbody&gt;
-								&lt;tr&gt;
-									&lt;td class="pay-online-btn" style="background-color: #EEEEFF; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"&gt;&lt;a class="button-link" href="#" style="display: inline-block; padding: 10px 30px; font-size: 14px; color: #3B38B4; text-decoration: none; font-weight: bold;" target="_blank"&gt;Pay Online &lt;/a&gt;&lt;/td&gt;
-								&lt;/tr&gt;
-							&lt;/tbody&gt;
-						&lt;/table&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-					&lt;tr&gt;
-						&lt;td align="center" style="padding: 10px 20px; border-top: 1px dotted #ccc;"&gt;
-							&lt;a href="#" style="color: #3f51b5; font-size: 13px; text-decoration: underline;"&gt;Pay by Check&lt;/a&gt; &lt;span style="color: #555; font-size: 13px;"&gt;(less secure and slower)&lt;/span&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-					&lt;tr&gt;
-						&lt;td align="center" style="padding: 10px 20px; border-top: 1px dotted #ccc;"&gt;
-							&lt;i style="color: #333; font-size: 13px;"&gt;For details, see attached Invoice&lt;/i&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-					&lt;tr&gt;
-						&lt;td align="center" style="padding: 15px 20px; border-top: 1px dotted #ccc;"&gt;
-							&lt;table align="center" border="0" cellpadding="0" cellspacing="10" role="presentation"&gt;
-								&lt;tr&gt;
-									&lt;td align="center" style="border: 1px dotted #ccc; padding: 10px 15px;"&gt;
-										&lt;img src="https://cdn-icons-png.flaticon.com/512/3050/3050519.png" width="32" style="display:block;margin-bottom:6px;opacity:0.6;"/&gt;
-										&lt;a href="#" style="font-size: 12px; color: #0088cc; text-decoration: none; font-weight: bold;"&gt;Sign In&lt;/a&gt;
-									&lt;/td&gt;
-									&lt;td align="center" style="border: 1px dotted #ccc; padding: 10px 15px;"&gt;
-										&lt;img src="https://cdn-icons-png.flaticon.com/512/263/263065.png" width="28" style="display:block;margin-bottom:8px;opacity:0.4;"/&gt;
-										&lt;a href="#" style="font-size: 12px; color: #0088cc; text-decoration: none; font-weight: bold;"&gt;Cancel&lt;/a&gt;
-									&lt;/td&gt;
-								&lt;/tr&gt;
-							&lt;/table&gt;
-						&lt;/td&gt;
-					&lt;/tr&gt;
-				&lt;/tbody&gt;
-			&lt;/table&gt;
-			&lt;/td&gt;
-		&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-			&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 20px; border-top: 1px dotted #ccc; border-bottom: 1px solid #ddd; padding: 15px 0; background-color: #f8f9fa;"&gt;
-				&lt;tr&gt;
-					&lt;td align="center" style="padding: 15px 0;"&gt;
-						&lt;a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;"&gt;Unsubscribe&lt;/a&gt;
-						&lt;span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"&gt;&lt;/span&gt;
-						&lt;a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;"&gt;Cancel Subscription&lt;/a&gt;
-						&lt;span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"&gt;&lt;/span&gt;
-						&lt;a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;"&gt;Privacy &amp; Cookies&lt;/a&gt;
-						&lt;span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"&gt;&lt;/span&gt;
-						&lt;a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;"&gt;Help&lt;/a&gt;
-					&lt;/td&gt;
-				&lt;/tr&gt;
-			&lt;/table&gt;
+  'auto-invoice': `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge">
+<style type="text/css">body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } body { margin: 0 !important; padding: 0 !important; width: 100% !important; background: transparent; } table { border-collapse: collapse !important; } img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; } a { text-decoration: none; } .pay-online-btn:hover { background-color: #3B38B4 !important; } .pay-online-btn:hover a { color: #ffffff !important; } .action-tile:hover { background-color: #EEEEFF !important; } @media screen and (max-width: 600px) { .wrapper { width: 100% !important; padding: 10px !important; } .content-table { width: 100% !important; } .mobile-center { text-align: center !important; } .statement-table { width: 100% !important; } .action-column { display: table-cell !important; width: 50% !important; text-align: center !important; padding: 0 5px !important; } }</style>
+</head>
+<body style="background:#f0f2f5; font-family:Arial,sans-serif;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: transparent;" width="100%">
+	<tbody>
+		<tr>
+			<td align="center" style="padding: 10px 5px;">
+			<table border="0" cellpadding="0" cellspacing="0" class="wrapper" role="presentation" style="background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);" width="100%">
+				<tbody>
+					<tr>
+						<td style="padding: 20px 20px 15px 20px;">
+						<p style="margin: 0; font-size: 14px; color: #555555; line-height: 1.6;"><img alt="USA Flag" height="14" src="https://app.helpingwithflags.com/images/us-flag.png" style="display: inline; vertical-align: middle; margin-right: 6px;" width="22" />Thank you for your past participation in our <strong>Holiday Flag Program</strong>. Your donation helps local community charities.</p>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding: 10px 20px 5px 20px;">
+						<h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #3B38B4; font-style: italic;">Payment Reminder</h2>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding: 5px 20px 20px 20px;">
+						<p style="margin: 0; font-size: 13px; color: #333333;">Your annual holiday flag subscription is now due</p>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding: 0 20px 15px 20px;">
+						<p style="margin: 0; font-size: 13px; color: #333333; line-height: 1.6;"><strong>To:</strong> John Doe<br />
+						<strong>Address:</strong> 123 Main St, Anytown</p>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding: 0 20px 20px 20px;">
+						<table border="0" cellpadding="0" cellspacing="0" class="statement-table" role="presentation" style="border: 1px solid #dddddd;" width="100%">
+							<tbody>
+								<tr>
+									<td style="background-color: #d9d9d9; color: #333333; padding: 10px 12px; font-size: 13px; font-weight: bold; width: 60%;">Statement Period</td>
+									<td style="background-color: #d9d9d9; color: #333333; padding: 10px 12px; font-size: 13px; font-weight: bold; text-align: center;">Current Balance</td>
+								</tr>
+								<tr>
+									<td style="padding: 10px 12px; font-size: 13px; color: #333333;">Jan - Dec 2026</td>
+									<td style="padding: 10px 12px; font-size: 13px; color: #333333; text-align: center; font-weight: bold;">$50.00</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding: 10px 20px 10px 20px;">
+						<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation">
+							<tbody>
+								<tr>
+									<td class="pay-online-btn" style="background-color: #EEEEFF; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"><a class="button-link" href="#" style="display: inline-block; padding: 10px 30px; font-size: 14px; color: #3B38B4; text-decoration: none; font-weight: bold;" target="_blank">Pay Online </a></td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="center" style="padding: 10px 20px; border-top: 1px dotted #ccc;">
+							<a href="#" style="color: #3f51b5; font-size: 13px; text-decoration: underline;">Pay by Check</a> <span style="color: #555; font-size: 13px;">(less secure and slower)</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="center" style="padding: 10px 20px; border-top: 1px dotted #ccc;">
+							<i style="color: #333; font-size: 13px;">For details, see attached Invoice</i>
+						</td>
+					</tr>
+					<tr>
+						<td align="center" style="padding: 15px 20px; border-top: 1px dotted #ccc;">
+							<table align="center" border="0" cellpadding="0" cellspacing="10" role="presentation">
+								<tr>
+									<td align="center" style="border: 1px dotted #ccc; padding: 10px 15px;">
+										<img src="https://cdn-icons-png.flaticon.com/512/3050/3050519.png" width="32" style="display:block;margin-bottom:6px;opacity:0.6;"/>
+										<a href="#" style="font-size: 12px; color: #0088cc; text-decoration: none; font-weight: bold;">Sign In</a>
+									</td>
+									<td align="center" style="border: 1px dotted #ccc; padding: 10px 15px;">
+										<img src="https://cdn-icons-png.flaticon.com/512/263/263065.png" width="28" style="display:block;margin-bottom:8px;opacity:0.4;"/>
+										<a href="#" style="font-size: 12px; color: #0088cc; text-decoration: none; font-weight: bold;">Cancel</a>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 20px; border-top: 1px dotted #ccc; border-bottom: 1px solid #ddd; padding: 15px 0; background-color: #f8f9fa;">
+				<tr>
+					<td align="center" style="padding: 15px 0;">
+						<a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;">Unsubscribe</a>
+						<span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"></span>
+						<a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;">Cancel Subscription</a>
+						<span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"></span>
+						<a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;">Privacy & Cookies</a>
+						<span style="color: #000; margin: 0 10px; font-weight: bold; border-left: 2px solid #000; padding-left: 10px;"></span>
+						<a href="#" style="color: #0088cc; font-size: 13px; text-decoration: none;">Help</a>
+					</td>
+				</tr>
+			</table>
 			
-			&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 15px; padding-bottom: 40px;"&gt;
-				&lt;tr&gt;
-					&lt;td align="center" style="padding: 10px 0;"&gt;
-						&lt;strong style="color: #333; font-size: 13px; margin-bottom: 10px; display: block;"&gt;CONTACT&lt;/strong&gt;
-						&lt;div style="color: #555; font-size: 13px; line-height: 1.6;"&gt;
-							Friends of Fairview&lt;br&gt;
-							(214) 383-8012&lt;br&gt;
+			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 15px; padding-bottom: 40px;">
+				<tr>
+					<td align="center" style="padding: 10px 0;">
+						<strong style="color: #333; font-size: 13px; margin-bottom: 10px; display: block;">CONTACT</strong>
+						<div style="color: #555; font-size: 13px; line-height: 1.6;">
+							Friends of Fairview<br>
+							(214) 383-8012<br>
 							500 State HWY 5
-						&lt;/div&gt;
-					&lt;/td&gt;
-				&lt;/tr&gt;
-			&lt;/table&gt;
-&lt;/body&gt;
-&lt;/html&gt;`,
+						</div>
+					</td>
+				</tr>
+			</table>
+</body>
+</html>`,
   '2024-renewal-notification': '<div style="padding:40px;text-align:center;font-family:sans-serif;"><h3>2024 Renewal Notification</h3><p>Your 2024 flag subscription is due for renewal.</p></div>',
   '2025-renewals': '<div style="padding:40px;text-align:center;font-family:sans-serif;"><h3>2025 Renewals</h3><p>Don\'t miss out on holiday flags for 2025.</p></div>',
   'automatic-subscription-renewal-notification': '<div style="padding:40px;text-align:center;font-family:sans-serif;"><h3>Auto-Pay Notice</h3><p>Your card on file will be charged automatically.</p></div>'
