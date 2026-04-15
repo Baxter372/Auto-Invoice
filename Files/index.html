@@ -137,7 +137,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 </div>
 <h1>Auto-Invoicing Dashboard</h1>
 <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
-<button id="header-toggle-btn" onclick="const p = document.getElementById('premium-dropdown'); p.style.display = p.style.display === 'none' ? 'block' : 'none';" style="background:linear-gradient(135deg,#1e2a6e,#2c3e8c);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(44,62,140,0.3);transition:all 0.2s;"><i data-lucide="zap" style="width:16px; height:16px;"></i> Turn On Auto-Invoicing</button>
+<button id="header-toggle-btn" onclick="const p = document.getElementById('premium-dropdown'); p.style.display = p.style.display === 'none' ? 'block' : 'none';" style="background:linear-gradient(135deg,#1e2a6e,#2c3e8c);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(44,62,140,0.3);transition:all 0.2s;"><i data-lucide="zap" style="width:16px; height:16px;"></i> Turn On Auto-Invoicing <span id="header-power-led" style="width:10px;height:10px;border-radius:50%;background:#e74c3c;box-shadow:0 0 6px rgba(231,76,60,0.6);margin-left:6px;transition:0.3s;"></span></button>
 </div>
 <div id="premium-dropdown" style="display:none;position:absolute;top:calc(100% + 15px);right:20px;width:380px;z-index:2000;">
 <!-- Master Auto-Invoicing Card -->
@@ -962,7 +962,19 @@ let smsBillingState = 'off';
 const scheduleStatus = { email:'paused', sms:'paused' };
 
 function updateConfigureBtn(){
-  document.getElementById('configure-btn-wrap').style.display = (autoBillingState === 'on' || smsBillingState === 'on') ? 'block' : 'none';
+  const isActive = (autoBillingState === 'on' || smsBillingState === 'on');
+  document.getElementById('configure-btn-wrap').style.display = isActive ? 'block' : 'none';
+  
+  const led = document.getElementById('header-power-led');
+  if(led) {
+      if(isActive) {
+          led.style.background = '#27ae60';
+          led.style.boxShadow = '0 0 8px rgba(39, 174, 96, 0.8)';
+      } else {
+          led.style.background = '#e74c3c';
+          led.style.boxShadow = '0 0 6px rgba(231, 76, 60, 0.6)';
+      }
+  }
 }
 function setAutoBilling(state){
   if(state === 'on' && autoBillingState !== 'on') {
