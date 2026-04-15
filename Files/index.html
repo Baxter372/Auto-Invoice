@@ -422,7 +422,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <table id="email-table">
 <thead>
 <tr>
-<th class="sortable" onclick="sortTable('email',0)">Status<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('email',0)" style="text-align:center;">Status<span class="sort-icon"></span></th>
 <th class="sortable" onclick="sortTable('email',1)">Recipient<span class="sort-icon"></span></th>
 <th class="sortable" onclick="sortTable('email',2)">Send Date<span class="sort-icon"></span></th>
 <th class="sortable" onclick="sortTable('email',3)">Subject<span class="sort-icon"></span></th>
@@ -453,7 +453,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <table id="sms-table">
 <thead>
 <tr>
-<th class="sortable" onclick="sortTable('sms',0)">Status<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('sms',0)" style="text-align:center;">Status<span class="sort-icon"></span></th>
               <th class="sortable" onclick="sortTable('sms',1)">Recipient<span class="sort-icon"></span></th>
               <th class="sortable" onclick="sortTable('sms',2)">Send Date<span class="sort-icon"></span></th>
               <th class="sortable" onclick="sortTable('sms',3)">Segments<span class="sort-icon"></span></th>
@@ -1107,11 +1107,11 @@ function renderTables(){
   window._eRows = curMode==='scheduled' ? scheduledEmailRows : (isFiltered ? ignoredEmailRows : d.emailRows);
   window._sRows = curMode==='scheduled' ? scheduledSmsRows  : (isFiltered ? ignoredSmsRows  : d.smsRows);
   document.getElementById('email-tbody').innerHTML = window._eRows.map((r,i)=>
-    `<tr>${r.map(c=>`<td>${c}</td>`).join('')}<td><a href="#" onclick="openEmailPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`
+    `<tr>${r.map((c,idx)=>`<td${idx===1 ? ' style="text-align:left"' : ''}>${c}</td>`).join('')}<td><a href="#" onclick="openEmailPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`
   ).join('');
   document.getElementById('sms-tbody').innerHTML = window._sRows.map((r,i)=>{
     const cost = (r[3]*RATE).toFixed(4);
-    return `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>$${cost}</td><td>${r[4]}</td><td><a href="#" onclick="openSmsPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`;
+    return `<tr><td>${r[0]}</td><td style="text-align:left">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>$${cost}</td><td>${r[4]}</td><td><a href="#" onclick="openSmsPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`;
   }).join('');
 }
 
