@@ -569,26 +569,27 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
 <thead style="background:#eef2ff;">
 <tr>
+<th style="padding:12px 20px; text-align:center; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">VIEW</th>
 <th style="padding:12px 20px; text-align:center; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">TYPE</th>
 <th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">TITLE</th>
 <th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">DESCRIPTION</th>
 <th style="padding:12px 20px; text-align:center; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em; width:100px;">ACTION</th>
 </tr>
 </thead>
-<tbody>
+<tbody><tr style="border-bottom:1px solid #eee;">
+<td style="text-align:center; padding:16px;"><input type="radio" name="sms_tpl_view" checked onclick="previewSmsTpl('auto-invoice-sms')" style="accent-color:#3f51b5; transform:scale(1.2); cursor:pointer;"/></td>
+<td style="text-align:center; padding:16px;color:#555;">Auto-Invoicing Text</td>
+<td style="text-align:left; padding:16px;color:#555;">Auto-Invoicing Text</td>
+<td style="text-align:left; padding:16px;color:#555;">Default SMS/TEXT Auto-Invoicing Template</td>
+<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;"></i></td>
+</tr>
 <tr style="border-bottom:1px solid #eee;">
+<td style="text-align:center; padding:16px;"><input type="radio" name="sms_tpl_view" onclick="previewSmsTpl('demo-testing')" style="accent-color:#3f51b5; transform:scale(1.2); cursor:pointer;"/></td>
 <td style="text-align:center; padding:16px;color:#555;">Demo testing</td>
 <td style="text-align:left; padding:16px;color:#555;">Demo test create</td>
 <td style="text-align:left; padding:16px;color:#555;">this message is creating for the demo test</td>
 <td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;margin-right:12px;"></i> <i data-lucide="trash-2" style="width:18px;height:18px;color:#e74c3c;cursor:pointer;"></i></td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="text-align:center; padding:16px;color:#555;">Auto-Invoicing Text – 1st Text</td>
-<td style="text-align:left; padding:16px;color:#555;">Auto-Invoicing Text – 1st Text</td>
-<td style="text-align:left; padding:16px;color:#555;">Default SMS/TEXT Auto-Invoicing Template</td>
-<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;"></i></td>
-</tr>
-</tbody>
+</tr></tbody>
 </table>
 </div>
 </div>
@@ -725,7 +726,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <h3 style="margin:0 0 10px 0;font-size:0.95rem;color:#3f51b5;border-bottom:2px solid #eef2ff;padding-bottom:6px;display:flex;align-items:center;gap:6px;"><i data-lucide="message-square" style="width:16px;height:16px;"></i> Default SMS/Text Preview</h3>
 <div style="background:#f2f2f7;padding:24px;border-radius:12px;display:flex;justify-content:center;box-shadow:inset 0 2px 4px rgba(0,0,0,0.05);">
 <!-- CSS iMessage Mockup -->
-<div style="max-width:380px;background:#34c759;border-radius:18px 18px 4px 18px;padding:14px 18px;color:#fff;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:1.05rem;line-height:1.4;box-shadow:0 1px 2px rgba(0,0,0,0.1);position:relative;">
+<div id="sms-preview-msg" style="max-width:380px;background:#34c759;border-radius:18px 18px 4px 18px;padding:14px 18px;color:#fff;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:1.05rem;line-height:1.4;box-shadow:0 1px 2px rgba(0,0,0,0.1);position:relative;">
              John Doe Your Holiday Flag Program invoice is ready. Pay securely here: <a href="#" style="color:#fff;text-decoration:underline;word-break:break-all;">https://pay.helpingwithflags.com/inv123</a>
 <!-- Tail -->
 <svg fill="none" style="position:absolute;bottom:0;right:-8px;width:16px;height:14px;" viewbox="0 0 16 14" xmlns="http://www.w3.org/2000/svg"><path d="M0 14C3.86599 14 7 10.866 7 7V0H16C16 7.73199 9.73199 14 2 14H0Z" fill="#34c759"></path></svg>
@@ -1490,6 +1491,19 @@ function previewEmailTpl(key){
       iframe.srcdoc = emailTemplatesHTML[key];
   } else if(iframe) {
       iframe.srcdoc = '<div style="padding:40px;text-align:center;font-family:sans-serif;color:#888;">Preview not available for this template yet.</div>';
+  }
+}
+
+const smsTemplatesData = {
+  'auto-invoice-sms': `John Doe Your Holiday Flag Program invoice is ready. Pay securely here: <a href="#" style="color:#fff;text-decoration:underline;word-break:break-all;">https://pay.helpingwithflags.com/inv123</a>`,
+  'demo-testing': `This is a demo test create message for internal testing purposes. Do not ignore.`
+};
+
+function previewSmsTpl(key){
+  const msgDiv = document.getElementById('sms-preview-msg');
+  if(msgDiv && smsTemplatesData[key]) {
+      const tailHtml = `\n<!-- Tail -->\n<svg fill="none" style="position:absolute;bottom:0;right:-8px;width:16px;height:14px;" viewbox="0 0 16 14" xmlns="http://www.w3.org/2000/svg"><path d="M0 14C3.86599 14 7 10.866 7 7V0H16C16 7.73199 9.73199 14 2 14H0Z" fill="#34c759"></path></svg>`;
+      msgDiv.innerHTML = smsTemplatesData[key] + tailHtml;
   }
 }
 </script>
