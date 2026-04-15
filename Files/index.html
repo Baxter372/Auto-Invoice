@@ -205,7 +205,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <button class="main-tab" id="mtab-dashboard" onclick="switchMainTab('dashboard')">Dashboard</button>
 <button class="main-tab active" id="mtab-history" onclick="switchMainTab('history')">Message History</button>
 <button class="main-tab" id="mtab-templates" onclick="switchMainTab('templates')">Templates</button>
-<a href="javascript:void(0);" onclick="openConfig()" style="margin-left:auto; align-self:flex-end; margin-bottom:10px; color:#555; font-weight:bold; font-size:0.85rem; text-decoration:none; display:flex; align-items:center; gap:4px; transition:color 0.2s;" onmouseover="this.style.color='#2c3e8c'" onmouseout="this.style.color='#555'"><i data-lucide="settings" style="width:14px;height:14px;"></i> Auto-Invoicing Configuration</a>
+<button class="main-tab" id="mtab-config" onclick="switchMainTab('config')">Configuration</button>
 </div>
 <div id="main-panel-dashboard" style="display:none;">
 <div style="display:grid; grid-template-columns:2fr 1fr; gap:24px;">
@@ -810,12 +810,10 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 </div>
 </div>
 </div>
-</div> <!-- closes main-left-col -->
-<!-- /.page-body -->
-<!-- Config Modal -->
-<div class="modal-overlay" id="config-modal">
-<div class="modal-box" style="width:640px;max-width:95vw;max-height:90vh;overflow-y:auto;">
-<div class="modal-header"><h3 style="display:flex;align-items:center;gap:6px;"><i data-lucide="settings" style="width: 18px; height: 18px;"></i> Auto-Invoicing Configuration</h3><button class="modal-close" onclick="closeConfig()"><i data-lucide="x" style="width: 18px; height: 18px;"></i></button></div>
+
+<div id="main-panel-config" style="display:none; padding:20px 0;">
+<div style="background:#fff; border:1px solid #ddd; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.06); max-width:800px;">
+
 <div style="display:flex;border-bottom:2px solid #eee;background:#1a2560;">
 <button id="cfg-tab-email" onclick="switchCfgTab('email')" style="flex:1;padding:11px;border:none;border-bottom:3px solid #fff;background:#fff;color:#2c3e8c;font-weight:bold;cursor:pointer;"><i data-lucide="mail" style="width: 16px; height: 16px; margin-right:4px; top: 3px; position:relative;"></i> EMAIL</button>
 <button id="cfg-tab-sms" onclick="switchCfgTab('sms')" style="flex:1;padding:11px;border:none;border-bottom:3px solid transparent;background:#888;color:#fff;font-weight:bold;cursor:pointer;"><i data-lucide="message-square" style="width: 16px; height: 16px; margin-right:4px; top: 3px; position:relative;"></i> SMS/TEXT</button>
@@ -876,12 +874,13 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div style="background:#e8f4fd;border:1px solid #b3d9f5;border-radius:6px;padding:10px 14px;font-size:0.8rem;color:#1a6e9e;margin-top:14px;"><div style="display:flex;align-items:center;gap:6px;"><i data-lucide="info" style="width: 14px; height: 14px; flex-shrink: 0;"></i> <span>The Administrator will be notified by SMS 24 hours prior to the start of the Auto-Invoicing process.</span></div>
 </div>
 </div>
-<div class="modal-footer">
-<button class="btn-secondary" onclick="closeConfig()">Cancel</button>
-<button class="btn-primary" onclick="closeConfig()">Save Settings</button>
+
 </div>
 </div>
-</div>
+
+</div> <!-- closes main-left-col -->
+<!-- /.page-body -->
+
 <!-- Email Preview Modal -->
 <div class="modal-overlay" id="email-preview-modal">
 <div class="modal-box" style="width:660px;max-width:95vw;max-height:90vh;overflow-y:auto;">
@@ -964,10 +963,12 @@ function switchMainTab(tabId) {
   document.getElementById('main-panel-dashboard').style.display = tabId==='dashboard'?'block':'none';
   document.getElementById('main-panel-history').style.display   = tabId==='history'?'block':'none';
   document.getElementById('main-panel-templates').style.display = tabId==='templates'?'block':'none';
+  document.getElementById('main-panel-config').style.display = tabId==='config'?'block':'none';
   
   document.getElementById('mtab-dashboard').className = 'main-tab ' + (tabId==='dashboard'?'active':'');
   document.getElementById('mtab-history').className   = 'main-tab ' + (tabId==='history'?'active':'');
   document.getElementById('mtab-templates').className = 'main-tab ' + (tabId==='templates'?'active':'');
+  document.getElementById('mtab-config').className    = 'main-tab ' + (tabId==='config'?'active':'');
   
   // Dynamic Layout logic
   var metrics = document.getElementById('right-col-metrics');
@@ -975,7 +976,7 @@ function switchMainTab(tabId) {
   var mainCol = document.getElementById('main-right-col');
   if(metrics) metrics.style.display = tabId==='dashboard'?'block':'none';
   if(preview) preview.style.display = tabId==='templates'?'block':'none';
-  if(mainCol) mainCol.style.display = tabId==='history'?'none':'block';
+  if(mainCol) mainCol.style.display = (tabId==='history' || tabId==='config')?'none':'block';
   
   var pageBody = document.querySelector('.page-body');
   // gridTemplateColumns logic replaced by flexbox
