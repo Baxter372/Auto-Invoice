@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<script>
+window.onerror = function(msg, url, line) {
+    alert("GLOBAL JS ERR: " + msg + " at line " + line);
+};
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Auto-Invoicing Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #f0f3f8; color: #333; font-size: 14px; }
+.top-bar { background: #eef1f5; padding: 10px 24px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #555; }
+.top-bar .home-link { color: #364fc7; display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; }
+.header { background: #fff; padding: 16px 24px; border-bottom: 2px solid #364fc7; display: flex; align-items: center; gap: 16px; }
+.header h1 { color: #364fc7; font-size: 2.2rem; font-weight: 400; margin-left: 4px; letter-spacing: -0.02em; }
+.year-badge { background: #2c3e8c; color: #fff; border-radius: 10px; padding: 3px 12px; font-size: 0.75rem; font-weight: bold; }
+.toggle-btns { display: flex; border-radius: 4px; overflow: hidden; }
+.toggle-btns button { padding: 5px 10px; font-size: 0.75rem; font-weight: bold; border: none; cursor: pointer; }
+  .main-tab-bar { display: flex; gap: 2px; margin-bottom: 20px; border-bottom: 3px solid #2c3e8c; }
+  .main-tab { flex: 1; padding: 12px 20px; border: none; background: #777; cursor: pointer; font-size: 0.88rem; font-weight: bold; color: #fff; text-transform: uppercase; border-radius: 4px 4px 0 0; transition: background 0.2s; }
+  .main-tab.active { background: #2c3e8c; }
+  .main-tab:hover:not(.active) { background: #555; }
+  .page-body { display: flex; gap: 20px; padding: 20px 30px; align-items: flex-start; flex-wrap: nowrap; }
+.list-mode-bar { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 20px; }
+.list-mode-bar span { font-weight: bold; color: #2c3e8c; font-size: 0.88rem; }
+.list-mode-bar label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; }
+.sub-tab-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.sub-tab { padding: 8px 20px; border: 1px solid transparent; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem; background: transparent; color: #666; transition: all 0.2s; }
+  .sub-tab.active { background: #eef2ff; color: #2c3e8c; border: 1px solid #ccdaff; }
+  .sub-tab.inactive { background: transparent; color: #888; }
+  .sub-tab:hover:not(.active) { background: #f9faff; color: #2c3e8c; }
+.export-btns { display: flex; gap: 6px; }
+.export-btn { width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; color: #fff; display: flex; align-items: center; justify-content: center; }
+.export-btn.excel { background: #1e7e34; }
+.export-btn.pdf   { background: #c0392b; }
+.filter-bar { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
+.filter-bar input { flex: 1; padding: 7px 10px; border: none; border-bottom: 2px solid #2c3e8c; border-radius: 0; font-size: 0.82rem; }
+.filter-bar select { flex: 1; padding: 7px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.82rem; }
+.btn-apply { background: #2c3e8c; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; cursor: pointer; font-size: 0.82rem; }
+.btn-reset { background: #fff; border: 1px solid #ccc; padding: 7px 12px; border-radius: 4px; cursor: pointer; font-size: 0.82rem; }
+.filter-active { display: none; background: #fdecea; border: 1px solid #e74c3c; border-radius: 6px; padding: 8px 14px; margin-bottom: 10px; font-size: 0.8rem; color: #c0392b; align-items: center; gap: 8px; }
+.filter-active button { margin-left: auto; background: #e74c3c; color: #fff; border: none; border-radius: 4px; padding: 3px 10px; cursor: pointer; }
+.table-wrap { background: #fff; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+thead tr { background: #dce3f5; }
+thead th { padding: 9px 10px; text-align: left; color: #2c3e8c; font-weight: bold; position: relative; }
+thead th.sortable { cursor: pointer; user-select: none; padding-right: 24px; }
+thead th.sortable:hover { background: #c8d3f0; }
+.sort-icon { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); font-size: 0.62rem; color: #6677aa; }
+th.sort-asc .sort-icon::after  { content: '▲'; color: #2c3e8c; }
+th.sort-desc .sort-icon::after { content: '▼'; color: #2c3e8c; }
+th:not(.sort-asc):not(.sort-desc) .sort-icon::after { content: '⇅'; }
+.filter-row-tr th { background: #eef1fb; padding: 5px 6px; }
+.filter-row-tr input, .filter-row-tr select { width: 100%; padding: 4px 6px; border: 1px solid #c5cee8; border-radius: 4px; font-size: 0.72rem; background: #fff; }
+tbody tr:nth-child(even) { background: #f9faff; }
+tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.72rem; font-weight: bold; }
+.badge.sent    { background: #d4edda; color: #155724; }
+.badge.failed  { background: #f8d7da; color: #721c24; }
+.badge.pending { background: #fff3cd; color: #856404; }
+.badge.opened  { background: #cce5ff; color: #004085; }
+.right-col { position: sticky; top: 16px; flex: 0 0 500px; width: 500px; }
+.metrics-panel { background: #fff; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+.metrics-panel-header { background: #2c3e8c; color: #fff; padding: 12px 16px; font-weight: bold; font-size: 0.92rem; }
+.metric-tabs { display: flex; border-bottom: 1px solid #ddd; }
+.metric-tab { flex: 1; padding: 9px 6px; border: none; background: #f7f8fc; cursor: pointer; font-size: 0.75rem; font-weight: bold; color: #666; border-bottom: 3px solid transparent; text-align: center; }
+.metric-tab.active { background: #fff; color: #2c3e8c; border-bottom: 3px solid #2c3e8c; }
+.metric-tab:hover:not(.active) { background: #eef1fb; }
+.metric-panel { display: none; padding: 14px; }
+.metric-panel.active { display: block; }
+.m-card { border: 1px solid #e8ecf5; border-radius: 6px; padding: 11px 12px; margin-bottom: 10px; text-align: center; background: #fafbff; }
+.m-label { font-size: 0.71rem; color: #888; margin-bottom: 3px; }
+.m-value { font-size: 1.35rem; font-weight: bold; color: #2c3e8c; }
+.m-value.green  { color: #27ae60; }
+.m-value.orange { color: #e67e22; }
+.m-value.red    { color: #e74c3c; }
+.m-sub { font-size: 0.7rem; color: #aaa; margin-top: 2px; }
+.m-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.m-grid-2 .m-card { margin-bottom: 0; }
+.m-section-title { font-size: 0.78rem; font-weight: bold; color: #2c3e8c; margin: 4px 0 8px; }
+.cmp-item { margin-bottom: 10px; }
+.cmp-label { font-size: 0.72rem; color: #666; margin-bottom: 3px; display: flex; justify-content: space-between; }
+.cmp-bar-bg { background: #eee; border-radius: 4px; height: 10px; }
+.cmp-bar-fill { height: 10px; border-radius: 4px; }
+.mini-chart { background: #f0f4ff; border-radius: 4px; height: 90px; display: flex; align-items: flex-end; gap: 4px; padding: 8px 8px 0; margin-bottom: 6px; }
+.mini-bar { flex: 1; border-radius: 2px 2px 0 0; background: #2c3e8c; opacity: 0.75; }
+.mini-labels { display: flex; gap: 4px; margin-bottom: 10px; }
+.mini-labels span { flex: 1; text-align: center; font-size: 0.6rem; color: #999; }
+.retry-item { margin-bottom: 8px; }
+.retry-label { font-size: 0.72rem; color: #555; display: flex; justify-content: space-between; margin-bottom: 2px; }
+.retry-bar-bg { background: #eee; border-radius: 4px; height: 8px; }
+.retry-bar-fill { height: 8px; border-radius: 4px; }
+.ignored-row { cursor: pointer; border: 1px solid #e74c3c; border-radius: 6px; padding: 10px 12px; background: #fff5f5; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+.ignored-row:hover { background: #fdecea; }
+.ig-label { font-size: 0.75rem; color: #c0392b; font-weight: bold; }
+.ig-val { font-size: 1.1rem; font-weight: bold; color: #e74c3c; }
+.ig-hint { font-size: 0.68rem; color: #e74c3c; }
+.sched-notice { display: flex; justify-content: center; gap: 16px; margin-top: 6px; }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
+.modal-box { background: #fff; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); overflow: hidden; }
+.modal-header { background: #2c3e8c; color: #fff; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+.modal-header h3 { font-size: 1rem; margin: 0; }
+.modal-close { background: transparent; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; }
+.modal-footer { padding: 12px 20px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 10px; background: #fff; }
+.btn-primary   { background: #2c3e8c; color: #fff; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-size: 0.88rem; }
+.btn-secondary { background: #fff; border: 1px solid #ccc; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-size: 0.88rem; }
+.btn-green     { background: #27ae60; color: #fff; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-size: 0.88rem; }
+/* Tooltips */
+.ai-feature-row { position: relative; }
+.ai-tooltip { display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: rgba(15,15,30,0.96); color: #fff; font-size: 0.72rem; line-height: 1.5; padding: 8px 12px; border-radius: 6px; width: 210px; text-align: left; z-index: 999; pointer-events: none; box-shadow: 0 4px 14px rgba(0,0,0,0.4); }
+.ai-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: rgba(15,15,30,0.96); }
+.ai-feature-row:hover .ai-tooltip { display: block; }
+</style>
+</head>
+<body>
+<div class="top-bar">
+<a class="home-link" href="#"><i data-lucide="home" style="width: 14px; height: 14px;"></i> Home</a>
+<span>&gt;</span>
+<span style="font-weight: 600; color: #555;">Auto Invoicing</span>
+</div>
+<div class="header" style="position:relative; overflow:visible;">
+<div style="color:#111; display:flex; align-items:center;">
+<svg fill="none" height="42" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 32 32" width="52">
+<rect height="18" rx="2" ry="2" width="28" x="2" y="4"></rect>
+<line stroke-width="3" x1="8" x2="24" y1="28" y2="28"></line>
+<line stroke-width="3" x1="16" x2="16" y1="22" y2="28"></line>
+<path d="M6 18v-6 M10 18v-9 M14 18v-4" stroke-width="2.5"></path>
+<path d="M4 18h12" stroke-width="2"></path>
+<circle cx="23" cy="11" r="5" stroke-width="2.5"></circle>
+<path d="M23 6v5h5" stroke-width="2.5"></path>
+</svg>
+</div>
+<h1>Auto-Invoicing Dashboard</h1>
+<div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
+<button id="header-toggle-btn" onclick="const p = document.getElementById('premium-dropdown'); p.style.display = p.style.display === 'none' ? 'block' : 'none';" style="background:linear-gradient(135deg,#1e2a6e,#2c3e8c);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(44,62,140,0.3);transition:all 0.2s;"><i data-lucide="zap" style="width:16px; height:16px;"></i> Turn On Auto-Invoicing</button>
+</div>
+<div id="premium-dropdown" style="display:none;position:absolute;top:calc(100% + 15px);right:20px;width:380px;z-index:2000;">
+<!-- Master Auto-Invoicing Card -->
+<div style="background:linear-gradient(135deg,#1e2a6e,#2c3e8c);border-radius:8px;padding:16px;margin-bottom:12px;color:#fff;box-shadow:0 4px 12px rgba(44,62,140,0.2);">
+<div style="font-size:0.75rem;opacity:0.85;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+<i data-lucide="zap" style="width: 14px; height: 14px;"></i> Premium Add-ons
+      </div>
+<!-- Auto-Billing Toggle -->
+<div style="background:rgba(255,255,255,0.12);border-radius:6px;padding:12px;margin-bottom:10px;">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">
+<div>
+<div style="font-size:0.9rem;font-weight:bold;display:flex;align-items:center;gap:6px;"><i data-lucide="mail" style="width:14px; height:14px;"></i> Enable Auto-Billing</div>
+<div style="font-size:0.75rem;opacity:0.8;margin-top:2px;">$5.00 per month</div>
+</div>
+<div class="toggle-btns">
+<button id="ab-off" onclick="setAutoBilling('off')" style="padding:6px 14px;background:#e74c3c;color:#fff;border:none;cursor:pointer;font-size:0.78rem;font-weight:bold;">OFF</button>
+<button id="ab-on" onclick="setAutoBilling('on')" style="padding:6px 14px;background:#555;color:#fff;border:none;cursor:pointer;font-size:0.78rem;font-weight:bold;">ON</button>
+</div>
+</div>
+<div id="ab-sub-label" style="font-size:0.7rem;opacity:0.75;">Automatic email notices for collections.</div>
+</div>
+<!-- SMS Toggle -->
+<div style="background:rgba(255,255,255,0.12);border-radius:6px;padding:12px;margin-bottom:10px;">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">
+<div>
+<div style="font-size:0.9rem;font-weight:bold;display:flex;align-items:center;gap:6px;"><i data-lucide="message-square" style="width:14px; height:14px;"></i> Enable SMS/TEXT Messaging</div>
+<div style="font-size:0.75rem;opacity:0.8;margin-top:2px;">$0.05 per message block</div>
+</div>
+<div class="toggle-btns">
+<button id="sms-off" onclick="setSmsBilling('off')" style="padding:6px 14px;background:#e74c3c;color:#fff;border:none;cursor:pointer;font-size:0.78rem;font-weight:bold;">OFF</button>
+<button id="sms-on" onclick="setSmsBilling('on')" style="padding:6px 14px;background:#555;color:#fff;border:none;cursor:pointer;font-size:0.78rem;font-weight:bold;">ON</button>
+</div>
+</div>
+<div id="sms-sub-label" style="font-size:0.7rem;opacity:0.75;">Targeted SMS messaging to increase recovery.</div>
+</div>
+<!-- Configure button -->
+<div id="configure-btn-wrap" style="display:none;margin-bottom:10px;">
+<button onclick="openConfig()" style="width:100%;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:8px;cursor:pointer;font-size:0.82rem;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:6px;"><i data-lucide="settings" style="width: 14px; height: 14px;"></i> Configure Schedule &amp; Templates</button>
+</div>
+<!-- Stats strip -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center;border-top:1px solid rgba(255,255,255,0.15);padding-top:10px;">
+<div class="ai-feature-row" data-tip="Clubs using SMS + Email together see 15% more subscriptions recovered compared to email alone.">
+<div style="font-size:1rem;font-weight:bold;color:#a8f0c6;">15% <span style="opacity:0.6;font-size:0.7rem;">ⓘ</span></div>
+<div style="font-size:0.62rem;opacity:0.75;">Higher Recovery</div>
+<div class="ai-tooltip"></div>
+</div>
+<div class="ai-feature-row" data-tip="On average, clubs spend just ~$0.10 in SMS costs for every subscription successfully recovered.">
+<div style="font-size:1rem;font-weight:bold;color:#a8f0c6;">~$0.10 <span style="opacity:0.6;font-size:0.7rem;">ⓘ</span></div>
+<div style="font-size:0.62rem;opacity:0.75;">Avg Cost/Recovery</div>
+<div class="ai-tooltip"></div>
+</div>
+<div class="ai-feature-row" data-tip="Most customers pay within 2.4 days of receiving their first auto-invoice — faster than manual billing cycles.">
+<div style="font-size:1rem;font-weight:bold;color:#a8f0c6;">2.4 days <span style="opacity:0.6;font-size:0.7rem;">ⓘ</span></div>
+<div style="font-size:0.62rem;opacity:0.75;">Avg Time to Pay</div>
+<div class="ai-tooltip"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="page-body">
+<!-- LEFT -->
+<div id="main-left-col" style="flex:1; min-width:0; width:100%;">
+<div class="main-tab-bar" style="width: 100%;">
+<button class="main-tab" id="mtab-dashboard" onclick="switchMainTab('dashboard')">Dashboard</button>
+<button class="main-tab active" id="mtab-history" onclick="switchMainTab('history')">Message History</button>
+<button class="main-tab" id="mtab-templates" onclick="switchMainTab('templates')">Templates</button>
+</div>
+<div id="main-panel-dashboard" style="display:none;">
+<div style="display:grid; grid-template-columns:2fr 1fr; gap:24px;">
+<!-- Column 1: The two new Data Cards -->
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+<!-- Email Data Card -->
+<div style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:32px 24px; box-shadow:0 2px 10px rgba(0,0,0,0.03); text-align:center;">
+<h3 style="margin:0 0 24px 0; font-size:1.4rem; font-weight:normal; color:#111;">Auto-Invoicing Emails</h3>
+<select style="width:100%; padding:10px 14px; border:1px solid #ddd; border-radius:4px; font-size:0.95rem; color:#777; margin-bottom:24px; outline:none; background:url('data:image/svg+xml;utf8,&lt;svg fill=%22none%22 height=%2224%22 stroke=%22%23999%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%222%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22&gt;&lt;polyline points=%226 9 12 15 18 9%22/&gt;&lt;/svg&gt;') no-repeat right 10px center; -webkit-appearance:none;">
+<option>This Month</option>
+<option>Last Month</option>
+<option>This Quarter</option>
+<option>Last Quarter</option>
+<option>This Year (YTD)</option>
+<option>Last Year</option>
+<option>All Time</option>
+</select>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:40px;">
+<div style="border:1px solid #eee; border-radius:8px; padding:24px 10px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+<div style="font-size:3rem; color:#0277bd; line-height:1;">21</div>
+<div style="font-size:1.2rem; color:#111; margin-top:12px;">Sent</div>
+</div>
+<div style="border:1px solid #eee; border-radius:8px; padding:24px 10px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+<div style="font-size:3rem; color:#0277bd; line-height:1;">47</div>
+<div style="font-size:1.2rem; color:#111; margin-top:12px;">Scheduled</div>
+</div>
+</div>
+<!-- CSS Pie Chart -->
+<div style="display:flex; justify-content:center; margin-bottom:30px;">
+<div style="width:140px; height:140px; border-radius:50%; background:conic-gradient(#0288d1 0% 35%, #0277bd 35% 65%, #b3e5fc 65% 90%, #81d4fa 90% 97%, #01579b 97% 100%); border:1px solid #fff; box-shadow:0 0 0 1px #eee; position:relative;">
+<!-- Optional inner labels could go here, but colors natively convey structure -->
+</div>
+</div>
+<!-- Legend -->
+<div style="display:flex; justify-content:center; gap:16px; font-size:0.7rem; color:#666; flex-wrap:wrap;">
+<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#01579b;display:inline-block;"></span> Queued</span>
+<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#81d4fa;display:inline-block;"></span> Processed</span>
+<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#0288d1;display:inline-block;"></span> Delivered</span>
+<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#b3e5fc;display:inline-block;"></span> Bounced</span>
+<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#0277bd;display:inline-block;"></span> Opened</span>
+</div>
+</div>
+<!-- SMS Data Card -->
+<div style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:32px 24px; box-shadow:0 2px 10px rgba(0,0,0,0.03); text-align:center;">
+<h3 style="margin:0 0 24px 0; font-size:1.4rem; font-weight:normal; color:#111;">Auto-Invoicing SMS/TEXT</h3>
+<select style="width:100%; padding:10px 14px; border:1px solid #ddd; border-radius:4px; font-size:0.95rem; color:#777; margin-bottom:24px; outline:none; background:url('data:image/svg+xml;utf8,&lt;svg fill=%22none%22 height=%2224%22 stroke=%22%23999%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%222%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22&gt;&lt;polyline points=%226 9 12 15 18 9%22/&gt;&lt;/svg&gt;') no-repeat right 10px center; -webkit-appearance:none;">
+<option>This Month</option>
+<option>Last Month</option>
+<option>This Quarter</option>
+<option>Last Quarter</option>
+<option>This Year (YTD)</option>
+<option>Last Year</option>
+<option>All Time</option>
+</select>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:40px;">
+<div style="border:1px solid #eee; border-radius:8px; padding:24px 10px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+<div style="font-size:3rem; color:#0277bd; line-height:1;">21</div>
+<div style="font-size:1.2rem; color:#111; margin-top:12px;">Sent</div>
+</div>
+<div style="border:1px solid #eee; border-radius:8px; padding:24px 10px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+<div style="font-size:3rem; color:#0277bd; line-height:1;">$1.05</div>
+<div style="font-size:1.2rem; color:#111; margin-top:12px;">Cost</div>
+</div>
+</div>
+<!-- CSS Donut Chart -->
+<div style="display:flex; justify-content:center; margin-bottom:30px;">
+<div style="width:140px; height:140px; border-radius:50%; background:conic-gradient(#006c8a 0% 75%, #008ba3 75% 85%, #00a4c9 85% 100%); border:1px solid #fff; position:relative; display:flex; align-items:center; justify-content:center;">
+<!-- Donut Hole -->
+<div style="width:70px; height:70px; background:#fff; border-radius:50%;"></div>
+</div>
+</div>
+<!-- Legend -->
+<div style="display:flex; justify-content:center; gap:16px; font-size:0.7rem; color:#666; flex-wrap:wrap;">
+<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#006c8a;display:inline-block;"></span> Delivered</span>
+<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#008ba3;display:inline-block;"></span> Failed</span>
+<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#00a4c9;display:inline-block;"></span> Pending</span>
+</div>
+</div>
+</div>
+<div id="right-col-metrics"><div style="background:linear-gradient(135deg,#1e2a6e,#2c3e8c);border-radius:8px;padding:16px;margin-bottom:12px;color:#fff;box-shadow:0 4px 12px rgba(44,62,140,0.2);">
+<div style="font-size:0.75rem;opacity:0.85;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+<i data-lucide="zap" style="width: 14px; height: 14px;"></i> Premium Add-ons
+      </div>
+<!-- Auto-Billing Toggle -->
+<div style="background:rgba(255,255,255,0.12);border-radius:6px;padding:12px;margin-bottom:10px;">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">
+<div>
+<div style="font-size:0.9rem;font-weight:bold;display:flex;align-items:center;gap:6px;"><i data-lucide="mail" style="width:14px; height:14px;"></i> Enable Auto-Billing</div>
+<div style="font-size:0.75rem;opacity:0.8;margin-top:2px;">$5.00 per month</div>
+</div>
+<div class="toggle-btns">
+<button id="ab-off" onclick="setAutoBilling('off')" style="padding:6px 14px;background:#e74c3c;color:#fff;border:none;cursor:pointer;font-size:0.78rem;font-weight:bold;">OFF</button>
+<button id="ab-on" onclick="setAutoBilling('on')" style="padding:6px 14px;background:#555;color:#fff;border:none;cursor:pointer;font-size:0.78rem;font-weight:bold;">ON</button>
+</div>
+</div>
+<div id="ab-sub-label" style="font-size:0.7rem;opacity:0.75;">Automatic email notices for collections.</div>
+</div>
+<!-- SMS Toggle -->
+<div style="background:rgba(255,255,255,0.12);border-radius:6px;padding:12px;margin-bottom:10px;">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">
+<div>
+<div style="font-size:0.9rem;font-weight:bold;display:flex;align-items:center;gap:6px;"><i data-lucide="message-square" style="width:14px; height:14px;"></i> Enable SMS/TEXT Messaging</div>
+<div style="font-size:0.75rem;opacity:0.8;margin-top:2px;">$0.05 per message block</div>
+</div>
+<div class="toggle-btns">
+<button id="sms-off" onclick="setSmsBilling('off')" style="padding:6px 14px;background:#e74c3c;color:#fff;border:none;cursor:pointer;font-size:0.78rem;font-weight:bold;">OFF</button>
+<button id="sms-on" onclick="setSmsBilling('on')" style="padding:6px 14px;background:#555;color:#fff;border:none;cursor:pointer;font-size:0.78rem;font-weight:bold;">ON</button>
+</div>
+</div>
+<div id="sms-sub-label" style="font-size:0.7rem;opacity:0.75;">Targeted SMS messaging to increase recovery.</div>
+</div>
+<!-- Configure button -->
+<div id="configure-btn-wrap" style="display:none;margin-bottom:10px;">
+<button onclick="openConfig()" style="width:100%;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:8px;cursor:pointer;font-size:0.82rem;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:6px;"><i data-lucide="settings" style="width: 14px; height: 14px;"></i> Configure Schedule &amp; Templates</button>
+</div>
+<!-- Stats strip -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center;border-top:1px solid rgba(255,255,255,0.15);padding-top:10px;">
+<div class="ai-feature-row" data-tip="Clubs using SMS + Email together see 15% more subscriptions recovered compared to email alone.">
+<div style="font-size:1rem;font-weight:bold;color:#a8f0c6;">15% <span style="opacity:0.6;font-size:0.7rem;">ⓘ</span></div>
+<div style="font-size:0.62rem;opacity:0.75;">Higher Recovery</div>
+<div class="ai-tooltip"></div>
+</div>
+<div class="ai-feature-row" data-tip="On average, clubs spend just ~$0.10 in SMS costs for every subscription successfully recovered.">
+<div style="font-size:1rem;font-weight:bold;color:#a8f0c6;">~$0.10 <span style="opacity:0.6;font-size:0.7rem;">ⓘ</span></div>
+<div style="font-size:0.62rem;opacity:0.75;">Avg Cost/Recovery</div>
+<div class="ai-tooltip"></div>
+</div>
+<div class="ai-feature-row" data-tip="Most customers pay within 2.4 days of receiving their first auto-invoice — faster than manual billing cycles.">
+<div style="font-size:1rem;font-weight:bold;color:#a8f0c6;">2.4 days <span style="opacity:0.6;font-size:0.7rem;">ⓘ</span></div>
+<div style="font-size:0.62rem;opacity:0.75;">Avg Time to Pay</div>
+<div class="ai-tooltip"></div>
+</div>
+</div>
+</div></div></div>
+</div>
+<div id="main-panel-history">
+<div class="sub-tab-bar" style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; margin-bottom: 12px;">
+<div style="display:flex;gap:6px;">
+<button class="sub-tab active" id="btn-email" onclick="switchSub('email')">Email List</button>
+<button class="sub-tab inactive" id="btn-sms" onclick="switchSub('sms')">SMS/Text List</button>
+</div>
+<div style="display:flex; align-items:center; gap: 12px; background:#f9faff; padding:4px 14px; border-radius:6px; border:1px solid #eee;">
+<span style="font-weight:bold; color:#2c3e8c; font-size:0.85rem; display:flex; align-items:center; gap:4px;"><i data-lucide="clipboard-list" style="width:14px; height:14px;"></i> View:</span>
+<label style="color:#2c3e8c; display:flex; align-items:center; gap:4px; cursor:pointer; font-size:0.85rem; font-weight:bold;"><input checked="" name="listMode" onchange="switchListMode('sent')" style="accent-color:#2c3e8c;" type="radio" value="sent"/> Sent Delivery</label>
+<label style="color:#e67e22; display:flex; align-items:center; gap:4px; cursor:pointer; font-size:0.85rem; font-weight:bold;"><input name="listMode" onchange="switchListMode('scheduled')" style="accent-color:#e67e22;" type="radio" value="scheduled"/> Scheduled Delivery</label>
+</div>
+<div class="export-btns" style="display:flex;gap:6px;">
+<button class="export-btn excel" style="background:#1e7e34;width:32px;height:32px;border-radius:50%;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(30,126,52,0.3);" title="Export Excel"><i data-lucide="file-spreadsheet" style="width:14px;height:14px;"></i></button>
+<button class="export-btn pdf" style="background:#c0392b;width:32px;height:32px;border-radius:50%;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(192,57,43,0.3);" title="Export PDF"><i data-lucide="file-text" style="width:14px;height:14px;"></i></button>
+</div>
+</div>
+<div class="filter-bar">
+<label style="font-weight:bold;color:#2c3e8c;font-size:0.85rem;white-space:nowrap;display:flex; align-items:center; gap: 4px;"><i data-lucide="calendar" style="width: 14px; height: 14px;"></i> Year:</label>
+<select id="year-filter" onchange="switchYear(this.value)" style="padding:7px 10px;border:2px solid #2c3e8c;border-radius:4px;font-size:0.82rem;font-weight:bold;color:#2c3e8c;background:#f0f4ff;cursor:pointer;max-width:90px;">
+<option selected="" value="2026">2026</option>
+<option value="2025">2025</option>
+</select>
+<input placeholder="Enter Business or Customer Name" type="text"/>
+<select><option>Select Date Range</option><option>Last 7 Days</option><option>Last 30 Days</option><option>Last 90 Days</option></select>
+<button class="btn-apply">Apply</button>
+<button class="btn-reset">Reset</button>
+</div>
+<div class="filter-active" id="filter-banner">
+<i data-lucide="alert-triangle" style="width: 16px; height: 16px; color:#e74c3c;"></i> <span><strong>Filtered:</strong> Showing customers who ignored all notices.</span>
+<button onclick="clearIgnoredFilter()">✕ Clear</button>
+</div>
+<div id="panel-email">
+<div class="table-wrap">
+<table id="email-table">
+<thead>
+<tr>
+<th class="sortable" onclick="sortTable('email',0)">Send Date<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('email',1)">Status<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('email',2)">Recipient<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('email',3)">Subject<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('email',4)">Type<span class="sort-icon"></span></th>
+<th>Opened</th><th>Clicked</th>
+<th class="sortable" onclick="sortTable('email',7)">Sent Qty<span class="sort-icon"></span></th>
+<th>Action</th>
+</tr>
+<tr class="filter-row-tr" id="email-filter-row">
+<th><input oninput="applyColFilter('email')" placeholder="Date..." type="text"/></th>
+<th><select onchange="applyColFilter('email')"><option value="">All</option><option>Sent</option><option>Failed</option><option>Pending</option></select></th>
+<th><input oninput="applyColFilter('email')" placeholder="Name/Email..." type="text"/></th>
+<th><input oninput="applyColFilter('email')" placeholder="Subject..." type="text"/></th>
+<th><select onchange="applyColFilter('email')"><option value="">All</option><option>Expiration</option><option>Renewal</option><option>Final</option></select></th>
+<th><select onchange="applyColFilter('email')"><option value="">All</option><option>Yes</option><option>—</option></select></th>
+<th><select onchange="applyColFilter('email')"><option value="">All</option><option>Yes</option><option>—</option></select></th>
+<th><select onchange="applyColFilter('email')"><option value="">All</option><option>1</option><option>2</option><option>3</option></select></th>
+<th></th>
+</tr>
+</thead>
+<tbody id="email-tbody"></tbody>
+</table>
+</div>
+</div>
+<div id="panel-sms" style="display:none;">
+<div class="table-wrap">
+<table id="sms-table">
+<thead>
+<tr>
+<th class="sortable" onclick="sortTable('sms',0)">Send Date<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('sms',1)">Status<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('sms',2)">Recipient<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('sms',3)">Segments<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('sms',4)">Club Cost<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('sms',5)">Sent Qty<span class="sort-icon"></span></th>
+<th class="sortable" onclick="sortTable('sms',6)">Club<span class="sort-icon"></span></th>
+<th>Action</th>
+</tr>
+<tr class="filter-row-tr" id="sms-filter-row">
+<th><input oninput="applyColFilter('sms')" placeholder="Date..." type="text"/></th>
+<th><select onchange="applyColFilter('sms')"><option value="">All</option><option>Delivered</option><option>Failed</option><option>Pending</option><option>Opted Out</option></select></th>
+<th><input oninput="applyColFilter('sms')" placeholder="Name/Phone..." type="text"/></th>
+<th><select onchange="applyColFilter('sms')"><option value="">All</option><option>1</option><option>2</option><option>3</option></select></th>
+<th></th>
+<th><select onchange="applyColFilter('sms')"><option value="">All</option><option>1</option><option>2</option><option>3</option></select></th>
+<th><input oninput="applyColFilter('sms')" placeholder="Club..." type="text"/></th>
+<th></th>
+</tr>
+</thead>
+<tbody id="sms-tbody"></tbody>
+</table>
+</div>
+</div>
+</div> <!-- /#main-panel-history -->
+<div id="main-panel-templates" style="display:none;">
+<div style="display:grid; grid-template-columns:1fr 400px; gap:24px; align-items:start;">
+<!-- Column 1: UNIFIED CARD LAYER -->
+<div style="background:#fff; border:1px solid #ddd; border-radius:8px; display:flex; flex-direction:column; overflow:hidden;">
+<!-- MASTER TABS -->
+<div style="display:flex; border-bottom: 1px solid #ddd; background: #f9faff;">
+<button id="btn-tpl-email" onclick="switchTemplateTab('email')" style="flex:1; padding:16px; font-weight:bold; font-size:0.95rem; background:#fff; color:#2c3e8c; border:none; border-bottom:3px solid #2c3e8c; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"> <i data-lucide="mail"></i> Standard Email Templates</button>
+<button id="btn-tpl-sms" onclick="switchTemplateTab('sms')" style="flex:1; padding:16px; font-weight:bold; font-size:0.95rem; background:#f9faff; color:#888; border:none; border-bottom:3px solid transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"> <i data-lucide="message-square"></i> SMS / Text Templates</button>
+</div>
+<!-- EMAIL TEMPLATES VIEW -->
+<div id="tpl-panel-email">
+<div style="padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee;">
+<div style="font-size:0.85rem; color:#777;">Manage automatically triggered email templates for invoices and renewals.</div>
+<button style="background:#2c3e8c; color:#fff; border:none; border-radius:4px; padding:8px 16px; font-weight:bold; font-size:0.8rem; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 4px rgba(44,62,140,0.2);">
+<i data-lucide="plus" style="width:14px; height:14px;"></i> Create Template
+                   </button>
+</div>
+<div style="padding:16px 20px; background:#fafafa; border-bottom:1px solid #eee; display:flex; gap:16px; align-items:center;">
+<span style="font-weight:bold; color:#555; font-size:0.85rem;"><i data-lucide="filter" style="width:14px; height:14px; position:relative; top:2px;"></i> Filters:</span>
+<select style="width:200px; padding:8px 12px; border:1px solid #ccc; border-radius:4px; color:#555; font-size:0.85rem; outline:none;"><option>Select Template Type</option></select>
+<select style="width:200px; padding:8px 12px; border:1px solid #ccc; border-radius:4px; color:#555; font-size:0.85rem; outline:none;"><option>All Templates</option></select>
+<input placeholder="Search Title..." style="flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:4px; font-size:0.85rem; outline:none;" type="text"/>
+</div>
+<div class="table-wrap" style="border:none; border-top:1px solid #ddd; overflow-x: auto;">
+<table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+<thead style="background:#eef2ff;">
+<tr>
+<th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">TYPE</th>
+<th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">TITLE</th>
+<th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">SUBJECT</th>
+<th style="padding:12px 20px; text-align:center; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em; width:100px;">ACTION</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom:1px solid #eee;">
+<td style="padding:16px;color:#555;">Renewal Reminder</td>
+<td style="padding:16px;color:#555;">2024 Renewal Notification</td>
+<td style="padding:16px;color:#555;">2024 Flag Subscription Renewal Notification</td>
+<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;margin-right:12px;"></i> <i data-lucide="trash-2" style="width:18px;height:18px;color:#e74c3c;cursor:pointer;"></i></td>
+</tr>
+<tr style="border-bottom:1px solid #eee;">
+<td style="padding:16px;color:#555;">TEST Template</td>
+<td style="padding:16px;color:#555;">2025 renewals</td>
+<td style="padding:16px;color:#555;">Don't miss on holiday flags folks</td>
+<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;margin-right:12px;"></i> <i data-lucide="trash-2" style="width:18px;height:18px;color:#e74c3c;cursor:pointer;"></i></td>
+</tr>
+<tr style="border-bottom:1px solid #eee;">
+<td style="padding:16px;color:#555;">Auto-Invoice</td>
+<td style="padding:16px;color:#555;">Auto-Invoice</td>
+<td style="padding:16px;color:#555;">Auto Invoice Renewal Reminder</td>
+<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;"></i></td>
+</tr>
+<tr>
+<td style="padding:16px;color:#555;">Auto-Pay</td>
+<td style="padding:16px;color:#555;">Automatic Subscription Renewal Notification</td>
+<td style="padding:16px;color:#555;">Automatic Subscription Renewal Notification</td>
+<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;"></i></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- SMS/TEXT TEMPLATES VIEW -->
+<div id="tpl-panel-sms" style="display:none;">
+<div style="padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee;">
+<div style="font-size:0.85rem; color:#777;">Manage automatically triggered SMS text templates.</div>
+<button style="background:#2c3e8c; color:#fff; border:none; border-radius:4px; padding:8px 16px; font-weight:bold; font-size:0.8rem; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 4px rgba(44,62,140,0.2);">
+<i data-lucide="plus" style="width:14px; height:14px;"></i> Create Template
+                   </button>
+</div>
+<div style="padding:16px 20px; background:#fafafa; border-bottom:1px solid #eee; display:flex; gap:16px; align-items:center;">
+<span style="font-weight:bold; color:#555; font-size:0.85rem;"><i data-lucide="filter" style="width:14px; height:14px; position:relative; top:2px;"></i> Filters:</span>
+<select style="width:200px; padding:8px 12px; border:1px solid #ccc; border-radius:4px; color:#555; font-size:0.85rem; outline:none;"><option>Select Template Type</option></select>
+<select style="width:200px; padding:8px 12px; border:1px solid #ccc; border-radius:4px; color:#555; font-size:0.85rem; outline:none;"><option>All Templates</option></select>
+<input placeholder="Search Title..." style="flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:4px; font-size:0.85rem; outline:none;" type="text"/>
+</div>
+<div class="table-wrap" style="border:none; border-top:1px solid #ddd; overflow-x: auto;">
+<table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+<thead style="background:#eef2ff;">
+<tr>
+<th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">TYPE</th>
+<th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">TITLE</th>
+<th style="padding:12px 20px; text-align:left; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em;">DESCRIPTION</th>
+<th style="padding:12px 20px; text-align:center; color:#3f51b5; font-weight:bold; font-size:0.8rem; letter-spacing:0.04em; width:100px;">ACTION</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom:1px solid #eee;">
+<td style="padding:16px;color:#555;">Demo testing</td>
+<td style="padding:16px;color:#555;">Demo test create</td>
+<td style="padding:16px;color:#555;">this message is creating for the demo test</td>
+<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;margin-right:12px;"></i> <i data-lucide="trash-2" style="width:18px;height:18px;color:#e74c3c;cursor:pointer;"></i></td>
+</tr>
+<tr style="border-bottom:1px solid #eee;">
+<td style="padding:16px;color:#555;">Auto-Invoicing Text – 1st Text</td>
+<td style="padding:16px;color:#555;">Auto-Invoicing Text – 1st Text</td>
+<td style="padding:16px;color:#555;">Default SMS/TEXT Auto-Invoicing Template</td>
+<td style="padding:16px;text-align:center;"><i data-lucide="edit" style="width:18px;height:18px;color:#3f51b5;cursor:pointer;"></i></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Column 2: Extracted Previews -->
+<div id="right-col-preview">
+<div id="preview-email-card" style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+<h3 style="margin:0 0 10px 0;font-size:0.95rem;color:#3f51b5;border-bottom:2px solid #eef2ff;padding-bottom:6px;display:flex;align-items:center;gap:6px;"><i data-lucide="mail" style="width:16px;height:16px;"></i> Default Email Preview</h3>
+<div style="border:1px solid #eee;border-radius:4px;overflow:hidden;background:#f9f9f9;height:580px;">
+<iframe srcdoc='&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+&lt;style type="text/css"&gt;body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } body { margin: 0 !important; padding: 0 !important; width: 100% !important; background: transparent; } table { border-collapse: collapse !important; } img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; } a { text-decoration: none; } .pay-online-btn:hover { background-color: #3B38B4 !important; } .pay-online-btn:hover a { color: #ffffff !important; } .action-tile:hover { background-color: #EEEEFF !important; } @media screen and (max-width: 600px) { .wrapper { width: 100% !important; padding: 10px !important; } .content-table { width: 100% !important; } .mobile-center { text-align: center !important; } .statement-table { width: 100% !important; } .action-column { display: table-cell !important; width: 50% !important; text-align: center !important; padding: 0 5px !important; } }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body style="background:#f0f2f5; font-family:Arial,sans-serif;"&gt;
+&lt;table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: transparent;" width="100%"&gt;
+	&lt;tbody&gt;
+		&lt;tr&gt;
+			&lt;td align="center" style="padding: 10px 5px;"&gt;
+			&lt;table border="0" cellpadding="0" cellspacing="0" class="wrapper" role="presentation" style="background-color: #ffffff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);" width="100%"&gt;
+				&lt;tbody&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 20px 20px 15px 20px;"&gt;
+						&lt;p style="margin: 0; font-size: 14px; color: #555555; line-height: 1.6;"&gt;&lt;img alt="USA Flag" height="14" src="https://app.helpingwithflags.com/images/us-flag.png" style="display: inline; vertical-align: middle; margin-right: 6px;" width="22" /&gt;Thank you for your past participation in our &lt;strong&gt;Holiday Flag Program&lt;/strong&gt;. Your donation helps local community charities.&lt;/p&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 10px 20px 5px 20px;"&gt;
+						&lt;h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #3B38B4; font-style: italic;"&gt;Payment Reminder&lt;/h2&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 5px 20px 20px 20px;"&gt;
+						&lt;p style="margin: 0; font-size: 13px; color: #333333;"&gt;Your annual holiday flag subscription is now due&lt;/p&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 0 20px 15px 20px;"&gt;
+						&lt;p style="margin: 0; font-size: 13px; color: #333333; line-height: 1.6;"&gt;&lt;strong&gt;To:&lt;/strong&gt; John Doe&lt;br /&gt;
+						&lt;strong&gt;Address:&lt;/strong&gt; 123 Main St, Anytown&lt;/p&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 0 20px 20px 20px;"&gt;
+						&lt;table border="0" cellpadding="0" cellspacing="0" class="statement-table" role="presentation" style="border: 1px solid #dddddd;" width="100%"&gt;
+							&lt;tbody&gt;
+								&lt;tr&gt;
+									&lt;td style="background-color: #d9d9d9; color: #333333; padding: 10px 12px; font-size: 13px; font-weight: bold; width: 60%;"&gt;Statement Period&lt;/td&gt;
+									&lt;td style="background-color: #d9d9d9; color: #333333; padding: 10px 12px; font-size: 13px; font-weight: bold; text-align: center;"&gt;Current Balance&lt;/td&gt;
+								&lt;/tr&gt;
+								&lt;tr&gt;
+									&lt;td style="padding: 10px 12px; font-size: 13px; color: #333333;"&gt;Jan - Dec 2026&lt;/td&gt;
+									&lt;td style="padding: 10px 12px; font-size: 13px; color: #333333; text-align: center; font-weight: bold;"&gt;$50.00&lt;/td&gt;
+								&lt;/tr&gt;
+							&lt;/tbody&gt;
+						&lt;/table&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr&gt;
+						&lt;td style="padding: 10px 20px 10px 20px;"&gt;
+						&lt;table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"&gt;
+							&lt;tbody&gt;
+								&lt;tr&gt;
+									&lt;td class="pay-online-btn" style="background-color: #EEEEFF; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"&gt;&lt;a class="button-link" href="#" style="display: inline-block; padding: 10px 30px; font-size: 14px; color: #3B38B4; text-decoration: none; font-weight: bold;" target="_blank"&gt;Pay Online &lt;/a&gt;&lt;/td&gt;
+								&lt;/tr&gt;
+							&lt;/tbody&gt;
+						&lt;/table&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+				&lt;/tbody&gt;
+			&lt;/table&gt;
+			&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;' style="width:100%;height:580px;border:none;"></iframe>
+</div>
+</div>
+<div id="preview-sms-card" style="display:none;background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+<h3 style="margin:0 0 10px 0;font-size:0.95rem;color:#3f51b5;border-bottom:2px solid #eef2ff;padding-bottom:6px;display:flex;align-items:center;gap:6px;"><i data-lucide="message-square" style="width:16px;height:16px;"></i> Default SMS/Text Preview</h3>
+<div style="background:#f2f2f7;padding:24px;border-radius:12px;display:flex;justify-content:center;box-shadow:inset 0 2px 4px rgba(0,0,0,0.05);">
+<!-- CSS iMessage Mockup -->
+<div style="max-width:380px;background:#34c759;border-radius:18px 18px 4px 18px;padding:14px 18px;color:#fff;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:1.05rem;line-height:1.4;box-shadow:0 1px 2px rgba(0,0,0,0.1);position:relative;">
+             John Doe Your Holiday Flag Program invoice is ready. Pay securely here: <a href="#" style="color:#fff;text-decoration:underline;word-break:break-all;">https://pay.helpingwithflags.com/inv123</a>
+<!-- Tail -->
+<svg fill="none" style="position:absolute;bottom:0;right:-8px;width:16px;height:14px;" viewbox="0 0 16 14" xmlns="http://www.w3.org/2000/svg"><path d="M0 14C3.86599 14 7 10.866 7 7V0H16C16 7.73199 9.73199 14 2 14H0Z" fill="#34c759"></path></svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div> <!-- closes main-left-col -->
+ <!-- /.page-body -->
+<!-- Config Modal -->
+<div class="modal-overlay" id="config-modal">
+<div class="modal-box" style="width:640px;max-width:95vw;max-height:90vh;overflow-y:auto;">
+<div class="modal-header"><h3 style="display:flex;align-items:center;gap:6px;"><i data-lucide="settings" style="width: 18px; height: 18px;"></i> Auto-Invoicing Configuration</h3><button class="modal-close" onclick="closeConfig()"><i data-lucide="x" style="width: 18px; height: 18px;"></i></button></div>
+<div style="display:flex;border-bottom:2px solid #eee;background:#1a2560;">
+<button id="cfg-tab-email" onclick="switchCfgTab('email')" style="flex:1;padding:11px;border:none;border-bottom:3px solid #fff;background:#fff;color:#2c3e8c;font-weight:bold;cursor:pointer;"><i data-lucide="mail" style="width: 16px; height: 16px; margin-right:4px; top: 3px; position:relative;"></i> EMAIL</button>
+<button id="cfg-tab-sms" onclick="switchCfgTab('sms')" style="flex:1;padding:11px;border:none;border-bottom:3px solid transparent;background:#888;color:#fff;font-weight:bold;cursor:pointer;"><i data-lucide="message-square" style="width: 16px; height: 16px; margin-right:4px; top: 3px; position:relative;"></i> SMS/TEXT</button>
+</div>
+<div id="cfg-email" style="padding:20px;">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:14px;">
+<div><div style="font-weight:bold;color:#2c3e8c;font-size:1rem;">EMAIL – Set Date to Send Invoice to Customers</div><div style="font-size:0.8rem;color:#666;margin-top:3px;">Setup Email System to send Invoice to each customer when the invoice is created automatically. This includes setting up a schedule so the system can send follow up reminders.</div></div>
+<div class="toggle-btns" style="flex-shrink:0;border-radius:4px;overflow:hidden;">
+<button id="cfg-email-enabled" onclick="setScheduleStatus('email','enabled')" style="padding:6px 12px;background:#27ae60;color:#fff;border:none;cursor:pointer;font-weight:bold;font-size:0.78rem;"><div style="display:flex;align-items:center;gap:4px;"><i data-lucide="play" style="width: 12px; height: 12px;"></i> Enabled</div></button>
+<button id="cfg-email-paused" onclick="setScheduleStatus('email','paused')" style="padding:6px 12px;background:#888;color:#fff;border:none;cursor:pointer;font-weight:bold;font-size:0.78rem;"><div style="display:flex;align-items:center;gap:4px;"><i data-lucide="pause" style="width: 12px; height: 12px;"></i> Paused</div></button>
+</div>
+</div>
+<div id="cfg-email-schedule" style="border-top:1px solid #eee;padding-top:14px;">
+<div style="display:flex;gap:20px;margin-bottom:14px;">
+<label style="display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;"><input name="email-date-type" type="radio" value="custom"/> Custom Date</label>
+<label style="display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;font-weight:bold;"><input checked="" name="email-date-type" type="radio" value="invoice"/> Invoice Creation Date <span style="color:#888;font-weight:normal;">(2026-11-12)</span></label>
+</div>
+<div style="border-top:1px solid #eee;padding-top:14px;">
+<div style="display:flex;gap:24px;margin-bottom:12px;">
+<label style="display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;font-weight:bold;"><input checked="" name="email-sched-type" type="radio" value="recurring"/> Recurring Reminder Schedule</label>
+<label style="display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;"><input name="email-sched-type" type="radio" value="granular"/> Granular Reminder Schedule</label>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+<div><div style="font-size:0.78rem;color:#555;margin-bottom:4px;">Send Reminder Invoice every:</div><div style="display:flex;"><input style="width:100%;padding:7px;border:1px solid #ccc;border-right:none;border-radius:4px 0 0 4px;" type="number" value="7"/><span style="background:#eee;border:1px solid #ccc;padding:7px 10px;border-radius:0 4px 4px 0;">days</span></div></div>
+<div><div style="font-size:0.78rem;color:#555;margin-bottom:4px;">Days Until:</div><input style="width:100%;padding:7px;border:1px solid #ccc;border-radius:4px;" type="date" value="2026-06-17"/></div>
+<div><div style="font-size:0.78rem;color:#555;margin-bottom:4px;">Email Template: <a href="https://hwfv2.projectdemo.us/campaign" style="color:#2c3e8c;font-size:0.72rem;text-decoration:underline;" target="_blank">Go to Templates →</a></div><select style="width:100%;padding:7px;border:1px solid #ccc;border-radius:4px;"><option>-- Select Template --</option><option>Expiration Notice</option><option>Renewal Reminder</option><option>Final Notice</option></select></div>
+</div>
+</div>
+</div>
+<div style="background:#e8f4fd;border:1px solid #b3d9f5;border-radius:6px;padding:10px 14px;font-size:0.8rem;color:#1a6e9e;margin-top:14px;"><div style="display:flex;align-items:center;gap:6px;"><i data-lucide="info" style="width: 14px; height: 14px; flex-shrink: 0;"></i> <span>The Administrator will be notified by Email 24 hours prior to the start of the Auto-Invoicing process.</span></div>
+</div>
+<div id="cfg-sms" style="padding:20px;display:none;">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:14px;">
+<div><div style="font-weight:bold;color:#2c3e8c;font-size:1rem;">SMS/TEXT – Set Date to Send Invoice to Customers</div><div style="font-size:0.8rem;color:#666;margin-top:3px;">Setup SMS System to send Invoice to each customer when the invoice is created automatically. This includes setting up a schedule so the system can send follow up reminders.</div></div>
+<div class="toggle-btns" style="flex-shrink:0;border-radius:4px;overflow:hidden;">
+<button id="cfg-sms-enabled" onclick="setScheduleStatus('sms','enabled')" style="padding:6px 12px;background:#27ae60;color:#fff;border:none;cursor:pointer;font-weight:bold;font-size:0.78rem;"><div style="display:flex;align-items:center;gap:4px;"><i data-lucide="play" style="width: 12px; height: 12px;"></i> Enabled</div></button>
+<button id="cfg-sms-paused" onclick="setScheduleStatus('sms','paused')" style="padding:6px 12px;background:#888;color:#fff;border:none;cursor:pointer;font-weight:bold;font-size:0.78rem;"><div style="display:flex;align-items:center;gap:4px;"><i data-lucide="pause" style="width: 12px; height: 12px;"></i> Paused</div></button>
+</div>
+</div>
+<div id="cfg-sms-schedule" style="border-top:1px solid #eee;padding-top:14px;">
+<div style="display:flex;gap:20px;margin-bottom:14px;">
+<label style="display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;"><input name="sms-date-type" type="radio" value="custom"/> Custom Date</label>
+<label style="display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;font-weight:bold;"><input checked="" name="sms-date-type" type="radio" value="invoice"/> Invoice Creation Date <span style="color:#888;font-weight:normal;">(2026-11-12)</span></label>
+</div>
+<div style="border-top:1px solid #eee;padding-top:14px;">
+<div style="display:flex;gap:24px;margin-bottom:12px;">
+<label style="display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;font-weight:bold;"><input checked="" name="sms-sched-type" type="radio" value="recurring"/> Recurring Reminder Schedule</label>
+<label style="display:flex;align-items:center;gap:6px;font-size:0.88rem;cursor:pointer;"><input name="sms-sched-type" type="radio" value="granular"/> Granular Reminder Schedule</label>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+<div><div style="font-size:0.78rem;color:#555;margin-bottom:4px;">Send Reminder SMS every:</div><div style="display:flex;"><input style="width:100%;padding:7px;border:1px solid #ccc;border-right:none;border-radius:4px 0 0 4px;" type="number" value="7"/><span style="background:#eee;border:1px solid #ccc;padding:7px 10px;border-radius:0 4px 4px 0;">days</span></div></div>
+<div><div style="font-size:0.78rem;color:#555;margin-bottom:4px;">Days Until:</div><input style="width:100%;padding:7px;border:1px solid #ccc;border-radius:4px;" type="date" value="2026-06-17"/></div>
+<div><div style="font-size:0.78rem;color:#555;margin-bottom:4px;">SMS Template: <a href="https://hwfv2.projectdemo.us/campaign" style="color:#2c3e8c;font-size:0.72rem;text-decoration:underline;" target="_blank">Go to Templates →</a></div><select style="width:100%;padding:7px;border:1px solid #ccc;border-radius:4px;"><option>-- Select Template --</option><option>Expiration Notice</option><option>Renewal Reminder</option><option>Final Notice</option></select></div>
+</div>
+</div>
+</div>
+<div style="background:#e8f4fd;border:1px solid #b3d9f5;border-radius:6px;padding:10px 14px;font-size:0.8rem;color:#1a6e9e;margin-top:14px;"><div style="display:flex;align-items:center;gap:6px;"><i data-lucide="info" style="width: 14px; height: 14px; flex-shrink: 0;"></i> <span>The Administrator will be notified by SMS 24 hours prior to the start of the Auto-Invoicing process.</span></div>
+</div>
+<div class="modal-footer">
+<button class="btn-secondary" onclick="closeConfig()">Cancel</button>
+<button class="btn-primary" onclick="closeConfig()">Save Settings</button>
+</div>
+</div>
+</div>
+<!-- Email Preview Modal -->
+<div class="modal-overlay" id="email-preview-modal">
+<div class="modal-box" style="width:660px;max-width:95vw;max-height:90vh;overflow-y:auto;">
+<div class="modal-header" style="position:sticky;top:0;z-index:1;">
+<div><h3 style="display:flex;align-items:center;gap:6px;"><i data-lucide="mail" style="width: 18px; height: 18px;"></i> Email Preview</h3><div style="font-size:0.75rem;opacity:0.8;margin-top:2px;">To: <span id="preview-recipient"></span>  |  Notice: <span id="preview-notice"></span>  |  Sent: <span id="preview-date"></span></div></div>
+<button class="modal-close" onclick="closeEmailPreview()"><i data-lucide="x" style="width: 18px; height: 18px;"></i></button>
+</div>
+<div style="padding:20px;background:#f5f5f5;">
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 2px 15px rgba(0,0,0,0.15);width:100%;max-width:540px;">
+<tr><td style="padding:25px 40px 20px;"><p style="margin:0;font-size:15px;color:#555;line-height:1.6;">🇺🇸 Thank you for your past participation in our <strong>Holiday Flag Program</strong>. Your donation helps local community charities.</p></td></tr>
+<tr><td style="padding:10px 40px 5px;"><h2 style="margin:0;font-size:22px;font-weight:bold;color:#3B38B4;font-style:italic;">Payment Reminder</h2></td></tr>
+<tr><td style="padding:5px 40px 20px;"><p style="margin:0;font-size:14px;color:#333;">Your annual holiday flag subscription is now due</p></td></tr>
+<tr><td style="padding:0 40px 15px;"><p style="margin:0;font-size:14px;color:#333;line-height:1.6;"><strong>To:</strong> <span id="prev-name">John Smith</span><br/><strong>Address:</strong> 1234 Main St, Dallas, TX 75201</p></td></tr>
+<tr><td style="padding:0 40px 20px;">
+<table border="0" cellpadding="0" cellspacing="0" style="border:1px solid #ddd;width:100%;">
+<tr><td style="background:#d9d9d9;padding:12px 15px;font-size:14px;font-weight:bold;width:60%;">Statement Period</td><td style="background:#d9d9d9;padding:12px 15px;font-size:14px;font-weight:bold;text-align:center;">Current Balance</td></tr>
+<tr><td style="padding:12px 15px;font-size:14px;color:#333;">Jan 1, 2026 – Dec 31, 2026</td><td style="padding:12px 15px;font-size:14px;color:#333;text-align:center;font-weight:bold;">$75.00</td></tr>
+</table>
+</td></tr>
+<tr><td style="padding:10px 40px;text-align:center;"><table align="center" border="0" cellpadding="0" cellspacing="0"><tr><td style="background:#EEEEFF;border-radius:10%;box-shadow:0 4px 8px rgba(0,0,0,0.2);"><a href="#" style="display:inline-block;padding:12px 50px;font-size:16px;color:#3B38B4;font-weight:bold;">Pay Online</a></td></tr></table></td></tr>
+<tr><td style="padding:5px 40px 15px;text-align:center;"><p style="margin:0;font-size:13px;color:#666;"><a href="#" style="color:#3B38B4;text-decoration:underline;">Pay by Check</a> (less secure and slower)</p></td></tr>
+<tr><td style="padding:5px 40px 20px;text-align:center;"><p style="margin:0;font-size:14px;color:#333;font-style:italic;">For details, see attached Invoice</p></td></tr>
+<tr><td style="padding:10px 40px 25px;border-top:1px solid #ddd;text-align:center;">
+<table align="center" border="0" cellpadding="0" cellspacing="0"><tr>
+<td style="padding:0 10px;vertical-align:top;"><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-radius:10%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.08);"><tr><td style="padding:10px 15px 6px;text-align:center;"><div style="width:28px;height:28px;background:#3B38B4;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#fff;"><i data-lucide="user" style="width: 16px; height: 16px;"></i></div></td></tr><tr><td style="padding:0 10px 10px;text-align:center;"><p style="margin:0;font-size:11px;color:#555;">Sign In</p></td></tr></table></td>
+<td style="padding:0 10px;vertical-align:top;"><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-radius:10%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.08);"><tr><td style="padding:10px 15px 6px;text-align:center;"><div style="width:28px;height:28px;background:#e74c3c;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#fff;"><i data-lucide="x-circle" style="width: 16px; height: 16px;"></i></div></td></tr><tr><td style="padding:0 10px 10px;text-align:center;"><p style="margin:0;font-size:11px;color:#555;">Cancel</p></td></tr></table></td>
+</tr></table>
+</td></tr>
+</table>
+</td></tr></table>
+</div>
+<div class="modal-footer">
+<button class="btn-secondary" onclick="closeEmailPreview()">Close</button>
+<button class="btn-primary" style="display:flex;align-items:center;gap:6px;"><i data-lucide="rotate-cw" style="width: 14px; height: 14px;"></i> Resend</button>
+</div>
+</div>
+</div>
+<!-- SMS Preview Modal -->
+<div class="modal-overlay" id="sms-preview-modal">
+<div class="modal-box" style="width:380px;max-width:95vw;">
+<div class="modal-header">
+<div><h3 style="display:flex;align-items:center;gap:6px;"><i data-lucide="message-square" style="width: 18px; height: 18px;"></i> SMS Preview</h3><div style="font-size:0.75rem;opacity:0.8;margin-top:2px;">To: <span id="sms-preview-recipient"></span>  |  Notice: <span id="sms-preview-notice"></span>  |  Sent: <span id="sms-preview-date"></span></div></div>
+<button class="modal-close" onclick="closeSmsPreview()"><i data-lucide="x" style="width: 18px; height: 18px;"></i></button>
+</div>
+<div style="padding:20px;background:#f0f3f8;">
+<div style="background:#1c1c1e;border-radius:36px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,0.35);max-width:300px;margin:0 auto;">
+<div style="display:flex;justify-content:center;margin-bottom:10px;"><div style="width:60px;height:6px;background:#333;border-radius:3px;"></div></div>
+<div style="display:flex;justify-content:space-between;padding:0 8px 8px;font-size:0.65rem;color:#aaa;"><span>9:41 AM</span><span style="display:flex;gap:4px;"><i data-lucide="signal" style="width: 12px; height: 12px;"></i><i data-lucide="battery-medium" style="width: 12px; height: 12px;"></i></span></div>
+<div style="background:#2c2c2e;border-radius:12px 12px 0 0;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:2px;">
+<div style="width:32px;height:32px;background:#3B38B4;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.8rem;font-weight:bold;">HF</div>
+<div><div style="color:#fff;font-size:0.8rem;font-weight:bold;">HelpingWithFlags</div><div style="color:#aaa;font-size:0.68rem;">text message</div></div>
+</div>
+<div style="background:#2c2c2e;border-radius:0 0 12px 12px;padding:14px;min-height:180px;">
+<div id="sms-preview-timestamp" style="text-align:center;color:#888;font-size:0.62rem;margin-bottom:12px;">Today, 9:41 AM</div>
+<div style="display:flex;justify-content:flex-start;margin-bottom:12px;">
+<div id="sms-bubble-text" style="background:#3a3a3c;border-radius:18px 18px 18px 4px;padding:12px 14px;max-width:85%;color:#fff;font-size:0.78rem;line-height:1.55;white-space:pre-line;">Loading...</div>
+</div>
+<div id="sms-segment-info" style="text-align:right;color:#666;font-size:0.62rem;">1 segment · $0.0490</div>
+</div>
+<div style="background:#2c2c2e;border-radius:20px;padding:8px 14px;margin-top:10px;display:flex;align-items:center;gap:8px;">
+<div style="flex:1;background:#3a3a3c;border-radius:14px;padding:6px 12px;color:#666;font-size:0.72rem;">iMessage</div>
+<div style="color:#3B38B4;"><i data-lucide="arrow-up-circle" style="width: 18px; height: 18px;"></i></div>
+</div>
+</div>
+</div>
+<div style="padding:14px 20px;background:#f9faff;border-top:1px solid #eee;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
+<div><div style="font-size:0.68rem;color:#888;">Segments</div><div id="sms-meta-segments" style="font-weight:bold;color:#2c3e8c;">1</div></div>
+<div><div style="font-size:0.68rem;color:#888;">Club Cost</div><div id="sms-meta-cost" style="font-weight:bold;color:#27ae60;">$0.0490</div></div>
+<div><div style="font-size:0.68rem;color:#888;">Status</div><div id="sms-meta-status" style="font-weight:bold;font-size:0.85rem;">Delivered</div></div>
+</div>
+<div class="modal-footer">
+<button class="btn-secondary" onclick="closeSmsPreview()">Close</button>
+<button class="btn-green" style="display:flex;align-items:center;gap:6px;"><i data-lucide="rotate-cw" style="width: 14px; height: 14px;"></i> Resend</button>
+</div>
+</div>
+</div>
+<script>
+function switchMainTab(tabId) {
+  document.getElementById('main-panel-dashboard').style.display = tabId==='dashboard'?'block':'none';
+  document.getElementById('main-panel-history').style.display   = tabId==='history'?'block':'none';
+  document.getElementById('main-panel-templates').style.display = tabId==='templates'?'block':'none';
+  
+  document.getElementById('mtab-dashboard').className = 'main-tab ' + (tabId==='dashboard'?'active':'');
+  document.getElementById('mtab-history').className   = 'main-tab ' + (tabId==='history'?'active':'');
+  document.getElementById('mtab-templates').className = 'main-tab ' + (tabId==='templates'?'active':'');
+  
+  // Dynamic Layout logic
+  var metrics = document.getElementById('right-col-metrics');
+  var preview = document.getElementById('right-col-preview');
+  var mainCol = document.getElementById('main-right-col');
+  if(metrics) metrics.style.display = tabId==='dashboard'?'block':'none';
+  if(preview) preview.style.display = tabId==='templates'?'block':'none';
+  if(mainCol) mainCol.style.display = tabId==='history'?'none':'block';
+  
+  var pageBody = document.querySelector('.page-body');
+  // gridTemplateColumns logic replaced by flexbox
+
+  lucide.createIcons();
+}
+
+function switchTemplateTab(type) {
+    // 1. Toggle the main table list panel
+    var tplEmail = document.getElementById('tpl-panel-email');
+    var tplSms = document.getElementById('tpl-panel-sms');
+    if (tplEmail) tplEmail.style.display = type==='email' ? 'block' : 'none';
+    if (tplSms) tplSms.style.display = type==='sms' ? 'block' : 'none';
+    
+    // 2. Toggle the right-column preview cards dynamically
+    var previewEmail = document.getElementById('preview-email-card');
+    var previewSms = document.getElementById('preview-sms-card');
+    if (previewEmail) previewEmail.style.display = type==='email' ? 'block' : 'none';
+    if (previewSms) previewSms.style.display = type==='sms' ? 'block' : 'none';
+    
+    // 3. Update active tab button styles manually (overriding inline CSS)
+    var btnEmail = document.getElementById('btn-tpl-email');
+    var btnSms = document.getElementById('btn-tpl-sms');
+    
+    if (btnEmail && btnSms) {
+        if (type === 'email') {
+            btnEmail.style.background = '#fff';
+            btnEmail.style.color = '#2c3e8c';
+            btnEmail.style.borderBottom = '3px solid #2c3e8c';
+            
+            btnSms.style.background = '#f9faff';
+            btnSms.style.color = '#888';
+            btnSms.style.borderBottom = '3px solid transparent';
+        } else {
+            btnSms.style.background = '#fff';
+            btnSms.style.color = '#2c3e8c';
+            btnSms.style.borderBottom = '3px solid #2c3e8c';
+            
+            btnEmail.style.background = '#f9faff';
+            btnEmail.style.color = '#888';
+            btnEmail.style.borderBottom = '3px solid transparent';
+        }
+    }
+    lucide.createIcons();
+  }
+const RATE = 0.049;
+
+// ── State ────────────────────────────────────────────────────────
+let curYear = '2026', curSub = 'email', curMode = 'sent', isFiltered = false;
+const sortState   = { email:{ col:-1, dir:1 }, sms:{ col:-1, dir:1 } };
+window._eRows = []; window._sRows = [];
+
+// ── Master toggle ────────────────────────────────────────────────
+let autoBillingState = 'off';
+let smsBillingState = 'off';
+const scheduleStatus = { email:'paused', sms:'paused' };
+
+function updateConfigureBtn(){
+  document.getElementById('configure-btn-wrap').style.display = (autoBillingState === 'on' || smsBillingState === 'on') ? 'block' : 'none';
+}
+function setAutoBilling(state){
+  if(state === 'on' && autoBillingState !== 'on') {
+    let m = document.getElementById('auto-bill-modal');
+    if(!m) {
+      const div = document.createElement('div');
+      div.id = 'auto-bill-modal';
+      div.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:999999999; display:flex; align-items:center; justify-content:center;';
+      div.innerHTML = `
+        <div style="width:400px;max-width:95vw;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,0.3);overflow:hidden;font-family:Arial,sans-serif;">
+          <div style="background:#2c3e8c;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <h3 style="margin:0;font-size:1.1rem;display:flex;align-items:center;gap:6px;">Enable Auto-Billing</h3>
+            <button style="background:transparent;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;" onclick="document.getElementById('auto-bill-modal').style.display='none'">✕</button>
+          </div>
+          <div style="padding:20px;">
+            <div style="font-weight:bold;color:#2c3e8c;font-size:1.1rem;margin-bottom:12px;">Approve Feature Addition</div>
+            <p style="font-size:0.9rem;color:#444;line-height:1.5;margin:0;">Your monthly invoice will be updated with this additional charge of <strong>$5.00/mo</strong>. Cost will be prorated if turned on during the month.</p>
+          </div>
+          <div style="background:#f0f3f8;padding:12px 20px;display:flex;justify-content:flex-end;gap:10px;">
+            <button style="padding:8px 16px;background:#ddd;border:none;border-radius:6px;cursor:pointer;font-weight:bold;color:#555;" onclick="document.getElementById('auto-bill-modal').style.display='none'">Cancel</button>
+            <button style="padding:8px 16px;background:#27ae60;border:none;border-radius:6px;cursor:pointer;font-weight:bold;color:#fff;" onclick="applyAutoBilling('on')">Accept &amp; Enable</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(div);
+    } else {
+      m.style.display = 'flex';
+    }
+    return;
+  }
+  applyAutoBilling(state);
+}
+
+function applyAutoBilling(state){
+  autoBillingState = state;
+  document.getElementById('ab-off').style.background = state==='off' ? '#e74c3c' : '#555';
+  document.getElementById('ab-on').style.background  = state==='on'  ? '#27ae60' : '#555';
+  document.getElementById('ab-sub-label').textContent = state==='on' ? 'Active - automated billing emails enabled.' : 'Automatic email notices for collections.';
+  updateConfigureBtn();
+  document.getElementById('auto-bill-modal').style.display='none';
+}
+
+function setSmsBilling(state){
+  if(state === 'on' && smsBillingState !== 'on') {
+    let m = document.getElementById('sms-bill-modal');
+    if(!m) {
+      const div = document.createElement('div');
+      div.id = 'sms-bill-modal';
+      div.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:999999999; display:flex; align-items:center; justify-content:center;';
+      div.innerHTML = `
+        <div style="width:440px;max-width:95vw;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,0.3);overflow:hidden;font-family:Arial,sans-serif;">
+          <div style="background:#2c3e8c;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <h3 style="margin:0;font-size:1.1rem;display:flex;align-items:center;gap:6px;">Enable SMS/Text</h3>
+            <button style="background:transparent;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;" onclick="document.getElementById('sms-bill-modal').style.display='none'">✕</button>
+          </div>
+          <div style="padding:20px;">
+            <div style="font-weight:bold;color:#2c3e8c;font-size:1.1rem;margin-bottom:12px;">Approve Feature Addition</div>
+            <p style="font-size:0.9rem;color:#444;line-height:1.5;margin-bottom:14px;">You are enabling the Premium SMS/Text feature. Standard text messages are billed per <strong>message block</strong> at a rate of <strong>$0.05 (5 cents)</strong> each.</p>
+            <div style="background:#f9faff;border-left:3px solid #2c3e8c;padding:10px 14px;border-radius:4px;font-size:0.8rem;color:#555;line-height:1.4;">
+              <strong>What is a Message Block?</strong><br>
+              A standard telecom message block consists of 160 characters. Longer messages or messages containing special characters (like emojis) are automatically split and billed as multiple blocks.<br><br>
+              <strong style="color:#2c3e8c;">Note:</strong> Our default Auto-Invoice SMS message is less than 160 characters.
+            </div>
+          </div>
+          <div style="background:#f0f3f8;padding:12px 20px;display:flex;justify-content:flex-end;gap:10px;">
+            <button style="padding:8px 16px;background:#ddd;border:none;border-radius:6px;cursor:pointer;font-weight:bold;color:#555;" onclick="document.getElementById('sms-bill-modal').style.display='none'">Cancel</button>
+            <button style="padding:8px 16px;background:#27ae60;border:none;border-radius:6px;cursor:pointer;font-weight:bold;color:#fff;" onclick="applySmsBilling('on')">Accept &amp; Enable</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(div);
+    } else {
+      m.style.display = 'flex';
+    }
+    return;
+  }
+  applySmsBilling(state);
+}
+
+function applySmsBilling(state){
+  smsBillingState = state;
+  document.getElementById('sms-off').style.background = state==='off' ? '#e74c3c' : '#555';
+  document.getElementById('sms-on').style.background  = state==='on'  ? '#27ae60' : '#555';
+  document.getElementById('sms-sub-label').textContent = state==='on' ? 'Active - targeted SMS enabled.' : 'Targeted SMS messaging to increase recovery.';
+  updateConfigureBtn();
+  document.getElementById('sms-bill-modal').style.display='none';
+}
+
+// ── Schedule Enabled/Paused ───────────────────────────────────────
+function setScheduleStatus(type, status){
+  scheduleStatus[type] = status;
+  const eBtn = document.getElementById('cfg-'+type+'-enabled');
+  const pBtn = document.getElementById('cfg-'+type+'-paused');
+  const sched = document.getElementById('cfg-'+type+'-schedule');
+  eBtn.style.background = status==='enabled' ? '#27ae60' : '#888';
+  pBtn.style.background = status==='paused'  ? '#e67e22' : '#888';
+  // Grey out schedule fields when paused
+  sched.style.opacity      = status==='paused' ? '0.4' : '1';
+  sched.style.pointerEvents= status==='paused' ? 'none' : 'auto';
+}
+
+// ── Data ─────────────────────────────────────────────────────────
+const yearData = {
+  '2026': {
+    kpi: { total:'1,284', emailTotal:'724', smsTotal:'560', success:'87.4%', revenue:'$14,320', avgpay:'2.4 days', notContacted:'14' },
+    cmp: { email:62, sms:74, both:38, ignored:18 },
+    chart: { bars:[40,55,48,70,62,80,75,90], labels:['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'] },
+    retry: { first:642, second:213, third:87, noresp:18 },
+    emailSent: { customers:'10', open:'60%', openSub:'6 of 10 opened', ctr:'30%', ctrSub:'3 of 10 clicked', bounce:'10%', pending:'1', failed:'2', unsub:'0', avgpay:'2.1 days' },
+    smsSent: { segments:15, monthcost:'$0.7350', monthsub:'Mar 2026', yearcost:'$8.8200', yearsub:'2026 YTD', customers:'10', delivrate:'70%', delivSub:'7 of 10 delivered', failed:'1', optout:'1', avgpay:'1.8 days' },
+    emailRows: [
+      ['03/25/2026','<span class="badge sent">Sent</span>','John Smith<br><small>john.smith@email.com</small>','Subscription Expired','Expiration','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','1'],
+      ['03/25/2026','<span class="badge failed">Failed</span>','Linda Garza<br><small>lgarza_old@yahoo.com</small>','Subscription Expired','Expiration','—','—','1'],
+      ['03/24/2026','<span class="badge sent">Sent</span>','Mike Torres<br><small>mtorres@gmail.com</small>','Renew Subscription','Renewal','<span class="badge opened">Yes</span>','—','2'],
+      ['03/24/2026','<span class="badge sent">Sent</span>','Sara Nguyen<br><small>sara.nguyen@outlook.com</small>','Subscription Expired','Expiration','—','—','1'],
+      ['03/23/2026','<span class="badge pending">Pending</span>','DFW Flag Co.<br><small>billing@dfwflag.com</small>','Final Notice','Final','—','—','3'],
+      ['03/23/2026','<span class="badge sent">Sent</span>','Carlos Rivera<br><small>crivera@hotmail.com</small>','Renew Subscription','Renewal','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','2'],
+      ['03/22/2026','<span class="badge failed">Failed</span>','Lone Star Events<br><small>info@lonestarevents.net</small>','Subscription Expired','Expiration','—','—','1'],
+      ['03/22/2026','<span class="badge sent">Sent</span>','Patricia Odom<br><small>podom@gmail.com</small>','Final Notice','Final','<span class="badge opened">Yes</span>','—','3'],
+      ['03/21/2026','<span class="badge sent">Sent</span>','Texas Flag Supply<br><small>orders@txflagsupply.com</small>','Subscription Expired','Expiration','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','1'],
+      ['03/20/2026','<span class="badge sent">Sent</span>','James Whitfield<br><small>jwhitfield@work.com</small>','Renew Subscription','Renewal','—','—','2'],
+    ],
+    smsRows: [
+      ['03/25/2026','<span class="badge sent">Delivered</span>','John Smith<br><small>(214) 555-0182</small>',1,'1','Dallas Flag Club'],
+      ['03/25/2026','<span class="badge failed">Failed</span>','Linda Garza<br><small>(972) 555-0344</small>',1,'1','Plano Flags'],
+      ['03/24/2026','<span class="badge sent">Delivered</span>','Mike Torres<br><small>(469) 555-0217</small>',2,'2','Arlington Flags'],
+      ['03/24/2026','<span class="badge pending">Pending</span>','Sara Nguyen<br><small>(817) 555-0093</small>',1,'1','Fort Worth Flags'],
+      ['03/23/2026','<span class="badge sent">Delivered</span>','Carlos Rivera<br><small>(214) 555-0456</small>',2,'2','Dallas Flag Club'],
+      ['03/23/2026','<span class="badge failed">Opted Out</span>','DFW Flag Co.<br><small>(972) 555-0781</small>',1,'3','Plano Flags'],
+      ['03/22/2026','<span class="badge sent">Delivered</span>','Patricia Odom<br><small>(469) 555-0329</small>',1,'3','Arlington Flags'],
+      ['03/22/2026','<span class="badge sent">Delivered</span>','Texas Flag Supply<br><small>(817) 555-0614</small>',3,'1','Fort Worth Flags'],
+      ['03/21/2026','<span class="badge pending">Pending</span>','James Whitfield<br><small>(214) 555-0508</small>',1,'2','Dallas Flag Club'],
+      ['03/20/2026','<span class="badge sent">Delivered</span>','Lone Star Events<br><small>(972) 555-0867</small>',2,'1','Plano Flags'],
+    ]
+  },
+  '2025': {
+    kpi: { total:'987', emailTotal:'561', smsTotal:'426', success:'81.2%', revenue:'$10,740', avgpay:'3.1 days', notContacted:'22' },
+    cmp: { email:54, sms:67, both:29, ignored:24 },
+    chart: { bars:[30,42,38,55,50,65,60,72], labels:['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'] },
+    retry: { first:510, second:178, third:94, noresp:24 },
+    emailSent: { customers:'8', open:'51%', openSub:'4 of 8 opened', ctr:'25%', ctrSub:'2 of 8 clicked', bounce:'15%', pending:'0', failed:'3', unsub:'1', avgpay:'3.4 days' },
+    smsSent: { segments:11, monthcost:'$0.3920', monthsub:'Oct 2025', yearcost:'$5.9290', yearsub:'2025 YTD', customers:'8', delivrate:'62%', delivSub:'5 of 8 delivered', failed:'2', optout:'2', avgpay:'2.6 days' },
+    emailRows: [
+      ['10/14/2025','<span class="badge sent">Sent</span>','Brian Nguyen<br><small>bnguyen@gmail.com</small>','Subscription Expired','Expiration','<span class="badge opened">Yes</span>','—','1'],
+      ['10/12/2025','<span class="badge failed">Failed</span>','Gulf Coast Flags<br><small>info@gulfcoastflags.com</small>','Subscription Expired','Expiration','—','—','1'],
+      ['10/10/2025','<span class="badge sent">Sent</span>','Angela Kim<br><small>akim@outlook.com</small>','Renew Subscription','Renewal','<span class="badge opened">Yes</span>','<span class="badge sent">Yes</span>','2'],
+      ['10/08/2025','<span class="badge sent">Sent</span>','Heritage Flag Co.<br><small>orders@heritageflag.com</small>','Final Notice','Final','—','—','3'],
+      ['10/05/2025','<span class="badge failed">Failed</span>','Roy Duncan<br><small>rduncan@work.net</small>','Subscription Expired','Expiration','—','—','1'],
+      ['10/03/2025','<span class="badge sent">Sent</span>','Melody Shaw<br><small>mshaw@gmail.com</small>','Renew Subscription','Renewal','<span class="badge opened">Yes</span>','—','2'],
+      ['09/28/2025','<span class="badge sent">Sent</span>','Panhandle Banners<br><small>hello@panhandlebanners.com</small>','Subscription Expired','Expiration','—','—','1'],
+      ['09/25/2025','<span class="badge failed">Failed</span>','Travis Cole<br><small>tcole@yahoo.com</small>','Final Notice','Final','—','—','3'],
+    ],
+    smsRows: [
+      ['10/14/2025','<span class="badge sent">Delivered</span>','Brian Nguyen<br><small>(214) 555-0143</small>',1,'1','Dallas Flag Club'],
+      ['10/12/2025','<span class="badge failed">Failed</span>','Gulf Coast Flags<br><small>(713) 555-0284</small>',1,'1','Houston Flags'],
+      ['10/10/2025','<span class="badge sent">Delivered</span>','Angela Kim<br><small>(972) 555-0319</small>',2,'2','Plano Flags'],
+      ['10/08/2025','<span class="badge failed">Opted Out</span>','Heritage Flag Co.<br><small>(817) 555-0452</small>',1,'3','Fort Worth Flags'],
+      ['10/05/2025','<span class="badge sent">Delivered</span>','Melody Shaw<br><small>(469) 555-0517</small>',1,'2','Arlington Flags'],
+      ['09/28/2025','<span class="badge sent">Delivered</span>','Panhandle Banners<br><small>(806) 555-0628</small>',2,'1','Amarillo Flags'],
+      ['09/25/2025','<span class="badge failed">Failed</span>','Travis Cole<br><small>(214) 555-0761</small>',1,'3','Dallas Flag Club'],
+    ]
+  }
+};
+
+const scheduledEmailRows = [
+  ['03/30/2026','<span class="badge pending">Scheduled</span>','Robert Chen<br><small>rchen@gmail.com</small>','Subscription Expired','Expiration','—','—','1'],
+  ['03/30/2026','<span class="badge pending">Scheduled</span>','Alicia Monroe<br><small>amonroe@outlook.com</small>','Renew Subscription','Renewal','—','—','2'],
+  ['03/31/2026','<span class="badge pending">Scheduled</span>','Sunrise Flag Co.<br><small>info@sunriseflag.com</small>','Subscription Expired','Expiration','—','—','1'],
+  ['03/31/2026','<span class="badge pending">Scheduled</span>','David Patel<br><small>dpatel@work.com</small>','Final Notice','Final','—','—','3'],
+  ['04/01/2026','<span class="badge pending">Scheduled</span>','Maria Castillo<br><small>mcastillo@gmail.com</small>','Subscription Expired','Expiration','—','—','1'],
+  ['04/01/2026','<span class="badge pending">Scheduled</span>','TX Banner Supply<br><small>orders@txbanner.com</small>','Renew Subscription','Renewal','—','—','2'],
+  ['04/02/2026','<span class="badge pending">Scheduled</span>','Kevin Brooks<br><small>kbrooks@hotmail.com</small>','Final Notice','Final','—','—','3'],
+];
+const scheduledSmsRows = [
+  ['03/30/2026','<span class="badge pending">Scheduled</span>','Robert Chen<br><small>(214) 555-0192</small>',1,'1','Dallas Flag Club'],
+  ['03/30/2026','<span class="badge pending">Scheduled</span>','Alicia Monroe<br><small>(972) 555-0417</small>',2,'2','Plano Flags'],
+  ['03/31/2026','<span class="badge pending">Scheduled</span>','Sunrise Flag Co.<br><small>(469) 555-0284</small>',1,'1','Arlington Flags'],
+  ['03/31/2026','<span class="badge pending">Scheduled</span>','David Patel<br><small>(817) 555-0339</small>',1,'3','Fort Worth Flags'],
+  ['04/01/2026','<span class="badge pending">Scheduled</span>','Maria Castillo<br><small>(214) 555-0561</small>',2,'1','Dallas Flag Club'],
+  ['04/02/2026','<span class="badge pending">Scheduled</span>','Kevin Brooks<br><small>(972) 555-0748</small>',1,'3','Plano Flags'],
+];
+const ignoredEmailRows = [
+  ['03/10/2026','<span class="badge failed">No Response</span>','Patricia Odom<br><small>podom@gmail.com</small>','Final Notice','Final','—','—','3'],
+  ['03/08/2026','<span class="badge failed">No Response</span>','Linda Garza<br><small>lgarza_old@yahoo.com</small>','Final Notice','Final','—','—','3'],
+  ['03/06/2026','<span class="badge failed">No Response</span>','DFW Flag Co.<br><small>billing@dfwflag.com</small>','Final Notice','Final','—','—','3'],
+];
+const ignoredSmsRows = [
+  ['03/10/2026','<span class="badge failed">No Response</span>','Patricia Odom<br><small>(469) 555-0329</small>',1,'3','Arlington Flags'],
+  ['03/08/2026','<span class="badge failed">No Response</span>','DFW Flag Co.<br><small>(972) 555-0781</small>',1,'3','Plano Flags'],
+  ['03/06/2026','<span class="badge failed">No Response</span>','James Whitfield<br><small>(214) 555-0508</small>',1,'3','Dallas Flag Club'],
+];
+
+// ── Init ─────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.ai-feature-row[data-tip]').forEach(el => {
+    const tip = el.querySelector('.ai-tooltip');
+    if(tip) tip.textContent = el.getAttribute('data-tip');
+  });
+  updateConfigureBtn();
+  // Initialize Email & SMS schedules as Paused by default
+  setScheduleStatus('email','paused');
+  setScheduleStatus('sms','paused');
+  renderTables();
+});
+
+// ── Render tables ────────────────────────────────────────────────
+function renderTables(){
+  const d = yearData[curYear];
+  window._eRows = curMode==='scheduled' ? scheduledEmailRows : (isFiltered ? ignoredEmailRows : d.emailRows);
+  window._sRows = curMode==='scheduled' ? scheduledSmsRows  : (isFiltered ? ignoredSmsRows  : d.smsRows);
+  document.getElementById('email-tbody').innerHTML = window._eRows.map((r,i)=>
+    `<tr>${r.map(c=>`<td>${c}</td>`).join('')}<td><a href="#" onclick="openEmailPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`
+  ).join('');
+  document.getElementById('sms-tbody').innerHTML = window._sRows.map((r,i)=>{
+    const cost = (r[3]*RATE).toFixed(4);
+    return `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>$${cost}</td><td>${r[4]}</td><td>${r[5]}</td><td><a href="#" onclick="openSmsPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`;
+  }).join('');
+}
+
+// ── Year switch ──────────────────────────────────────────────────
+function switchYear(yr){
+  curYear = yr;
+  const d = yearData[yr];
+  document.getElementById('year-badge').textContent = 'Showing: '+yr;
+  document.getElementById('ov-total').textContent        = d.kpi.total;
+  document.getElementById('ov-email-total').textContent  = d.kpi.emailTotal;
+  document.getElementById('ov-sms-total').textContent    = d.kpi.smsTotal;
+  document.getElementById('ov-success').textContent      = d.kpi.success;
+  document.getElementById('ov-revenue').textContent      = d.kpi.revenue;
+  document.getElementById('ov-avgpay').textContent       = d.kpi.avgpay;
+  document.getElementById('ov-notcontacted').textContent = d.kpi.notContacted;
+  document.getElementById('cmp-email-bar').style.width   = d.cmp.email+'%';
+  document.getElementById('cmp-sms-bar').style.width     = d.cmp.sms+'%';
+  document.getElementById('cmp-both-bar').style.width    = d.cmp.both+'%';
+  document.getElementById('cmp-email-pct').textContent   = d.cmp.email+'%';
+  document.getElementById('cmp-sms-pct').textContent     = d.cmp.sms+'%';
+  document.getElementById('cmp-both-pct').textContent    = d.cmp.both+'%';
+  document.getElementById('cmp-ignored-val').textContent = d.cmp.ignored;
+  const em = d.emailSent;
+  document.getElementById('me-customers').textContent = em.customers;
+  document.getElementById('me-open').textContent      = em.open;
+  document.getElementById('me-open-sub').textContent  = em.openSub;
+  document.getElementById('me-ctr').textContent       = em.ctr;
+  document.getElementById('me-ctr-sub').textContent   = em.ctrSub;
+  document.getElementById('me-bounce').textContent    = em.bounce;
+  document.getElementById('me-pending').textContent   = em.pending;
+  document.getElementById('me-failed').textContent    = em.failed;
+  document.getElementById('me-unsub').textContent     = em.unsub;
+  document.getElementById('me-avgpay').textContent    = em.avgpay;
+  const sm = d.smsSent;
+  document.getElementById('ms-cpc').textContent       = '$'+(sm.segments*RATE/parseInt(sm.customers)).toFixed(2);
+  document.getElementById('ms-monthcost').textContent = sm.monthcost;
+  document.getElementById('ms-monthsub').textContent  = sm.monthsub;
+  document.getElementById('ms-yearcost').textContent  = sm.yearcost;
+  document.getElementById('ms-yearsub').textContent   = sm.yearsub;
+  document.getElementById('ms-segments').textContent  = sm.segments;
+  document.getElementById('ms-delivrate').textContent = sm.delivrate;
+  document.getElementById('ms-deliv-sub').textContent = sm.delivSub;
+  document.getElementById('ms-customers').textContent = sm.customers;
+  document.getElementById('ms-avgpay').textContent    = sm.avgpay;
+  document.getElementById('ms-failed').textContent    = sm.failed;
+  document.getElementById('ms-optout').textContent    = sm.optout;
+  const r = d.retry;
+  document.getElementById('r-first').textContent      = r.first;
+  document.getElementById('r-second').textContent     = r.second;
+  document.getElementById('r-third').textContent      = r.third;
+  document.getElementById('r-noresp').textContent     = r.noresp;
+  document.getElementById('r-second-bar').style.width = Math.round(r.second/r.first*100)+'%';
+  document.getElementById('r-third-bar').style.width  = Math.round(r.third/r.first*100)+'%';
+  document.querySelectorAll('#trend-chart .mini-bar').forEach((b,i)=>{ b.style.height=d.chart.bars[i]+'%'; });
+  document.querySelectorAll('#trend-labels span').forEach((s,i)=>{ s.textContent=d.chart.labels[i]; });
+  if(isFiltered) clearIgnoredFilter();
+  renderTables();
+}
+
+// ── Navigation ───────────────────────────────────────────────────
+function switchSub(type){
+  curSub = type;
+  document.getElementById('panel-email').style.display = type==='email' ? '' : 'none';
+  document.getElementById('panel-sms').style.display   = type==='sms'   ? '' : 'none';
+  document.getElementById('btn-email').className = 'sub-tab '+(type==='email'?'active':'inactive');
+  document.getElementById('btn-sms').className   = 'sub-tab '+(type==='sms'  ?'active':'inactive');
+}
+function switchListMode(mode){
+  curMode = mode;
+  const s = mode==='scheduled';
+  document.getElementById('me-sent').style.display  = s ? 'none'  : 'block';
+  document.getElementById('me-sched').style.display = s ? 'block' : 'none';
+  document.getElementById('ms-sent').style.display  = s ? 'none'  : 'block';
+  document.getElementById('ms-sched').style.display = s ? 'block' : 'none';
+  if(isFiltered) clearIgnoredFilter();
+  renderTables();
+}
+function switchMetric(btn, id){
+  document.querySelectorAll('.metric-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.metric-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// ── Filter ───────────────────────────────────────────────────────
+function filterIgnored(){ isFiltered=true; document.getElementById('filter-banner').style.display='flex'; renderTables(); }
+function clearIgnoredFilter(){ isFiltered=false; document.getElementById('filter-banner').style.display='none'; renderTables(); }
+
+// ── Sort / column filter ─────────────────────────────────────────
+function getCellText(td){ return td ? td.innerText.trim().toLowerCase() : ''; }
+function sortTable(type, col){
+  const ss = sortState[type];
+  ss.dir = ss.col===col ? ss.dir*-1 : 1; ss.col = col;
+  document.querySelectorAll('#'+type+'-table thead tr:first-child th.sortable').forEach((th,i)=>{
+    th.classList.remove('sort-asc','sort-desc');
+    if(i===col) th.classList.add(ss.dir===1?'sort-asc':'sort-desc');
+  });
+  applyColFilter(type);
+}
+function applyColFilter(type){
+  const tbody   = document.getElementById(type+'-tbody');
+  const rows    = Array.from(tbody.querySelectorAll('tr'));
+  const filters = Array.from(document.getElementById(type+'-filter-row').querySelectorAll('input,select')).map(el=>el.value.toLowerCase().trim());
+  const ss      = sortState[type];
+  rows.forEach(tr=>{
+    const cells = Array.from(tr.querySelectorAll('td'));
+    tr.style.display = filters.every((f,i)=>!f||getCellText(cells[i]).includes(f)) ? '' : 'none';
+  });
+  if(ss.col>=0){
+    Array.from(tbody.querySelectorAll('tr:not([style*="none"])')).sort((a,b)=>{
+      const aT=getCellText(a.querySelectorAll('td')[ss.col]), bT=getCellText(b.querySelectorAll('td')[ss.col]);
+      return aT<bT?-ss.dir:aT>bT?ss.dir:0;
+    }).forEach(r=>tbody.appendChild(r));
+  }
+}
+
+// ── Config modal ─────────────────────────────────────────────────
+function openConfig()  { document.getElementById('config-modal').style.display='flex'; }
+function closeConfig() { document.getElementById('config-modal').style.display='none'; }
+function switchCfgTab(tab){
+  document.getElementById('cfg-email').style.display = tab==='email'?'block':'none';
+  document.getElementById('cfg-sms').style.display   = tab==='sms'  ?'block':'none';
+  const eBtn = document.getElementById('cfg-tab-email');
+  const sBtn = document.getElementById('cfg-tab-sms');
+  eBtn.style.background    = tab==='email' ? '#fff' : '#888';
+  eBtn.style.color         = tab==='email' ? '#2c3e8c' : '#fff';
+  eBtn.style.borderBottom  = tab==='email' ? '3px solid #fff' : '3px solid transparent';
+  sBtn.style.background    = tab==='sms'   ? '#fff' : '#888';
+  sBtn.style.color         = tab==='sms'   ? '#2c3e8c' : '#fff';
+  sBtn.style.borderBottom  = tab==='sms'   ? '3px solid #fff' : '3px solid transparent';
+}
+
+// ── Email preview ────────────────────────────────────────────────
+function openEmailPreviewIdx(idx){
+  const r = window._eRows[idx];
+  const clean = r[2].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  document.getElementById('preview-recipient').textContent = clean;
+  document.getElementById('preview-notice').textContent   = r[7];
+  document.getElementById('preview-date').textContent     = r[0];
+  document.getElementById('prev-name').textContent        = clean.split(' ').slice(0,2).join(' ');
+  document.getElementById('email-preview-modal').style.display='flex';
+}
+function closeEmailPreview(){ document.getElementById('email-preview-modal').style.display='none'; }
+
+// ── SMS preview ──────────────────────────────────────────────────
+function openSmsPreviewIdx(idx){
+  const r = window._sRows[idx];
+  const segs  = r[3];
+  const cost  = (segs*RATE).toFixed(4);
+  const clean = r[2].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  const parts = clean.split('  ');
+  const name  = (parts[0]||clean).trim();
+  const phone = (parts[1]||'').trim();
+  const status = r[1].replace(/<[^>]+>/g,'');
+  const msg = `Hi ${name}, this is a reminder from HelpingWithFlags.com that your annual Holiday Flag subscription is now due.\n\nAmount Due: $75.00\n\nPay online: https://app.helpingwithflags.com/pay\n\nReply STOP to opt out.`;
+  const segCount = Math.ceil(msg.length/160);
+  document.getElementById('sms-preview-recipient').textContent = (name+' '+phone).trim();
+  document.getElementById('sms-preview-notice').textContent   = r[4];
+  document.getElementById('sms-preview-date').textContent     = r[0];
+  document.getElementById('sms-preview-timestamp').textContent= r[0]+', 9:41 AM';
+  document.getElementById('sms-bubble-text').innerText        = msg;
+  document.getElementById('sms-segment-info').textContent     = segCount+' segment'+(segCount>1?'s':'')+' · $'+cost;
+  document.getElementById('sms-meta-segments').textContent    = segs;
+  document.getElementById('sms-meta-cost').textContent        = '$'+cost;
+  const st = document.getElementById('sms-meta-status');
+  st.textContent = status;
+  st.style.color = status==='Delivered'?'#27ae60':(status==='Pending'||status==='Scheduled')?'#e67e22':'#e74c3c';
+  document.getElementById('sms-preview-modal').style.display='flex';
+}
+function closeSmsPreview(){ document.getElementById('sms-preview-modal').style.display='none'; }
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+</script>
+</div></div></body>
+</html>
