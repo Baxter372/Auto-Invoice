@@ -78,9 +78,9 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
                <table style="width:100%; border-collapse:collapse; text-align:left;">
                   <thead style="color:#3f51b5; font-size:0.85rem;">
                      <tr>
-                        <th style="padding:16px;">SCHEDULE</th>
-                        <th style="padding:16px;">SEND DATE</th>
-                        <th style="padding:16px;">SELECT TEMPLATE</th>
+                        <th style="padding:16px; text-align:left;">SCHEDULE</th>
+                        <th style="padding:16px; text-align:center;">SEND DATE</th>
+                        <th style="padding:16px; text-align:center;">SELECT TEMPLATE</th>
                         <th style="padding:10px; text-align:right;">
                            <button style="background:#3f51b5; color:#fff; border:none; padding:10px 16px; border-radius:2px; font-weight:bold; cursor:pointer; font-size:0.8rem;">ADD SCHEDULE</button>
                         </th>
@@ -88,9 +88,9 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
                   </thead>
                   <tbody style="background:#fff; border-top:1px solid #e1e8f5;">
                      <tr style="border-bottom:1px solid #f0f0f0;">
-                        <td style="padding:16px; color:#555; font-size:0.95rem;">1. Blast</td>
-                        <td style="padding:16px;"><input type="date" value="2026-04-16" style="padding:8px; border:1px solid #ccc; border-radius:4px; color:#555; outline:none;"/></td>
-                        <td style="padding:16px;">
+                        <td style="padding:16px; color:#555; font-size:0.95rem; text-align:left;">1. Blast</td>
+                        <td style="padding:16px; text-align:center;"><input type="date" value="2026-04-16" style="padding:8px; border:1px solid #ccc; border-radius:4px; color:#555; outline:none;"/></td>
+                        <td style="padding:16px; text-align:center;">
                            <select style="padding:8px; border:1px solid #ccc; border-radius:4px; color:#555; outline:none; width:100%;">
                               <option>2025 renewal</option>
                               <option>Final Expiration Notice</option>
@@ -101,9 +101,9 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
                         </td>
                      </tr>
                      <tr>
-                        <td style="padding:16px; color:#555; font-size:0.95rem;">2. Blast</td>
-                        <td style="padding:16px;"><input type="date" value="2026-04-21" style="padding:8px; border:1px solid #ccc; border-radius:4px; color:#555; outline:none;"/></td>
-                        <td style="padding:16px;">
+                        <td style="padding:16px; color:#555; font-size:0.95rem; text-align:left;">2. Blast</td>
+                        <td style="padding:16px; text-align:center;"><input type="date" value="2026-04-21" style="padding:8px; border:1px solid #ccc; border-radius:4px; color:#555; outline:none;"/></td>
+                        <td style="padding:16px; text-align:center;">
                            <select style="padding:8px; border:1px solid #ccc; border-radius:4px; color:#555; outline:none; width:100%;">
                               <option>Home & Busi...</option>
                            </select>

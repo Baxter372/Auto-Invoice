@@ -41,12 +41,12 @@ def generate_list_view(section_id, active_label):
             <td style="padding:16px 12px; text-align:center;">
                 <div style="width:16px; height:16px; background:#2ecc71; border-radius:50%; margin:0 auto; box-shadow:0 1px 3px rgba(46,204,113,0.4);"></div>
             </td>
-            <td style="padding:16px 12px; font-weight:bold; color:#111; font-size:0.85rem; max-width:200px; white-space:normal;">{row['name']}</td>
-            <td style="padding:16px 12px; color:#555; font-size:0.85rem;">{row['payment']}</td>
-            <td style="padding:16px 12px; color:#555; font-size:0.85rem;">{row['autopay']}</td>
-            <td style="padding:16px 12px; color:#555; font-size:0.85rem;">{row['email_type']}</td>
+            <td style="padding:16px 12px; font-weight:bold; color:#111; font-size:0.85rem; max-width:200px; white-space:normal; text-align:left;">{row['name']}</td>
+            <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['payment']}</td>
+            <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['autopay']}</td>
+            <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['email_type']}</td>
             <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['adv_filter']}</td>
-            <td style="padding:16px 12px; color:#555; font-size:0.85rem; max-width:140px; white-space:normal;">{row['schedule']}</td>
+            <td style="padding:16px 12px; color:#555; font-size:0.85rem; max-width:140px; white-space:normal; text-align:left;">{row['schedule']}</td>
             <td style="padding:16px 12px; color:#111; font-weight:bold; font-size:0.9rem; text-align:center;">{row['count']}</td>
             <td style="padding:16px 12px; text-align:center; min-width:80px;">
                 <i data-lucide="edit" style="width:18px; height:18px; color:#3f51b5; cursor:pointer; margin-right:8px;" onclick="document.getElementById('schedule-edit-modal').style.display='flex'"></i>
@@ -67,12 +67,12 @@ def generate_list_view(section_id, active_label):
                 <thead>
                     <tr style="border-bottom:2px solid #f0f0f0; color:#111; font-size:0.85rem;">
                         <th style="padding:16px 12px; text-align:center; width:60px;">Status</th>
-                        <th style="padding:16px 12px;">Schedule Name:</th>
-                        <th style="padding:16px 12px;">Payment Status</th>
-                        <th style="padding:16px 12px;">Auto-Pay</th>
-                        <th style="padding:16px 12px;">{type_header}</th>
+                        <th style="padding:16px 12px; text-align:left;">Schedule Name:</th>
+                        <th style="padding:16px 12px; text-align:center;">Payment Status</th>
+                        <th style="padding:16px 12px; text-align:center;">Auto-Pay</th>
+                        <th style="padding:16px 12px; text-align:center;">{type_header}</th>
                         <th style="padding:16px 12px; text-align:center;">ADV Filter</th>
-                        <th style="padding:16px 12px;">Schedule</th>
+                        <th style="padding:16px 12px; text-align:left;">Schedule</th>
                         <th style="padding:16px 12px; text-align:center;">Audience Count</th>
                         <th style="padding:16px 12px; text-align:center;">Action</th>
                     </tr>
