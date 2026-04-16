@@ -1045,7 +1045,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <button id="cfg-tab-email" onclick="switchCfgTab('email')" style="padding:8px 32px; font-weight:normal; font-size:0.95rem; background:#eef2fa; color:#3f51b5; border:none; border-radius:4px; cursor:pointer; transition: background 0.2s;">Email</button>
       <button id="cfg-tab-sms" onclick="switchCfgTab('sms')" style="padding:8px 32px; font-weight:normal; font-size:0.95rem; background:#f9f9f9; color:#888; border:none; border-radius:4px; cursor:pointer; transition: background 0.2s;">SMS/Text</button>
     </div>
-    <div style="background:#3f51b5; color:#fff; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(63,81,181,0.3);" onclick="document.getElementById('schedule-edit-modal').style.display='flex'">
+    <div style="background:#3f51b5; color:#fff; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(63,81,181,0.3);" onclick="document.getElementById('schedule-select-modal').style.display='flex'">
        <i data-lucide="plus" style="width:20px; height:20px; stroke-width:3;"></i>
     </div>
 </div>
@@ -2401,7 +2401,7 @@ function toggleActiveTpl(cb, type) {
       <!-- HEADER -->
       <div style="background:#fff; padding:16px 20px 0 20px; border-bottom:1px solid #ddd; flex-shrink:0;">
          <div style="display:flex; justify-content:space-between; align-items:center; margin:-16px -20px 16px -20px; padding:16px 20px; background:#f4f6f8; border-bottom:1px solid #eee;">
-            <h2 style="margin:0; font-size:1.3rem; font-weight:bold; color:#555;">Pending Payment Customers</h2>
+            <input type="text" value="Pending Payment Customers" style="margin:0; font-size:1.3rem; font-weight:bold; color:#555; background:transparent; border:none; outline:none; border-bottom:1px solid transparent; transition:border 0.2s; width:60%;" onfocus="this.style.borderBottom='1px solid #3f51b5'" onblur="this.style.borderBottom='1px solid transparent'"/>
             <i data-lucide="x" style="width:24px; height:24px; cursor:pointer; color:#888;" onclick="document.getElementById('schedule-edit-modal').style.display='none'"></i>
          </div>
          
@@ -2473,7 +2473,7 @@ function toggleActiveTpl(cb, type) {
                         <th style="padding:16px; text-align:center;">SEND DATE</th>
                         <th style="padding:16px; text-align:center;">SELECT TEMPLATE</th>
                         <th style="padding:10px; text-align:right;">
-                           <button style="background:#3f51b5; color:#fff; border:none; padding:10px 16px; border-radius:2px; font-weight:bold; cursor:pointer; font-size:0.8rem;">ADD SCHEDULE</button>
+                           <button onclick="addScheduleRow(this)" style="background:#3f51b5; color:#fff; border:none; padding:8px 16px; border-radius:2px; font-weight:bold; cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px;"><i data-lucide="plus" style="width:14px; height:14px;"></i> ADD SCHEDULE</button>
                         </th>
                      </tr>
                   </thead>
@@ -2600,6 +2600,29 @@ function toggleActiveTpl(cb, type) {
       <div style="padding:16px 20px; background:#fff; border-top:1px solid #ddd; display:flex; justify-content:flex-end; gap:12px; flex-shrink:0;">
          <button style="padding:10px 24px; background:#fff; border:1px solid #ccc; border-radius:4px; font-size:0.9rem; color:#555; cursor:pointer;" onclick="document.getElementById('schedule-edit-modal').style.display='none'">Cancel</button>
          <button id="modal-primary-action-btn" style="padding:10px 32px; background:#3f51b5; border:none; border-radius:4px; font-size:0.9rem; color:#fff; font-weight:bold; cursor:pointer;">Save & Next</button>
+      </div>
+   </div>
+</div>
+
+<!-- ── SCHEDULE SELECT MODAL ── -->
+<div id="schedule-select-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(2px);">
+   <div style="background:#fff; border-radius:4px; box-shadow:0 12px 40px rgba(0,0,0,0.2); width:450px; border:1px solid #ddd; display:flex; flex-direction:column; overflow:hidden; font-family:Arial, sans-serif;">
+      <!-- HEADER -->
+      <div style="background:#3f51b5; color:#fff; padding:14px 20px; display:flex; align-items:center; justify-content:space-between;">
+         <div style="margin:0; font-size:1.1rem; font-weight:bold; display:flex; align-items:center; gap:6px;">Select Route</div>
+         <i data-lucide="x" style="width:20px; height:20px; cursor:pointer; color:#fff;" onclick="document.getElementById('schedule-select-modal').style.display='none'"></i>
+      </div>
+      <!-- BODY -->
+      <div style="padding:24px; text-align:center;">
+         <div style="font-size:1.05rem; color:#444; margin-bottom:24px; line-height:1.5;">Would you like to add a new schedule to the Email list or SMS/Text list?</div>
+         <div style="display:flex; justify-content:center; gap:16px;">
+            <button style="flex:1; padding:12px; background:#fff; border:2px solid #3f51b5; color:#3f51b5; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.95rem; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="document.getElementById('schedule-select-modal').style.display='none'; document.getElementById('schedule-edit-modal').style.display='flex'; switchModalTab('filter');">
+               <i data-lucide="mail" style="width:18px; height:18px;"></i> Email List
+            </button>
+            <button style="flex:1; padding:12px; background:#fff; border:2px solid #27ae60; color:#27ae60; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.95rem; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="document.getElementById('schedule-select-modal').style.display='none'; document.getElementById('schedule-edit-modal').style.display='flex'; switchModalTab('filter');">
+               <i data-lucide="message-square" style="width:18px; height:18px;"></i> SMS/Text
+            </button>
+         </div>
       </div>
    </div>
 </div>
