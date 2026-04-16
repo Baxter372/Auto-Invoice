@@ -8,10 +8,21 @@
 function expandCard(cardId) {
     document.getElementById(cardId+'-placeholder').style.display = 'none';
     document.getElementById(cardId+'-full').style.display = 'flex';
+    document.getElementById(cardId).style.borderTop = '4px solid #e74c3c';
 }
 function revertCard(cardId) {
     document.getElementById(cardId+'-full').style.display = 'none';
     document.getElementById(cardId+'-placeholder').style.display = 'flex';
+    document.getElementById(cardId).style.borderTop = '4px solid #ccc';
+    
+    // Automatically sever 'ON' state gracefully if the user abandons via reversion
+    const headerBtns = document.getElementById(cardId+'-header').querySelectorAll('button');
+    if(headerBtns.length >= 2) {
+        headerBtns[0].style.background = '#e74c3c';
+        headerBtns[0].style.color = '#fff';
+        headerBtns[1].style.background = '#f0f0f0';
+        headerBtns[1].style.color = '#888';
+    }
 }
 function resetRadio(groupName) {
     let radios = document.querySelectorAll(`input[name="${groupName}"]`);
@@ -887,6 +898,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 
 
 
+
 <div id="cfg-email" style="padding:16px; display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; ">
 
     <!-- Card 1 -->
@@ -1001,7 +1013,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 2 -->
-    <div id="cfg-email-c2" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="cfg-email-c2" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="cfg-email-c2-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1130,7 +1142,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 3 -->
-    <div id="cfg-email-c3" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="cfg-email-c3" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="cfg-email-c3-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1259,7 +1271,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 4 -->
-    <div id="cfg-email-c4" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="cfg-email-c4" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="cfg-email-c4-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1388,7 +1400,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 5 -->
-    <div id="cfg-email-c5" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="cfg-email-c5" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="cfg-email-c5-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1632,7 +1644,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 2 -->
-    <div id="cfg-sms-c2" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="cfg-sms-c2" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="cfg-sms-c2-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1761,7 +1773,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 3 -->
-    <div id="cfg-sms-c3" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="cfg-sms-c3" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="cfg-sms-c3-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1890,7 +1902,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 4 -->
-    <div id="cfg-sms-c4" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="cfg-sms-c4" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="cfg-sms-c4-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -2019,7 +2031,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 5 -->
-    <div id="cfg-sms-c5" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="cfg-sms-c5" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="cfg-sms-c5-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -2235,10 +2247,21 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 function expandCard(cardId) {
     document.getElementById(cardId+'-placeholder').style.display = 'none';
     document.getElementById(cardId+'-full').style.display = 'flex';
+    document.getElementById(cardId).style.borderTop = '4px solid #e74c3c';
 }
 function revertCard(cardId) {
     document.getElementById(cardId+'-full').style.display = 'none';
     document.getElementById(cardId+'-placeholder').style.display = 'flex';
+    document.getElementById(cardId).style.borderTop = '4px solid #ccc';
+    
+    // Automatically sever 'ON' state gracefully if the user abandons via reversion
+    const headerBtns = document.getElementById(cardId+'-header').querySelectorAll('button');
+    if(headerBtns.length >= 2) {
+        headerBtns[0].style.background = '#e74c3c';
+        headerBtns[0].style.color = '#fff';
+        headerBtns[1].style.background = '#f0f0f0';
+        headerBtns[1].style.color = '#888';
+    }
 }
 function resetRadio(groupName) {
     let radios = document.querySelectorAll(`input[name="${groupName}"]`);
@@ -2788,10 +2811,21 @@ function closeSmsPreview(){ document.getElementById('sms-preview-modal').style.d
 function expandCard(cardId) {
     document.getElementById(cardId+'-placeholder').style.display = 'none';
     document.getElementById(cardId+'-full').style.display = 'flex';
+    document.getElementById(cardId).style.borderTop = '4px solid #e74c3c';
 }
 function revertCard(cardId) {
     document.getElementById(cardId+'-full').style.display = 'none';
     document.getElementById(cardId+'-placeholder').style.display = 'flex';
+    document.getElementById(cardId).style.borderTop = '4px solid #ccc';
+    
+    // Automatically sever 'ON' state gracefully if the user abandons via reversion
+    const headerBtns = document.getElementById(cardId+'-header').querySelectorAll('button');
+    if(headerBtns.length >= 2) {
+        headerBtns[0].style.background = '#e74c3c';
+        headerBtns[0].style.color = '#fff';
+        headerBtns[1].style.background = '#f0f0f0';
+        headerBtns[1].style.color = '#888';
+    }
 }
 function resetRadio(groupName) {
     let radios = document.querySelectorAll(`input[name="${groupName}"]`);

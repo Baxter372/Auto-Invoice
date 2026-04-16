@@ -129,7 +129,7 @@ def generate_layout(section_id, active_label, count=5):
             # Placeholder Card
             card = f"""
     <!-- Card {i} -->
-    <div id="{section_id}-c{i}" style="border:1px solid #2c3e8c; border-top:4px solid #e74c3c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="{section_id}-c{i}" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="{section_id}-c{i}-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send ({active_label}) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -173,14 +173,25 @@ email_layout = generate_layout("cfg-email", "Email", 5)
 sms_layout = generate_layout("cfg-sms", "SMS", 5)
 
 js_functions = """
-// ── Schedule 2-Card Expansion Logic ──────────────────────────────
-function expandSecondSchedule(sectionId) {
-    document.getElementById(sectionId+'-c2-placeholder').style.display = 'none';
-    document.getElementById(sectionId+'-c2-full').style.display = 'flex';
+// ── Schedule N-Card Expansion Logic ──────────────────────────────
+function expandCard(cardId) {
+    document.getElementById(cardId+'-placeholder').style.display = 'none';
+    document.getElementById(cardId+'-full').style.display = 'flex';
+    document.getElementById(cardId).style.borderTop = '4px solid #e74c3c';
 }
-function revertSecondSchedule(sectionId) {
-    document.getElementById(sectionId+'-c2-full').style.display = 'none';
-    document.getElementById(sectionId+'-c2-placeholder').style.display = 'flex';
+function revertCard(cardId) {
+    document.getElementById(cardId+'-full').style.display = 'none';
+    document.getElementById(cardId+'-placeholder').style.display = 'flex';
+    document.getElementById(cardId).style.borderTop = '4px solid #ccc';
+    
+    // Automatically sever 'ON' state gracefully if the user abandons via reversion
+    const headerBtns = document.getElementById(cardId+'-header').querySelectorAll('button');
+    if(headerBtns.length >= 2) {
+        headerBtns[0].style.background = '#e74c3c';
+        headerBtns[0].style.color = '#fff';
+        headerBtns[1].style.background = '#f0f0f0';
+        headerBtns[1].style.color = '#888';
+    }
 }
 function resetRadio(groupName) {
     let radios = document.querySelectorAll(`input[name="${groupName}"]`);
