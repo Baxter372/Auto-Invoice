@@ -5,7 +5,7 @@ with open("index.html", "r", encoding="utf-8") as f:
 
 modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
 <div id="schedule-edit-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(2px);">
-   <div style="background:#fff; border-radius:4px; box-shadow:0 12px 40px rgba(0,0,0,0.2); width:800px; max-height:90vh; border:1px solid #ddd; display:flex; flex-direction:column; overflow:hidden; font-family:Arial, sans-serif;">
+   <div style="background:#fff; border-radius:4px; box-shadow:0 12px 40px rgba(0,0,0,0.2); width:800px; height:750px; max-height:90vh; border:1px solid #ddd; display:flex; flex-direction:column; overflow:hidden; font-family:Arial, sans-serif;">
       
       <!-- HEADER -->
       <div style="background:#fff; padding:16px 20px 0 20px; border-bottom:1px solid #ddd; flex-shrink:0;">
