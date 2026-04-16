@@ -6,8 +6,6 @@ def generate_list_view(section_id, active_label):
     mock_data = [
         {
            'name': 'This Years Pending Payment Subscribers',
-           'payment': 'TY Invoices',
-           'autopay': 'Exclude',
            'date': 'Apr 30, 2026',
            'adv_filter': 'No',
            'schedule': 'Recurring Every 7 Days',
@@ -15,8 +13,6 @@ def generate_list_view(section_id, active_label):
         },
         {
            'name': 'Last Years Pending Payment Subscribers',
-           'payment': 'LY Invoices',
-           'autopay': 'Exclude',
            'date': 'Jun 15, 2026',
            'adv_filter': 'No',
            'schedule': 'Recurring Every 7 Days',
@@ -24,8 +20,6 @@ def generate_list_view(section_id, active_label):
         },
         {
            'name': 'Expired Credit Card',
-           'payment': 'TY Invoices',
-           'autopay': 'Expired Credit Card',
            'date': 'Jul 01, 2026',
            'adv_filter': 'No',
            'schedule': 'Custom',
@@ -41,8 +35,6 @@ def generate_list_view(section_id, active_label):
                 <div style="width:16px; height:16px; background:#2ecc71; border-radius:50%; margin:0 auto; box-shadow:0 1px 3px rgba(46,204,113,0.4);"></div>
             </td>
             <td style="padding:16px 12px; font-weight:bold; color:#111; font-size:0.85rem; max-width:200px; white-space:normal; text-align:left;">{row['name']}</td>
-            <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['payment']}</td>
-            <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['autopay']}</td>
             <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['date']}</td>
             <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['adv_filter']}</td>
             <td style="padding:16px 12px; color:#555; font-size:0.85rem; max-width:140px; white-space:normal; text-align:left;">{row['schedule']}</td>
@@ -65,8 +57,6 @@ def generate_list_view(section_id, active_label):
                     <tr style="border-bottom:2px solid #f0f0f0; color:#111; font-size:0.85rem;">
                         <th style="padding:16px 12px; text-align:center; width:60px;">Status</th>
                         <th style="padding:16px 12px; text-align:left;">Schedule Name:</th>
-                        <th style="padding:16px 12px; text-align:center;">Payment Status</th>
-                        <th style="padding:16px 12px; text-align:center;">Auto-Pay</th>
                         <th style="padding:16px 12px; text-align:center;">Next Sch. Date</th>
                         <th style="padding:16px 12px; text-align:center;">ADV Filter</th>
                         <th style="padding:16px 12px; text-align:left;">Schedule</th>
