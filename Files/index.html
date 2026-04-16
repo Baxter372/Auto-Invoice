@@ -173,10 +173,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 </div>
 <div id="sms-sub-label" style="font-size:0.7rem;opacity:0.75;">Targeted SMS messaging to increase recovery.</div>
 </div>
-<!-- Configure button -->
-<div id="configure-btn-wrap" style="display:none;margin-bottom:10px;">
-<button onclick="openConfig()" style="width:100%;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:8px;cursor:pointer;font-size:0.82rem;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:6px;"><i data-lucide="settings" style="width: 14px; height: 14px;"></i> Configure Schedule &amp; Templates</button>
-</div>
+
 <!-- Stats strip -->
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center;border-top:1px solid rgba(255,255,255,0.15);padding-top:10px;">
 <div class="ai-feature-row" data-tip="Clubs using SMS + Email together see 15% more subscriptions recovered compared to email alone.">
@@ -1023,7 +1020,6 @@ const scheduleStatus = { email:'paused', sms:'paused' };
 
 function updateConfigureBtn(){
   const isActive = (autoBillingState === 'on' || smsBillingState === 'on');
-  document.getElementById('configure-btn-wrap').style.display = isActive ? 'block' : 'none';
   
   const led = document.getElementById('header-power-led');
   if(led) {
