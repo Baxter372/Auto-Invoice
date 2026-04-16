@@ -2,6 +2,7 @@
 
 <html lang="en">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
 // ── Schedule 2-Card Expansion Logic ──────────────────────────────
@@ -500,22 +501,17 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       </tbody>
    </table>
 </div>
-<!-- CSS Pie Chart -->
-<div style="display:flex; justify-content:center; margin-bottom:30px;">
-<div style="width:140px; height:140px; border-radius:50%; background:conic-gradient(#0288d1 0% 35%, #0277bd 35% 65%, #b3e5fc 65% 90%, #81d4fa 90% 97%, #01579b 97% 100%); border:1px solid #fff; box-shadow:0 0 0 1px #eee; position:relative;">
-<span style="position:absolute; top:22px; right:22px; color:#fff; font-size:0.75rem; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.3);">35%</span>
-<span style="position:absolute; bottom:22px; right:22px; color:#fff; font-size:0.75rem; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.3);">30%</span>
-<span style="position:absolute; bottom:25px; left:15px; color:#01579b; font-size:0.75rem; font-weight:bold;">25%</span>
-<!-- Optional inner labels could go here, but colors natively convey structure -->
-</div>
+<!-- Dynamic Chart.js Bar Chart -->
+<div style="width:100%; height:250px; margin-bottom:20px; padding:0 10px;">
+    <canvas id="emailHistoryChart"></canvas>
 </div>
 <!-- Legend -->
-<div style="display:flex; justify-content:center; gap:16px; font-size:0.7rem; color:#666; flex-wrap:wrap;">
-<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#01579b;display:inline-block;"></span> Queued <b>(3%)</b></span>
-<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#81d4fa;display:inline-block;"></span> Processed <b>(7%)</b></span>
-<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#0288d1;display:inline-block;"></span> Delivered <b>(35%)</b></span>
-<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#b3e5fc;display:inline-block;"></span> Bounced <b>(25%)</b></span>
-<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#0277bd;display:inline-block;"></span> Opened <b>(30%)</b></span>
+<div style="display:flex; justify-content:center; gap:16px; font-size:0.75rem; color:#666; flex-wrap:wrap;">
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:rgba(180, 185, 190, 1);display:inline-block;"></span> Queued</span>
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:rgba(80, 170, 230, 1);display:inline-block;"></span> Delivered</span>
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:rgba(140, 210, 140, 1);display:inline-block;"></span> Opened</span>
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:rgba(230, 100, 100, 1);display:inline-block;"></span> Bounced</span>
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:16px;height:3px;background:rgba(255, 165, 0, 1);display:inline-block;"></span> Target Benchmark</span>
 </div>
 </div>
 <!-- SMS Data Card -->
@@ -2675,7 +2671,85 @@ function toggleScheduleActiveState(isActive) {
 }
 
 // Initialize Modal state machine arrays natively overriding static DOM HTML constraints
-document.addEventListener('DOMContentLoaded', () => switchModalTab('filter'));
+document.addEventListener('DOMContentLoaded', () => {
+    switchModalTab('filter');
+
+    // Chart.js Configuration Arrays
+    const ctxEmail = document.getElementById('emailHistoryChart');
+    if (ctxEmail) {
+        const labels = [];
+        const queuedData = [];
+        const deliveredData = [];
+        const openedData = [];
+        const bouncedData = [];
+        const targetData = [];
+        
+        let baseDate = new Date('2026-03-18T00:00:00');
+        for (let i = 0; i < 30; i++) {
+            let d = new Date(baseDate);
+            d.setDate(d.getDate() + i);
+            labels.push(d.toISOString().split('T')[0]);
+            
+            // Scaled randomized distribution mimicking marketing intervals bounded to <60 peak explicitly
+            queuedData.push(Math.floor(Math.random() * 4));
+            deliveredData.push(Math.floor(Math.random() * 25) + 15);
+            openedData.push(Math.floor(Math.random() * 12) + 8);
+            bouncedData.push(Math.floor(Math.random() * 4));
+            targetData.push(20); 
+        }
+        
+        new Chart(ctxEmail.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Target Baseline',
+                        data: targetData,
+                        borderColor: 'rgba(255, 165, 0, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointBackgroundColor: 'rgba(255, 165, 0, 1)',
+                        pointRadius: 0
+                    },
+                    {
+                        label: 'Queued',
+                        data: queuedData,
+                        backgroundColor: 'rgba(180, 185, 190, 0.9)'
+                    },
+                    {
+                        label: 'Delivered',
+                        data: deliveredData,
+                        backgroundColor: 'rgba(80, 170, 230, 0.9)'
+                    },
+                    {
+                        label: 'Opened',
+                        data: openedData,
+                        backgroundColor: 'rgba(140, 210, 140, 0.9)'
+                    },
+                    {
+                        label: 'Bounced',
+                        data: bouncedData,
+                        backgroundColor: 'rgba(230, 100, 100, 0.9)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: false, grid: { display: false } },
+                    y: { stacked: false, beginAtZero: true, suggestedMax: 60, grid: { color: '#f0f0f0' } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { mode: 'index', intersect: false }
+                }
+            }
+        });
+    }
+});
 </script>
 </body>
 </html>
