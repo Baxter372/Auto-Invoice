@@ -803,9 +803,9 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 </div>
 <div id="main-panel-config" style="display:none; padding:20px 0;">
 <div style="background:#fff; border:1px solid #ddd; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.06); width:100%;">
-<div style="display:flex;border-bottom:2px solid #eee;background:#1a2560;">
-<button id="cfg-tab-email" onclick="switchCfgTab('email')" style="flex:1;padding:11px;border:none;border-bottom:3px solid #fff;background:#fff;color:#2c3e8c;font-weight:bold;cursor:pointer;"><i data-lucide="mail" style="width: 16px; height: 16px; margin-right:4px; top: 3px; position:relative;"></i> EMAIL</button>
-<button id="cfg-tab-sms" onclick="switchCfgTab('sms')" style="flex:1;padding:11px;border:none;border-bottom:3px solid transparent;background:#888;color:#fff;font-weight:bold;cursor:pointer;"><i data-lucide="message-square" style="width: 16px; height: 16px; margin-right:4px; top: 3px; position:relative;"></i> SMS/TEXT</button>
+<div style="display:flex; border-bottom: 1px solid #ddd; background: #f9faff;">
+<button id="cfg-tab-email" onclick="switchCfgTab('email')" style="flex:1; padding:16px; font-weight:bold; font-size:0.95rem; background:#fff; color:#2c3e8c; border:none; border-bottom:3px solid #2c3e8c; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"> <i data-lucide="mail"></i> EMAIL</button>
+<button id="cfg-tab-sms" onclick="switchCfgTab('sms')" style="flex:1; padding:16px; font-weight:bold; font-size:0.95rem; background:#f9faff; color:#888; border:none; border-bottom:3px solid transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"> <i data-lucide="message-square"></i> SMS/TEXT</button>
 </div>
 <div id="cfg-email" style="padding:20px;">
 <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:14px;">
@@ -1381,12 +1381,12 @@ function switchCfgTab(tab){
   document.getElementById('cfg-sms').style.display   = tab==='sms'  ?'block':'none';
   const eBtn = document.getElementById('cfg-tab-email');
   const sBtn = document.getElementById('cfg-tab-sms');
-  eBtn.style.background    = tab==='email' ? '#fff' : '#888';
-  eBtn.style.color         = tab==='email' ? '#2c3e8c' : '#fff';
-  eBtn.style.borderBottom  = tab==='email' ? '3px solid #fff' : '3px solid transparent';
-  sBtn.style.background    = tab==='sms'   ? '#fff' : '#888';
-  sBtn.style.color         = tab==='sms'   ? '#2c3e8c' : '#fff';
-  sBtn.style.borderBottom  = tab==='sms'   ? '3px solid #fff' : '3px solid transparent';
+  eBtn.style.background    = tab==='email' ? '#fff' : '#f9faff';
+  eBtn.style.color         = tab==='email' ? '#2c3e8c' : '#888';
+  eBtn.style.borderBottom  = tab==='email' ? '3px solid #2c3e8c' : '3px solid transparent';
+  sBtn.style.background    = tab==='sms'   ? '#fff' : '#f9faff';
+  sBtn.style.color         = tab==='sms'   ? '#2c3e8c' : '#888';
+  sBtn.style.borderBottom  = tab==='sms'   ? '3px solid #2c3e8c' : '3px solid transparent';
 }
 
 // ── Email preview ────────────────────────────────────────────────
