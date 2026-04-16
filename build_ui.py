@@ -51,7 +51,7 @@ def get_fields(type_str, card_num=0):
       <!-- Email/Phone Addresses -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px; display:flex; align-items:center; gap:6px;">Target Addresses <span style="font-weight:normal; color:#888; font-size:0.75rem;">(Selecting type of address will not affect Customer count)</span> <a href="javascript:void(0)" onclick="resetRadio('addr_{type_str}')" style="color:#0277bd; font-size:0.75rem; text-decoration:underline;">Reset</a></div>
-         <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#111; font-weight:bold; margin-bottom:4px; cursor:pointer;"><input type="radio" name="addr_{type_str}" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> Billing Address and Contact Address</label>
+         <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#111; font-weight:bold; margin-bottom:4px; cursor:pointer;"><input type="radio" name="addr_{type_str}" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> {"Primary Phone Number and Contact Phone Number" if "sms" in type_str.lower() else "Billing Address and Contact Address"}</label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="addr_{type_str}" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customer Login Only</label>
       </div>
 
@@ -59,7 +59,8 @@ def get_fields(type_str, card_num=0):
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px; color:#3f51b5; font-size:0.85rem; cursor:pointer;">
          Advanced Filters <i data-lucide="chevron-down" style="width:14px; height:14px; vertical-align:middle;"></i>
       </div>
-
+      
+      {"" if "sms" in type_str.lower() else f"""
       <!-- Attach Invoice -->
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
@@ -68,6 +69,7 @@ def get_fields(type_str, card_num=0):
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_{type_str}" {chk_attach_no} style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
+      """}
 
       <!-- Schedule Details -->
       <h3 style="font-size:1.1rem; color:#111; margin:0 0 16px 0;">Schedule Details</h3>
@@ -198,7 +200,7 @@ def generate_layout(section_id, active_label, count=4):
                        <th style="padding:10px 8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /> ALL</th>
                        <th style="padding:10px 8px;">FULL NAME</th>
                        <th style="padding:10px 8px;">BILLING ADDRESS</th>
-                       <th style="padding:10px 8px;">EMAIL</th>
+                       <th style="padding:10px 8px;">{"MOBILE" if "sms" in active_label.lower() else "EMAIL"}</th>
                     </tr>
                 </thead>
                 <tbody id="{section_id}-audience-tbody" style="color:#e74c3c;">
