@@ -19,6 +19,7 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
             <div id="modal-tab-head-filter" onclick="switchModalTab('filter')" style="padding-bottom:12px; border-bottom:2px solid #3f51b5; color:#3f51b5; font-size:1.1rem; cursor:pointer;">Filter</div>
             <div id="modal-tab-head-schedule" onclick="switchModalTab('schedule')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Schedule</div>
             <div id="modal-tab-head-results" onclick="switchModalTab('results')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Results (<span style="color:#3f51b5;">212</span>)</div>
+            <div id="modal-tab-head-activate" onclick="switchModalTab('activate')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Test & Activate</div>
          </div>
       </div>
 
@@ -165,6 +166,42 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
              </div>
          </div>
          
+         <!-- BODY: ACTIVATE -->
+         <div id="modal-body-activate" style="display:none;">
+            <div style="font-weight:bold; font-size:1.15rem; color:#111; margin-bottom:16px;">Test & Activate Configuration</div>
+            
+            <!-- Send Test -->
+            <div style="background:#fff; border:1px solid #eee; padding:24px; margin-bottom:24px; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
+               <div style="font-weight:bold; font-size:1.05rem; color:#111; margin-bottom:8px;">1. Send Test Notification</div>
+               <div style="color:#666; font-size:0.9rem; margin-bottom:16px;">Send a sample notification to your admin email address to verify the template configuration.</div>
+               <div style="display:flex; gap:12px; align-items:center;">
+                  <input type="email" placeholder="Enter admin email address..." style="flex:1; padding:10px 12px; border:1px solid #ccc; border-radius:4px; font-size:0.95rem; outline:none;" value="admin@helpingwithflags.com" />
+                  <button style="background:#3f51b5; color:#fff; border:none; padding:11px 24px; border-radius:4px; font-size:0.95rem; font-weight:bold; cursor:pointer;" onclick="alert('Success! Test notification successfully simulated to admin email address.')">Send Test Notification</button>
+               </div>
+            </div>
+
+            <!-- Activation Panel -->
+            <div style="background:#fff; border:1px solid #eee; padding:24px; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
+               <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                     <div style="font-weight:bold; font-size:1.05rem; color:#111; margin-bottom:4px;">2. Schedule Activation</div>
+                     <div style="color:#666; font-size:0.9rem;">Turn this configuration ON to begin automatically processing elements inside the bounded audience matrix.</div>
+                  </div>
+                  <!-- Native iOS-Style Toggle -->
+                  <label style="position:relative; display:inline-block; width:52px; height:28px;">
+                     <input type="checkbox" id="modal-activate-slider" checked style="opacity:0; width:0; height:0;" onchange="toggleScheduleActiveState(this.checked)" />
+                     <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#ccc; transition:.4s; border-radius:28px;">
+                        <span style="position:absolute; content:''; height:20px; width:20px; left:4px; bottom:4px; background-color:white; transition:.4s; border-radius:50%; box-shadow:0 1px 3px rgba(0,0,0,0.2);"></span>
+                     </span>
+                  </label>
+               </div>
+               <style>
+                  #modal-activate-slider:checked + span { background-color: #2ecc71; }
+                  #modal-activate-slider:checked + span span { transform: translateX(24px); }
+               </style>
+            </div>
+         </div>
+         
       </div>
 
       <!-- FOOTER -->
@@ -181,9 +218,10 @@ function switchModalTab(tab) {
     document.getElementById('modal-body-filter').style.display = 'none';
     document.getElementById('modal-body-schedule').style.display = 'none';
     document.getElementById('modal-body-results').style.display = 'none';
+    document.getElementById('modal-body-activate').style.display = 'none';
     
     // Reset all headers
-    ['filter', 'schedule', 'results'].forEach(t => {
+    ['filter', 'schedule', 'results', 'activate'].forEach(t => {
         let el = document.getElementById('modal-tab-head-' + t);
         el.style.borderBottom = '2px solid transparent';
         el.style.color = '#111';
@@ -194,6 +232,15 @@ function switchModalTab(tab) {
     let head = document.getElementById('modal-tab-head-' + tab);
     head.style.borderBottom = '2px solid #3f51b5';
     head.style.color = '#3f51b5';
+}
+
+function toggleScheduleActiveState(isActive) {
+    // Lookup the first green status indicator dot on the main schedule grid
+    const dot = document.querySelector('#cfg-email tbody tr td div');
+    if (dot) {
+        dot.style.background = isActive ? '#2ecc71' : '#ccc';
+        dot.style.boxShadow = isActive ? '0 1px 3px rgba(46,204,113,0.4)' : 'none';
+    }
 }
 </script>
 </body>"""
