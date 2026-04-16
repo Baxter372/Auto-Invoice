@@ -64,7 +64,6 @@ function setCardFocus(sectionId, cardId) {
             panel.style.borderTop = `4px solid ${tColor}`;
         }
         
-        // Mock table data pipeline
         const tbody = document.getElementById(sectionId + '-audience-tbody');
         if(tbody) {
              const dataBlock1 = `
@@ -126,7 +125,6 @@ function setCardFocus(sectionId, cardId) {
         }
     }
 }
-
 // ── Schedule ON/OFF Interaction ──────────────────────────────
 function toggleCardStatus(btn, state) {
     const btnContainer = btn.parentElement; 
@@ -2186,12 +2184,15 @@ function setCardFocus(sectionId, cardId) {
     cards.forEach(c => {
         c.style.transform = 'scale(1)';
         c.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)';
+        c.style.borderColor = '#2c3e8c';
     });
 
     const targetCard = document.getElementById(cardId);
     if(targetCard) {
+        const tColor = targetCard.getAttribute('data-color') || '#2c3e8c';
         targetCard.style.transform = 'scale(1.02)';
-        targetCard.style.boxShadow = '0 8px 24px rgba(44, 62, 140, 0.15)';
+        targetCard.style.boxShadow = `0 8px 24px ${tColor}40`;
+        targetCard.style.borderColor = tColor;
         
         let name = "New Placeholder Schedule";
         const nameInput = targetCard.querySelector('input[type="text"]');
@@ -2205,7 +2206,11 @@ function setCardFocus(sectionId, cardId) {
         const audienceHeader = document.getElementById(sectionId + '-audience-target');
         if (audienceHeader) audienceHeader.innerText = name;
         
-        // Mock table data pipeline
+        const panel = document.getElementById(sectionId + '-audience-panel');
+        if(panel) {
+            panel.style.borderTop = `4px solid ${tColor}`;
+        }
+        
         const tbody = document.getElementById(sectionId + '-audience-tbody');
         if(tbody) {
              const dataBlock1 = `
@@ -2267,7 +2272,6 @@ function setCardFocus(sectionId, cardId) {
         }
     }
 }
-
 // ── Schedule ON/OFF Interaction ──────────────────────────────
 function toggleCardStatus(btn, state) {
     const btnContainer = btn.parentElement; 
@@ -2839,12 +2843,15 @@ function setCardFocus(sectionId, cardId) {
     cards.forEach(c => {
         c.style.transform = 'scale(1)';
         c.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)';
+        c.style.borderColor = '#2c3e8c';
     });
 
     const targetCard = document.getElementById(cardId);
     if(targetCard) {
+        const tColor = targetCard.getAttribute('data-color') || '#2c3e8c';
         targetCard.style.transform = 'scale(1.02)';
-        targetCard.style.boxShadow = '0 8px 24px rgba(44, 62, 140, 0.15)';
+        targetCard.style.boxShadow = `0 8px 24px ${tColor}40`;
+        targetCard.style.borderColor = tColor;
         
         let name = "New Placeholder Schedule";
         const nameInput = targetCard.querySelector('input[type="text"]');
@@ -2858,7 +2865,11 @@ function setCardFocus(sectionId, cardId) {
         const audienceHeader = document.getElementById(sectionId + '-audience-target');
         if (audienceHeader) audienceHeader.innerText = name;
         
-        // Mock table data pipeline
+        const panel = document.getElementById(sectionId + '-audience-panel');
+        if(panel) {
+            panel.style.borderTop = `4px solid ${tColor}`;
+        }
+        
         const tbody = document.getElementById(sectionId + '-audience-tbody');
         if(tbody) {
              const dataBlock1 = `
@@ -2920,7 +2931,6 @@ function setCardFocus(sectionId, cardId) {
         }
     }
 }
-
 // ── Schedule ON/OFF Interaction ──────────────────────────────
 function toggleCardStatus(btn, state) {
     const btnContainer = btn.parentElement; 
