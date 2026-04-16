@@ -217,9 +217,9 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
 <div id="schedule-select-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(2px);">
    <div style="background:#fff; border-radius:4px; box-shadow:0 12px 40px rgba(0,0,0,0.2); width:450px; border:1px solid #ddd; display:flex; flex-direction:column; overflow:hidden; font-family:Arial, sans-serif;">
       <!-- HEADER -->
-      <div style="background:#3f51b5; color:#fff; padding:14px 20px; display:flex; align-items:center; justify-content:space-between;">
-         <div style="margin:0; font-size:1.1rem; font-weight:bold; display:flex; align-items:center; gap:6px;">Select Route</div>
-         <i data-lucide="x" style="width:20px; height:20px; cursor:pointer; color:#fff;" onclick="document.getElementById('schedule-select-modal').style.display='none'"></i>
+      <div style="background:#f4f6f8; color:#555; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee;">
+         <div style="margin:0; font-size:1.1rem; font-weight:bold; display:flex; align-items:center; gap:6px;">Choose a List</div>
+         <i data-lucide="x" style="width:20px; height:20px; cursor:pointer; color:#888;" onclick="document.getElementById('schedule-select-modal').style.display='none'"></i>
       </div>
       <!-- BODY -->
       <div style="padding:24px; text-align:center;">
