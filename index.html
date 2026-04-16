@@ -1638,6 +1638,7 @@ function applySmsBilling(state){
 function setScheduleStatus(type, status){
   scheduleStatus[type] = status;
   const eBtn = document.getElementById('cfg-'+type+'-enabled');
+  if(!eBtn) return; // Prevent crash on new redesign layout lacking these IDs
   const pBtn = document.getElementById('cfg-'+type+'-paused');
   const sched = document.getElementById('cfg-'+type+'-schedule');
   eBtn.style.background = status==='enabled' ? '#27ae60' : '#888';
