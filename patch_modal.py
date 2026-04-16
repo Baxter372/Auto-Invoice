@@ -208,7 +208,7 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
       <!-- FOOTER -->
       <div style="padding:16px 20px; background:#fff; border-top:1px solid #ddd; display:flex; justify-content:flex-end; gap:12px; flex-shrink:0;">
          <button style="padding:10px 24px; background:#fff; border:1px solid #ccc; border-radius:4px; font-size:0.9rem; color:#555; cursor:pointer;" onclick="document.getElementById('schedule-edit-modal').style.display='none'">Cancel</button>
-         <button style="padding:10px 32px; background:#3f51b5; border:none; border-radius:4px; font-size:0.9rem; color:#fff; font-weight:bold; cursor:pointer;" onclick="document.getElementById('schedule-edit-modal').style.display='none'">Save</button>
+         <button id="modal-primary-action-btn" style="padding:10px 32px; background:#3f51b5; border:none; border-radius:4px; font-size:0.9rem; color:#fff; font-weight:bold; cursor:pointer;" onclick="document.getElementById('schedule-edit-modal').style.display='none'">Save & Next</button>
       </div>
    </div>
 </div>
@@ -233,6 +233,17 @@ function switchModalTab(tab) {
     let head = document.getElementById('modal-tab-head-' + tab);
     head.style.borderBottom = '2px solid #3f51b5';
     head.style.color = '#3f51b5';
+    
+    // Dynamic Action Button Logic
+    let actionBtn = document.getElementById('modal-primary-action-btn');
+    if (tab === 'activate') {
+        actionBtn.innerText = 'Save Configuration';
+        actionBtn.onclick = function() { document.getElementById('schedule-edit-modal').style.display='none'; };
+    } else {
+        actionBtn.innerText = 'Save & Next';
+        let nextTab = tab === 'filter' ? 'schedule' : (tab === 'schedule' ? 'results' : 'activate');
+        actionBtn.onclick = function() { switchModalTab(nextTab); };
+    }
 }
 
 function toggleScheduleActiveState(isActive) {
