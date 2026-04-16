@@ -8,9 +8,10 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
    <div style="background:#fff; border-radius:4px; box-shadow:0 12px 40px rgba(0,0,0,0.2); width:800px; height:750px; max-height:90vh; border:1px solid #ddd; display:flex; flex-direction:column; overflow:hidden; font-family:Arial, sans-serif;">
       
       <!-- HEADER -->
+      <style>.modal-head-input::placeholder { color:#aaa; font-style:italic; font-weight:normal; }</style>
       <div style="background:#fff; padding:16px 20px 0 20px; border-bottom:1px solid #ddd; flex-shrink:0;">
          <div style="display:flex; justify-content:space-between; align-items:center; margin:-16px -20px 16px -20px; padding:16px 20px; background:#f4f6f8; border-bottom:1px solid #eee;">
-            <input type="text" value="Pending Payment Customers" style="margin:0; font-size:1.3rem; font-weight:bold; color:#555; background:transparent; border:none; outline:none; border-bottom:1px solid transparent; transition:border 0.2s; width:60%;" onfocus="this.style.borderBottom='1px solid #3f51b5'" onblur="this.style.borderBottom='1px solid transparent'"/>
+            <input type="text" class="modal-head-input" placeholder="type a schedule name" value="" style="margin:0; font-size:1.3rem; font-weight:bold; color:#555; background:transparent; border:none; outline:none; border-bottom:1px solid transparent; transition:border 0.2s; width:60%;" onfocus="this.style.borderBottom='1px solid #3f51b5'" onblur="this.style.borderBottom='1px solid transparent'"/>
             <i data-lucide="x" style="width:24px; height:24px; cursor:pointer; color:#888;" onclick="document.getElementById('schedule-edit-modal').style.display='none'"></i>
          </div>
          
