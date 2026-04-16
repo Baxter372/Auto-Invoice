@@ -5,20 +5,37 @@ with open("index.html", "r", encoding="utf-8") as f:
     content = f.read()
 
 # Shared fields block to inject inside cards
-def get_fields(type_str):
+def get_fields(type_str, card_num=0):
+    val_name = "New Placeholder Schedule"
+    chk_pay_this_year = ""
+    chk_pay_last_year = ""
+    chk_attach_yes = ""
+    chk_attach_no = "checked"
+    
+    if card_num == 1:
+        val_name = "This Year's Renewal Customers"
+        chk_pay_this_year = "checked"
+        chk_attach_yes = "checked"
+        chk_attach_no = ""
+    elif card_num == 2:
+        val_name = "Last Year's Renewal Customers"
+        chk_pay_last_year = "checked"
+        chk_attach_yes = "checked"
+        chk_attach_no = ""
+
     return f"""
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="{val_name}" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox" {chk_pay_this_year} style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox" {chk_pay_last_year} style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -47,8 +64,8 @@ def get_fields(type_str):
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_{type_str}" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_{type_str}" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_{type_str}" {chk_attach_yes} style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_{type_str}" {chk_attach_no} style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
 
@@ -107,7 +124,7 @@ def get_fields(type_str):
 def generate_layout(section_id, active_label, count=4):
     cards_html = ""
     for i in range(1, count + 1):
-        if i == 1:
+        if i in [1, 2]:
             # Active Card
             card = f"""
     <!-- Card {i} -->
@@ -157,7 +174,7 @@ def generate_layout(section_id, active_label, count=4):
                <a href="javascript:void(0)" onclick="revertCard('{section_id}-c{i}')" style="color:#0277bd; text-decoration:underline;">Revert to no Schedule</a>
             </span>
          </div>
-         {get_fields(active_label + f"_c{i}")}
+         {get_fields(active_label + f"_c{i}", i)}
       </div>
     </div>
             """

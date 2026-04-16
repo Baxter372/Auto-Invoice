@@ -991,6 +991,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 
 
 
+
 <div id="cfg-email" style="padding:16px; display:flex; gap:24px; align-items:flex-start; ">
     <div style="flex:2.2; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
         
@@ -1008,17 +1009,17 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       </div>
       
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="New Placeholder Schedule" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -1047,7 +1048,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_Email_c1" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_Email_c1"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_Email_c1" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
@@ -1106,47 +1107,30 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 2 -->
-    <div id="cfg-email-c2" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c2')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
-      <div id="cfg-email-c2-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
+    <div id="cfg-email-c2" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c2')" style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
           <span style="font-size:0.75rem; color:#333;">Status</span>
           <div style="display:flex; border-radius:2px; overflow:hidden;">
-            <button onclick="toggleCardStatus(this, 'off')" style="background:#e74c3c; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
-            <button onclick="toggleCardStatus(this, 'on')" style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
+            <button onclick="toggleCardStatus(this, 'off')" style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
+            <button onclick="toggleCardStatus(this, 'on')" style="background:#27ae60; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
           </div>
         </div>
       </div>
-
-      <!-- State 1: Placeholder/Collapsed -->
-      <div id="cfg-email-c2-placeholder" style="flex:1; display:flex; flex-direction:column; align-items:center; padding-top:60px; cursor:pointer;" onclick="expandCard('cfg-email-c2')">
-         <div style="display:flex; align-items:center; gap:10px; font-size:1rem; color:#111; font-weight:bold;">
-            <i data-lucide="plus-circle" style="width:24px; height:24px; color:#3f51b5;"></i>
-            Add Another Schedule
-         </div>
-      </div>
-
-      <!-- State 2: Expanded Fields -->
-      <div id="cfg-email-c2-full" style="display:none; flex:1; flex-direction:column;">
-         <div style="margin-bottom:12px; border-bottom:1px solid #ddd; padding-bottom:8px;">
-            <span style="font-size:0.75rem; color:#888; display:flex; align-items:center; justify-content:space-between;">
-               <span style="display:flex; align-items:center; gap:4px;"><i data-lucide="plus-circle" style="width:12px; height:12px; color:#3f51b5;"></i> Add Another Schedule</span>
-               <a href="javascript:void(0)" onclick="revertCard('cfg-email-c2')" style="color:#0277bd; text-decoration:underline;">Revert to no Schedule</a>
-            </span>
-         </div>
-         
+      
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="New Placeholder Schedule" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -1175,7 +1159,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_Email_c2" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_Email_c2"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_Email_c2" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
@@ -1231,7 +1215,6 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
          <div style="display:flex;align-items:center;gap:6px;"><i data-lucide="info" style="width: 14px; height: 14px; flex-shrink: 0;"></i> <span>The Administrator will be notified by Email_c2 24 hours prior to the start of the Auto-Invoicing process.</span></div>
       </div>
 
-      </div>
     </div>
             
     <!-- Card 3 -->
@@ -1265,17 +1248,17 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
          </div>
          
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="New Placeholder Schedule" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -1304,7 +1287,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_Email_c3" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_Email_c3"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_Email_c3" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
@@ -1394,17 +1377,17 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
          </div>
          
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="New Placeholder Schedule" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -1433,7 +1416,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_Email_c4" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_Email_c4"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_Email_c4" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
@@ -1512,7 +1495,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
                        <th style="padding:10px 8px;">EMAIL</th>
                     </tr>
                 </thead>
-                <tbody style="color:#e74c3c;">
+                <tbody id="cfg-email-audience-tbody" style="color:#e74c3c;">
                     <tr style="border-bottom:1px solid #f0f0f0;">
                        <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
                        <td style="padding:8px;">Demooo Demooo</td>
@@ -1562,17 +1545,17 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       </div>
       
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="New Placeholder Schedule" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -1601,7 +1584,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_SMS_c1" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_SMS_c1"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_SMS_c1" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
@@ -1660,47 +1643,30 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 2 -->
-    <div id="cfg-sms-c2" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c2')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
-      <div id="cfg-sms-c2-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
+    <div id="cfg-sms-c2" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c2')" style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
           <span style="font-size:0.75rem; color:#333;">Status</span>
           <div style="display:flex; border-radius:2px; overflow:hidden;">
-            <button onclick="toggleCardStatus(this, 'off')" style="background:#e74c3c; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
-            <button onclick="toggleCardStatus(this, 'on')" style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
+            <button onclick="toggleCardStatus(this, 'off')" style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
+            <button onclick="toggleCardStatus(this, 'on')" style="background:#27ae60; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
           </div>
         </div>
       </div>
-
-      <!-- State 1: Placeholder/Collapsed -->
-      <div id="cfg-sms-c2-placeholder" style="flex:1; display:flex; flex-direction:column; align-items:center; padding-top:60px; cursor:pointer;" onclick="expandCard('cfg-sms-c2')">
-         <div style="display:flex; align-items:center; gap:10px; font-size:1rem; color:#111; font-weight:bold;">
-            <i data-lucide="plus-circle" style="width:24px; height:24px; color:#3f51b5;"></i>
-            Add Another Schedule
-         </div>
-      </div>
-
-      <!-- State 2: Expanded Fields -->
-      <div id="cfg-sms-c2-full" style="display:none; flex:1; flex-direction:column;">
-         <div style="margin-bottom:12px; border-bottom:1px solid #ddd; padding-bottom:8px;">
-            <span style="font-size:0.75rem; color:#888; display:flex; align-items:center; justify-content:space-between;">
-               <span style="display:flex; align-items:center; gap:4px;"><i data-lucide="plus-circle" style="width:12px; height:12px; color:#3f51b5;"></i> Add Another Schedule</span>
-               <a href="javascript:void(0)" onclick="revertCard('cfg-sms-c2')" style="color:#0277bd; text-decoration:underline;">Revert to no Schedule</a>
-            </span>
-         </div>
-         
+      
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="New Placeholder Schedule" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -1729,7 +1695,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_SMS_c2" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_SMS_c2"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_SMS_c2" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
@@ -1785,7 +1751,6 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
          <div style="display:flex;align-items:center;gap:6px;"><i data-lucide="info" style="width: 14px; height: 14px; flex-shrink: 0;"></i> <span>The Administrator will be notified by SMS_c2 24 hours prior to the start of the Auto-Invoicing process.</span></div>
       </div>
 
-      </div>
     </div>
             
     <!-- Card 3 -->
@@ -1819,17 +1784,17 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
          </div>
          
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="New Placeholder Schedule" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -1858,7 +1823,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_SMS_c3" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_SMS_c3"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_SMS_c3" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
@@ -1948,17 +1913,17 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
          </div>
          
       <div style="margin-bottom:16px;">
-         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="This Year's Renewal Customers" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
+         <div style="font-weight:bold; font-size:0.9rem; color:#111; margin-bottom:4px; display:flex; align-items:flex-end;">Schedule Name: <input type="text" value="New Placeholder Schedule" style="border:none; border-bottom:1px solid #b3d9f5; color:#0277bd; font-size:1.05rem; flex:1; outline:none; font-weight:bold; padding-bottom:2px; margin-left:8px;"/></div>
       </div>
       
       <!-- Payment Status -->
       <div style="margin-bottom:14px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Payment Status</div>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; margin-bottom:6px; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (this year)
          </label>
          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#555; cursor:pointer;">
-            <input type="checkbox" style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
+            <input type="checkbox"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Customers with active Invoices (past years)
          </label>
       </div>
 
@@ -1987,7 +1952,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <div style="margin-bottom:20px; border:1px solid #eee; padding:12px; border-radius:4px;">
          <div style="font-weight:bold; font-size:0.85rem; color:#111; margin-bottom:8px;">Attach Invoice to each Customer's Notice?</div>
          <div style="display:flex; gap:16px;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_SMS_c4" style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#555; cursor:pointer;"><input type="radio" name="attach_SMS_c4"  style="transform:scale(1.2); accent-color:#3f51b5;"/> Yes</label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#111; font-weight:bold; cursor:pointer;"><input type="radio" name="attach_SMS_c4" checked style="transform:scale(1.2); accent-color:#3f51b5;"/> No</label>
          </div>
       </div>
@@ -2066,7 +2031,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
                        <th style="padding:10px 8px;">EMAIL</th>
                     </tr>
                 </thead>
-                <tbody style="color:#e74c3c;">
+                <tbody id="cfg-sms-audience-tbody" style="color:#e74c3c;">
                     <tr style="border-bottom:1px solid #f0f0f0;">
                        <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
                        <td style="padding:8px;">Demooo Demooo</td>
