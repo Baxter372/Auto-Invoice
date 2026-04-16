@@ -190,14 +190,15 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
                   <!-- Native iOS-Style Toggle -->
                   <label style="position:relative; display:inline-block; width:52px; height:28px;">
                      <input type="checkbox" id="modal-activate-slider" checked style="opacity:0; width:0; height:0;" onchange="toggleScheduleActiveState(this.checked)" />
-                     <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#ccc; transition:.4s; border-radius:28px;">
-                        <span style="position:absolute; content:''; height:20px; width:20px; left:4px; bottom:4px; background-color:white; transition:.4s; border-radius:50%; box-shadow:0 1px 3px rgba(0,0,0,0.2);"></span>
+                     <span class="slider-bg" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; transition:.4s; border-radius:28px;">
+                        <span class="slider-dot" style="position:absolute; content:''; height:20px; width:20px; left:4px; bottom:4px; background-color:white; transition:.4s; border-radius:50%; box-shadow:0 1px 3px rgba(0,0,0,0.2);"></span>
                      </span>
                   </label>
                </div>
                <style>
-                  #modal-activate-slider:checked + span { background-color: #2ecc71; }
-                  #modal-activate-slider:checked + span span { transform: translateX(24px); }
+                  .slider-bg { background-color: #ccc; }
+                  #modal-activate-slider:checked + .slider-bg { background-color: #2ecc71 !important; }
+                  #modal-activate-slider:checked + .slider-bg .slider-dot { transform: translateX(24px); }
                </style>
             </div>
          </div>
