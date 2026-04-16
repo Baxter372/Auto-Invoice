@@ -462,41 +462,29 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div style="font-size:0.9rem; color:#555; margin-top:8px;">Scheduled</div>
 </div>
 </div>
-<!-- Recent Activity List -->
-<div style="text-align:left; margin-bottom:24px; font-size:0.85rem;">
-<!-- Row 1 -->
-<div style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f0f0f0;">
-<div style="width:36px; height:36px; border-radius:50%; background:#e8f4fd; color:#0277bd; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-<i data-lucide="user" style="width:18px;height:18px;"></i>
-</div>
-<div style="flex:1;">
-<div style="color:#111; font-weight:bold;">Sent — John Nakaoka</div>
-<div style="color:#888; font-size:0.75rem;">1386 Shadow Creek Dr · 1 flag</div>
-</div>
-<div style="color:#aaa; font-size:0.75rem;">8m ago</div>
-</div>
-<!-- Row 2 -->
-<div style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f0f0f0;">
-<div style="width:36px; height:36px; border-radius:50%; background:#e8f4fd; color:#0277bd; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-<i data-lucide="calendar" style="width:18px;height:18px;"></i>
-</div>
-<div style="flex:1;">
-<div style="color:#111; font-weight:bold;">Scheduled — Jim Baxter</div>
-<div style="color:#888; font-size:0.75rem;">Renewal Notice · Annual sub</div>
-</div>
-<div style="color:#aaa; font-size:0.75rem;">1h ago</div>
-</div>
-<!-- Row 3 -->
-<div style="display:flex; align-items:center; gap:12px; padding:10px 0;">
-<div style="width:36px; height:36px; border-radius:50%; background:#fff0f0; color:#e74c3c; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-<i data-lucide="alert-circle" style="width:18px;height:18px;"></i>
-</div>
-<div style="flex:1;">
-<div style="color:#111; font-weight:bold;">Bounced — George Jones</div>
-<div style="color:#888; font-size:0.75rem;">Invalid Address · Final Notice</div>
-</div>
-<div style="color:#aaa; font-size:0.75rem;">2h ago</div>
-</div>
+<!-- Active Schedules List -->
+<div style="text-align:left; margin-bottom:24px; border:1px solid #eee; border-radius:6px; overflow:hidden;">
+   <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+      <thead style="background:#f9faff; color:#2c3e8c;">
+         <tr style="border-bottom:1px solid #eee;">
+            <th style="padding:10px 12px; text-align:left; font-weight:bold;">Schedule Name</th>
+            <th style="padding:10px 12px; text-align:center; font-weight:bold;">Next Sch. Date</th>
+            <th style="padding:10px 12px; text-align:center; font-weight:bold;">Audience Ct.</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:12px; color:#111; font-weight:bold;">Pending Payment Subscri...</td>
+            <td style="padding:12px; color:#555; text-align:center;">Apr 30, 2026</td>
+            <td style="padding:12px; color:#0277bd; font-weight:bold; text-align:center;">212</td>
+         </tr>
+         <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:12px; color:#111; font-weight:bold;">Expired Credit Card</td>
+            <td style="padding:12px; color:#555; text-align:center;">Jul 01, 2026</td>
+            <td style="padding:12px; color:#0277bd; font-weight:bold; text-align:center;">15</td>
+         </tr>
+      </tbody>
+   </table>
 </div>
 <!-- CSS Pie Chart -->
 <div style="display:flex; justify-content:center; margin-bottom:30px;">
@@ -538,41 +526,29 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div style="font-size:0.9rem; color:#555; margin-top:8px;">Cost</div>
 </div>
 </div>
-<!-- Recent Activity List -->
-<div style="text-align:left; margin-bottom:24px; font-size:0.85rem;">
-<!-- Row 1 -->
-<div style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f0f0f0;">
-<div style="width:36px; height:36px; border-radius:50%; background:#e0f7fa; color:#006c8a; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-<i data-lucide="message-circle" style="width:18px;height:18px;"></i>
-</div>
-<div style="flex:1;">
-<div style="color:#111; font-weight:bold;">Delivered — John Smith</div>
-<div style="color:#888; font-size:0.75rem;">(214) 555-0182 · Expired</div>
-</div>
-<div style="color:#aaa; font-size:0.75rem;">12m ago</div>
-</div>
-<!-- Row 2 -->
-<div style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f0f0f0;">
-<div style="width:36px; height:36px; border-radius:50%; background:#fff0f0; color:#e74c3c; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-<i data-lucide="x-circle" style="width:18px;height:18px;"></i>
-</div>
-<div style="flex:1;">
-<div style="color:#111; font-weight:bold;">Failed — Linda Garza</div>
-<div style="color:#888; font-size:0.75rem;">(972) 555-0344 · Renewal</div>
-</div>
-<div style="color:#aaa; font-size:0.75rem;">45m ago</div>
-</div>
-<!-- Row 3 -->
-<div style="display:flex; align-items:center; gap:12px; padding:10px 0;">
-<div style="width:36px; height:36px; border-radius:50%; background:#e0f7fa; color:#006c8a; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-<i data-lucide="check-circle" style="width:18px;height:18px;"></i>
-</div>
-<div style="flex:1;">
-<div style="color:#111; font-weight:bold;">Delivered — Mike Torres</div>
-<div style="color:#888; font-size:0.75rem;">(469) 555-0217 · Renewal</div>
-</div>
-<div style="color:#aaa; font-size:0.75rem;">3h ago</div>
-</div>
+<!-- Active Schedules List -->
+<div style="text-align:left; margin-bottom:24px; border:1px solid #eee; border-radius:6px; overflow:hidden;">
+   <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+      <thead style="background:#f9faff; color:#2c3e8c;">
+         <tr style="border-bottom:1px solid #eee;">
+            <th style="padding:10px 12px; text-align:left; font-weight:bold;">Schedule Name</th>
+            <th style="padding:10px 12px; text-align:center; font-weight:bold;">Next Sch. Date</th>
+            <th style="padding:10px 12px; text-align:center; font-weight:bold;">Audience Ct.</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:12px; color:#111; font-weight:bold;">Pending Payment Subscri...</td>
+            <td style="padding:12px; color:#555; text-align:center;">Apr 30, 2026</td>
+            <td style="padding:12px; color:#0277bd; font-weight:bold; text-align:center;">82</td>
+         </tr>
+         <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:12px; color:#111; font-weight:bold;">Last Year Invoices</td>
+            <td style="padding:12px; color:#555; text-align:center;">Aug 15, 2026</td>
+            <td style="padding:12px; color:#0277bd; font-weight:bold; text-align:center;">14</td>
+         </tr>
+      </tbody>
+   </table>
 </div>
 <!-- CSS Donut Chart -->
 <div style="display:flex; justify-content:center; margin-bottom:30px;">
