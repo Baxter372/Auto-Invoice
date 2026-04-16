@@ -44,7 +44,7 @@ function setCardFocus(sectionId, cardId) {
         targetCard.style.transform = 'scale(1.02)';
         targetCard.style.boxShadow = '0 8px 24px rgba(44, 62, 140, 0.15)';
         
-        let name = "";
+        let name = "New Placeholder Schedule";
         const nameInput = targetCard.querySelector('input[type="text"]');
         if (nameInput && nameInput.value) {
             name = nameInput.value;
@@ -55,6 +55,67 @@ function setCardFocus(sectionId, cardId) {
         
         const audienceHeader = document.getElementById(sectionId + '-audience-target');
         if (audienceHeader) audienceHeader.innerText = name;
+        
+        // Mock table data pipeline
+        const tbody = document.getElementById(sectionId + '-audience-tbody');
+        if(tbody) {
+             const dataBlock1 = `
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Demooo Demooo</td>
+                   <td style="padding:8px;">890 Mountain Ave</td>
+                   <td style="padding:8px;">test@webcodegenie.net</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Webcodegenie</td>
+                   <td style="padding:8px;">676 N St Clair St</td>
+                   <td style="padding:8px;">sakshi.b@webcodegenie.com</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Multi Tier Product Test</td>
+                   <td style="padding:8px;">3456 Shadeland Ave</td>
+                   <td style="padding:8px;">tier@webcodegenie.net</td>
+                </tr>
+                <tr>
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Demo Testing</td>
+                   <td style="padding:8px;">5465 Windward Pkwy</td>
+                   <td style="padding:8px;">Demo.test@webcodegenie.net</td>
+                </tr>`;
+             
+             const dataBlock2 = `
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Acme Logistics Corp</td>
+                   <td style="padding:8px;">123 Business Loop, NY</td>
+                   <td style="padding:8px;">accounts@acmelogistics.com</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Jane Smith Enterprises</td>
+                   <td style="padding:8px;">42 North Avenue, Suite B</td>
+                   <td style="padding:8px;">jane.smith@gmail.com</td>
+                </tr>
+                <tr>
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Global Dynamics Inc.</td>
+                   <td style="padding:8px;">900 Tech Park Way</td>
+                   <td style="padding:8px;">billing@globaldynamics.org</td>
+                </tr>`;
+             
+             const emptyData = `
+                <tr><td colspan="4" style="padding:24px; text-align:center; color:#888;">No audience targeted by this filter configuration yet.</td></tr>`;
+                
+             if (cardId.endsWith('-c1')) {
+                 tbody.innerHTML = dataBlock1;
+             } else if (cardId.endsWith('-c2')) {
+                 tbody.innerHTML = dataBlock2;
+             } else {
+                 tbody.innerHTML = emptyData;
+             }
+        }
     }
 }
 
@@ -2160,7 +2221,7 @@ function setCardFocus(sectionId, cardId) {
         targetCard.style.transform = 'scale(1.02)';
         targetCard.style.boxShadow = '0 8px 24px rgba(44, 62, 140, 0.15)';
         
-        let name = "";
+        let name = "New Placeholder Schedule";
         const nameInput = targetCard.querySelector('input[type="text"]');
         if (nameInput && nameInput.value) {
             name = nameInput.value;
@@ -2171,6 +2232,67 @@ function setCardFocus(sectionId, cardId) {
         
         const audienceHeader = document.getElementById(sectionId + '-audience-target');
         if (audienceHeader) audienceHeader.innerText = name;
+        
+        // Mock table data pipeline
+        const tbody = document.getElementById(sectionId + '-audience-tbody');
+        if(tbody) {
+             const dataBlock1 = `
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Demooo Demooo</td>
+                   <td style="padding:8px;">890 Mountain Ave</td>
+                   <td style="padding:8px;">test@webcodegenie.net</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Webcodegenie</td>
+                   <td style="padding:8px;">676 N St Clair St</td>
+                   <td style="padding:8px;">sakshi.b@webcodegenie.com</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Multi Tier Product Test</td>
+                   <td style="padding:8px;">3456 Shadeland Ave</td>
+                   <td style="padding:8px;">tier@webcodegenie.net</td>
+                </tr>
+                <tr>
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Demo Testing</td>
+                   <td style="padding:8px;">5465 Windward Pkwy</td>
+                   <td style="padding:8px;">Demo.test@webcodegenie.net</td>
+                </tr>`;
+             
+             const dataBlock2 = `
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Acme Logistics Corp</td>
+                   <td style="padding:8px;">123 Business Loop, NY</td>
+                   <td style="padding:8px;">accounts@acmelogistics.com</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Jane Smith Enterprises</td>
+                   <td style="padding:8px;">42 North Avenue, Suite B</td>
+                   <td style="padding:8px;">jane.smith@gmail.com</td>
+                </tr>
+                <tr>
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Global Dynamics Inc.</td>
+                   <td style="padding:8px;">900 Tech Park Way</td>
+                   <td style="padding:8px;">billing@globaldynamics.org</td>
+                </tr>`;
+             
+             const emptyData = `
+                <tr><td colspan="4" style="padding:24px; text-align:center; color:#888;">No audience targeted by this filter configuration yet.</td></tr>`;
+                
+             if (cardId.endsWith('-c1')) {
+                 tbody.innerHTML = dataBlock1;
+             } else if (cardId.endsWith('-c2')) {
+                 tbody.innerHTML = dataBlock2;
+             } else {
+                 tbody.innerHTML = emptyData;
+             }
+        }
     }
 }
 
@@ -2754,7 +2876,7 @@ function setCardFocus(sectionId, cardId) {
         targetCard.style.transform = 'scale(1.02)';
         targetCard.style.boxShadow = '0 8px 24px rgba(44, 62, 140, 0.15)';
         
-        let name = "";
+        let name = "New Placeholder Schedule";
         const nameInput = targetCard.querySelector('input[type="text"]');
         if (nameInput && nameInput.value) {
             name = nameInput.value;
@@ -2765,6 +2887,67 @@ function setCardFocus(sectionId, cardId) {
         
         const audienceHeader = document.getElementById(sectionId + '-audience-target');
         if (audienceHeader) audienceHeader.innerText = name;
+        
+        // Mock table data pipeline
+        const tbody = document.getElementById(sectionId + '-audience-tbody');
+        if(tbody) {
+             const dataBlock1 = `
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Demooo Demooo</td>
+                   <td style="padding:8px;">890 Mountain Ave</td>
+                   <td style="padding:8px;">test@webcodegenie.net</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Webcodegenie</td>
+                   <td style="padding:8px;">676 N St Clair St</td>
+                   <td style="padding:8px;">sakshi.b@webcodegenie.com</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Multi Tier Product Test</td>
+                   <td style="padding:8px;">3456 Shadeland Ave</td>
+                   <td style="padding:8px;">tier@webcodegenie.net</td>
+                </tr>
+                <tr>
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Demo Testing</td>
+                   <td style="padding:8px;">5465 Windward Pkwy</td>
+                   <td style="padding:8px;">Demo.test@webcodegenie.net</td>
+                </tr>`;
+             
+             const dataBlock2 = `
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Acme Logistics Corp</td>
+                   <td style="padding:8px;">123 Business Loop, NY</td>
+                   <td style="padding:8px;">accounts@acmelogistics.com</td>
+                </tr>
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Jane Smith Enterprises</td>
+                   <td style="padding:8px;">42 North Avenue, Suite B</td>
+                   <td style="padding:8px;">jane.smith@gmail.com</td>
+                </tr>
+                <tr>
+                   <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                   <td style="padding:8px;">Global Dynamics Inc.</td>
+                   <td style="padding:8px;">900 Tech Park Way</td>
+                   <td style="padding:8px;">billing@globaldynamics.org</td>
+                </tr>`;
+             
+             const emptyData = `
+                <tr><td colspan="4" style="padding:24px; text-align:center; color:#888;">No audience targeted by this filter configuration yet.</td></tr>`;
+                
+             if (cardId.endsWith('-c1')) {
+                 tbody.innerHTML = dataBlock1;
+             } else if (cardId.endsWith('-c2')) {
+                 tbody.innerHTML = dataBlock2;
+             } else {
+                 tbody.innerHTML = emptyData;
+             }
+        }
     }
 }
 

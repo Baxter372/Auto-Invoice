@@ -182,7 +182,7 @@ def generate_layout(section_id, active_label, count=4):
                        <th style="padding:10px 8px;">EMAIL</th>
                     </tr>
                 </thead>
-                <tbody style="color:#e74c3c;">
+                <tbody id="{section_id}-audience-tbody" style="color:#e74c3c;">
                     <tr style="border-bottom:1px solid #f0f0f0;">
                        <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
                        <td style="padding:8px;">Demooo Demooo</td>
