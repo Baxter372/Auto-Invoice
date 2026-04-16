@@ -107,7 +107,7 @@ def get_fields(type_str):
 def generate_layout(section_id, active_label):
     card1 = f"""
     <!-- Card 1 -->
-    <div style="border:1px solid #2c3e8c; border-radius:4px; padding:20px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+    <div style="border:1px solid #2c3e8c; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:520px; overflow-y:auto;">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:16px;">
         <h2 style="margin:0; font-size:1.4rem; color:#111; font-weight:normal;">Auto-Send Invoice</h2>
         <div style="display:flex; align-items:center; gap:8px;">
@@ -124,7 +124,7 @@ def generate_layout(section_id, active_label):
 
     card2 = f"""
     <!-- Card 2 -->
-    <div id="{section_id}-c2" style="border:1px solid #2c3e8c; border-radius:4px; padding:20px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:800px; display:flex; flex-direction:column;">
+    <div id="{section_id}-c2" style="border:1px solid #2c3e8c; border-radius:4px; padding:16px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:520px; max-height:520px; overflow-y:auto; display:flex; flex-direction:column;">
       <div id="{section_id}-c2-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:16px;">
         <h2 style="margin:0; font-size:1.4rem; color:#111; font-weight:normal;">Auto-Send Invoice</h2>
         <div style="display:flex; align-items:center; gap:8px;">
@@ -157,10 +157,15 @@ def generate_layout(section_id, active_label):
     </div>
     """
 
+    card3 = card2.replace('-c2', '-c3')
+    card4 = card2.replace('-c2', '-c4')
+
     return f"""
-<div id="{section_id}" style="padding:20px; display:grid; grid-template-columns:1fr 1fr; gap:24px; { "display:none;" if section_id == "cfg-sms" else ""}">
+<div id="{section_id}" style="padding:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px; { "display:none;" if section_id == "cfg-sms" else ""}">
 {card1}
 {card2}
+{card3}
+{card4}
 </div>"""
 
 
@@ -205,7 +210,7 @@ function deleteScheduleRow(btn) {
 }
 """
 
-start_marker = '<div id="cfg-email" style="padding:20px;">'
+start_marker = '<div id="cfg-email"'
 end_marker = '</div> <!-- closes main-left-col -->'
 
 # Extract the block
@@ -216,10 +221,6 @@ if start_marker in content:
     # inject the new layouts
     new_content = pre + email_layout + "\n" + sms_layout + "\n</div> <!-- /#main-panel-config -->\n</div></div>\n" + end_marker + post
     
-    # inject script inside the <script> block
-    if "<script>" in new_content:
-        new_content = new_content.replace("<script>", "<script>\n" + js_functions)
-        
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(new_content)
     print("SUCCESS")
