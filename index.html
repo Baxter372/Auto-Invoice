@@ -37,12 +37,15 @@ function setCardFocus(sectionId, cardId) {
     cards.forEach(c => {
         c.style.transform = 'scale(1)';
         c.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)';
+        c.style.borderColor = '#2c3e8c';
     });
 
     const targetCard = document.getElementById(cardId);
     if(targetCard) {
+        const tColor = targetCard.getAttribute('data-color') || '#2c3e8c';
         targetCard.style.transform = 'scale(1.02)';
-        targetCard.style.boxShadow = '0 8px 24px rgba(44, 62, 140, 0.15)';
+        targetCard.style.boxShadow = `0 8px 24px ${tColor}40`;
+        targetCard.style.borderColor = tColor;
         
         let name = "New Placeholder Schedule";
         const nameInput = targetCard.querySelector('input[type="text"]');
@@ -55,6 +58,11 @@ function setCardFocus(sectionId, cardId) {
         
         const audienceHeader = document.getElementById(sectionId + '-audience-target');
         if (audienceHeader) audienceHeader.innerText = name;
+        
+        const panel = document.getElementById(sectionId + '-audience-panel');
+        if(panel) {
+            panel.style.borderTop = `4px solid ${tColor}`;
+        }
         
         // Mock table data pipeline
         const tbody = document.getElementById(sectionId + '-audience-tbody');
@@ -142,13 +150,11 @@ function toggleCardStatus(btn, state) {
         offBtn.style.color = '#888';
         onBtn.style.background = '#27ae60';
         onBtn.style.color = '#fff';
-        cardWrapper.style.borderTop = '4px solid #27ae60';
     } else {
         offBtn.style.background = '#e74c3c';
         offBtn.style.color = '#fff';
         onBtn.style.background = '#f0f0f0';
         onBtn.style.color = '#888';
-        cardWrapper.style.borderTop = '4px solid #e74c3c'; 
     }
 }
 // Dynamic Add/Delete Row Logic
@@ -992,11 +998,12 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 
 
 
+
 <div id="cfg-email" style="padding:16px; display:flex; gap:24px; align-items:flex-start; ">
     <div style="flex:2.2; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
         
     <!-- Card 1 -->
-    <div id="cfg-email-c1" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c1')" style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="cfg-email-c1" data-color="#3498db" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c1')" style="border:1px solid #2c3e8c; border-top:4px solid #3498db; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1107,7 +1114,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 2 -->
-    <div id="cfg-email-c2" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c2')" style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="cfg-email-c2" data-color="#9b59b6" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c2')" style="border:1px solid #2c3e8c; border-top:4px solid #9b59b6; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1218,7 +1225,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 3 -->
-    <div id="cfg-email-c3" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c3')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="cfg-email-c3" data-color="#e67e22" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c3')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div id="cfg-email-c3-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1347,7 +1354,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 4 -->
-    <div id="cfg-email-c4" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c4')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="cfg-email-c4" data-color="#1abc9c" class="schedule-card" onmouseenter="setCardFocus('cfg-email', 'cfg-email-c4')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div id="cfg-email-c4-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (Email) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1478,7 +1485,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
     
     <div style="flex:1;">
-       <div style="position:sticky; top:20px; border:1px solid #c9d8ff; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,0.05); min-height:600px;">
+       <div id="cfg-email-audience-panel" style="position:sticky; top:20px; border:1px solid #c9d8ff; border-top:4px solid transparent; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,0.05); min-height:600px; transition: border-top 0.25s ease;">
           <h2 style="margin:0 0 8px 0; font-size:1.2rem; color:#2c3e8c;">Audience Selector</h2>
           <p style="font-size:0.8rem; color:#666; margin-bottom:16px;">
              Previewing targeted audience for: <br/>
@@ -1532,7 +1539,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     <div style="flex:2.2; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
         
     <!-- Card 1 -->
-    <div id="cfg-sms-c1" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c1')" style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="cfg-sms-c1" data-color="#3498db" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c1')" style="border:1px solid #2c3e8c; border-top:4px solid #3498db; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1643,7 +1650,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 2 -->
-    <div id="cfg-sms-c2" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c2')" style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="cfg-sms-c2" data-color="#9b59b6" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c2')" style="border:1px solid #2c3e8c; border-top:4px solid #9b59b6; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1754,7 +1761,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 3 -->
-    <div id="cfg-sms-c3" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c3')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="cfg-sms-c3" data-color="#e67e22" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c3')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div id="cfg-sms-c3-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1883,7 +1890,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
             
     <!-- Card 4 -->
-    <div id="cfg-sms-c4" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c4')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="cfg-sms-c4" data-color="#1abc9c" class="schedule-card" onmouseenter="setCardFocus('cfg-sms', 'cfg-sms-c4')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div id="cfg-sms-c4-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send (SMS) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -2014,7 +2021,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
     
     <div style="flex:1;">
-       <div style="position:sticky; top:20px; border:1px solid #c9d8ff; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,0.05); min-height:600px;">
+       <div id="cfg-sms-audience-panel" style="position:sticky; top:20px; border:1px solid #c9d8ff; border-top:4px solid transparent; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,0.05); min-height:600px; transition: border-top 0.25s ease;">
           <h2 style="margin:0 0 8px 0; font-size:1.2rem; color:#2c3e8c;">Audience Selector</h2>
           <p style="font-size:0.8rem; color:#666; margin-bottom:16px;">
              Previewing targeted audience for: <br/>
@@ -2284,13 +2291,11 @@ function toggleCardStatus(btn, state) {
         offBtn.style.color = '#888';
         onBtn.style.background = '#27ae60';
         onBtn.style.color = '#fff';
-        cardWrapper.style.borderTop = '4px solid #27ae60';
     } else {
         offBtn.style.background = '#e74c3c';
         offBtn.style.color = '#fff';
         onBtn.style.background = '#f0f0f0';
         onBtn.style.color = '#888';
-        cardWrapper.style.borderTop = '4px solid #e74c3c'; 
     }
 }
 // Dynamic Add/Delete Row Logic
@@ -2939,13 +2944,11 @@ function toggleCardStatus(btn, state) {
         offBtn.style.color = '#888';
         onBtn.style.background = '#27ae60';
         onBtn.style.color = '#fff';
-        cardWrapper.style.borderTop = '4px solid #27ae60';
     } else {
         offBtn.style.background = '#e74c3c';
         offBtn.style.color = '#fff';
         onBtn.style.background = '#f0f0f0';
         onBtn.style.color = '#888';
-        cardWrapper.style.borderTop = '4px solid #e74c3c'; 
     }
 }
 // Dynamic Add/Delete Row Logic

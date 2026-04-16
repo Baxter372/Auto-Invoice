@@ -122,13 +122,15 @@ def get_fields(type_str, card_num=0):
 """
 
 def generate_layout(section_id, active_label, count=4):
+    card_colors = ['#3498db', '#9b59b6', '#e67e22', '#1abc9c', '#f1c40f']
     cards_html = ""
     for i in range(1, count + 1):
+        target_color = card_colors[(i-1) % len(card_colors)]
         if i in [1, 2]:
             # Active Card
             card = f"""
     <!-- Card {i} -->
-    <div id="{section_id}-c{i}" class="schedule-card" onmouseenter="setCardFocus('{section_id}', '{section_id}-c{i}')" style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="{section_id}-c{i}" data-color="{target_color}" class="schedule-card" onmouseenter="setCardFocus('{section_id}', '{section_id}-c{i}')" style="border:1px solid #2c3e8c; border-top:4px solid {target_color}; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send ({active_label}) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -146,7 +148,7 @@ def generate_layout(section_id, active_label, count=4):
             # Placeholder Card
             card = f"""
     <!-- Card {i} -->
-    <div id="{section_id}-c{i}" class="schedule-card" onmouseenter="setCardFocus('{section_id}', '{section_id}-c{i}')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
+    <div id="{section_id}-c{i}" data-color="{target_color}" class="schedule-card" onmouseenter="setCardFocus('{section_id}', '{section_id}-c{i}')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-color 0.2s;">
       <div id="{section_id}-c{i}-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send ({active_label}) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -182,7 +184,7 @@ def generate_layout(section_id, active_label, count=4):
 
     audience_html = f"""
     <div style="flex:1;">
-       <div style="position:sticky; top:20px; border:1px solid #c9d8ff; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,0.05); min-height:600px;">
+       <div id="{section_id}-audience-panel" style="position:sticky; top:20px; border:1px solid #c9d8ff; border-top:4px solid transparent; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,0.05); min-height:600px; transition: border-top 0.25s ease;">
           <h2 style="margin:0 0 8px 0; font-size:1.2rem; color:#2c3e8c;">Audience Selector</h2>
           <p style="font-size:0.8rem; color:#666; margin-bottom:16px;">
              Previewing targeted audience for: <br/>
@@ -291,15 +293,11 @@ function toggleCardStatus(btn, state) {
         offBtn.style.color = '#888';
         onBtn.style.background = '#27ae60';
         onBtn.style.color = '#fff';
-        cardWrapper.style.borderTop = '4px solid #27ae60';
     } else {
         offBtn.style.background = '#e74c3c';
         offBtn.style.color = '#fff';
         onBtn.style.background = '#f0f0f0';
         onBtn.style.color = '#888';
-        // Reset card top layer
-        cardWrapper.style.borderTop = '4px solid transparent'; 
-        // Note: For active Card 1, returning to transparent might lose its blue top edge if it was generic, but our transparent border preserves layout shift
     }
 }
 // Dynamic Add/Delete Row Logic
