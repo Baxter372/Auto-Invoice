@@ -208,7 +208,7 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
       <!-- FOOTER -->
       <div style="padding:16px 20px; background:#fff; border-top:1px solid #ddd; display:flex; justify-content:flex-end; gap:12px; flex-shrink:0;">
          <button style="padding:10px 24px; background:#fff; border:1px solid #ccc; border-radius:4px; font-size:0.9rem; color:#555; cursor:pointer;" onclick="document.getElementById('schedule-edit-modal').style.display='none'">Cancel</button>
-         <button id="modal-primary-action-btn" style="padding:10px 32px; background:#3f51b5; border:none; border-radius:4px; font-size:0.9rem; color:#fff; font-weight:bold; cursor:pointer;" onclick="document.getElementById('schedule-edit-modal').style.display='none'">Save & Next</button>
+         <button id="modal-primary-action-btn" style="padding:10px 32px; background:#3f51b5; border:none; border-radius:4px; font-size:0.9rem; color:#fff; font-weight:bold; cursor:pointer;">Save & Next</button>
       </div>
    </div>
 </div>
@@ -254,6 +254,9 @@ function toggleScheduleActiveState(isActive) {
         dot.style.boxShadow = isActive ? '0 1px 3px rgba(46,204,113,0.4)' : 'none';
     }
 }
+
+// Initialize Modal state machine arrays natively overriding static DOM HTML constraints
+document.addEventListener('DOMContentLoaded', () => switchModalTab('filter'));
 </script>
 </body>"""
 
