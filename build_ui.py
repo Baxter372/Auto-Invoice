@@ -8,7 +8,7 @@ def generate_list_view(section_id, active_label):
            'name': 'This Years Pending Payment Subscribers',
            'payment': 'TY Invoices',
            'autopay': 'Exclude',
-           'email_type': 'Billing',
+           'date': 'Apr 30, 2026',
            'adv_filter': 'No',
            'schedule': 'Recurring Every 7 Days',
            'count': '212'
@@ -17,7 +17,7 @@ def generate_list_view(section_id, active_label):
            'name': 'Last Years Pending Payment Subscribers',
            'payment': 'LY Invoices',
            'autopay': 'Exclude',
-           'email_type': 'Billing',
+           'date': 'Jun 15, 2026',
            'adv_filter': 'No',
            'schedule': 'Recurring Every 7 Days',
            'count': '22'
@@ -26,7 +26,7 @@ def generate_list_view(section_id, active_label):
            'name': 'Expired Credit Card',
            'payment': 'TY Invoices',
            'autopay': 'Expired Credit Card',
-           'email_type': 'Customer',
+           'date': 'Jul 01, 2026',
            'adv_filter': 'No',
            'schedule': 'Custom',
            'count': '15'
@@ -34,7 +34,6 @@ def generate_list_view(section_id, active_label):
     ]
     
     for row in mock_data:
-        type_col = "Email Type" if "email" in section_id.lower() else "SMS Type"
         
         row_html = f"""
         <tr style="border-bottom:1px solid #eee; transition: background 0.2s;" onmouseenter="this.style.background='#f8faff'" onmouseleave="this.style.background='transparent'">
@@ -44,7 +43,7 @@ def generate_list_view(section_id, active_label):
             <td style="padding:16px 12px; font-weight:bold; color:#111; font-size:0.85rem; max-width:200px; white-space:normal; text-align:left;">{row['name']}</td>
             <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['payment']}</td>
             <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['autopay']}</td>
-            <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['email_type']}</td>
+            <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['date']}</td>
             <td style="padding:16px 12px; color:#555; font-size:0.85rem; text-align:center;">{row['adv_filter']}</td>
             <td style="padding:16px 12px; color:#555; font-size:0.85rem; max-width:140px; white-space:normal; text-align:left;">{row['schedule']}</td>
             <td style="padding:16px 12px; color:#111; font-weight:bold; font-size:0.9rem; text-align:center;">{row['count']}</td>
@@ -58,8 +57,6 @@ def generate_list_view(section_id, active_label):
         
     tbody_content = "".join(rows)
 
-    type_header = "Email Type" if "email" in section_id.lower() else "SMS Type"
-    
     html = f"""
     <div id="{section_id}" style="padding:20px; background:#fff; { "display:none;" if section_id == "cfg-sms" else ""}">
         <div style="border:1px solid #eee; border-radius:4px; box-shadow:0 1px 4px rgba(0,0,0,0.02); overflow-x:auto;">
@@ -70,7 +67,7 @@ def generate_list_view(section_id, active_label):
                         <th style="padding:16px 12px; text-align:left;">Schedule Name:</th>
                         <th style="padding:16px 12px; text-align:center;">Payment Status</th>
                         <th style="padding:16px 12px; text-align:center;">Auto-Pay</th>
-                        <th style="padding:16px 12px; text-align:center;">{type_header}</th>
+                        <th style="padding:16px 12px; text-align:center;">Next Sch. Date</th>
                         <th style="padding:16px 12px; text-align:center;">ADV Filter</th>
                         <th style="padding:16px 12px; text-align:left;">Schedule</th>
                         <th style="padding:16px 12px; text-align:center;">Audience Count</th>
