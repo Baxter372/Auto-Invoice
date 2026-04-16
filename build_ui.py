@@ -104,14 +104,14 @@ def get_fields(type_str):
       </div>
 """
 
-def generate_layout(section_id, active_label, count=5):
+def generate_layout(section_id, active_label, count=4):
     cards_html = ""
     for i in range(1, count + 1):
         if i == 1:
             # Active Card
             card = f"""
     <!-- Card {i} -->
-    <div style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:480px; overflow-y:auto; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="{section_id}-c{i}" class="schedule-card" onmouseenter="setCardFocus('{section_id}', '{section_id}-c{i}')" style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:510px; overflow-y:auto; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send ({active_label}) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -129,7 +129,7 @@ def generate_layout(section_id, active_label, count=5):
             # Placeholder Card
             card = f"""
     <!-- Card {i} -->
-    <div id="{section_id}-c{i}" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
+    <div id="{section_id}-c{i}" class="schedule-card" onmouseenter="setCardFocus('{section_id}', '{section_id}-c{i}')" style="border:1px solid #2c3e8c; border-top:4px solid #ccc; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:510px; max-height:510px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s;">
       <div id="{section_id}-c{i}-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send ({active_label}) Schedule</h2>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -163,14 +163,68 @@ def generate_layout(section_id, active_label, count=5):
             """
         cards_html += card
 
+    audience_html = f"""
+    <div style="flex:1;">
+       <div style="position:sticky; top:20px; border:1px solid #c9d8ff; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,0.05); min-height:600px;">
+          <h2 style="margin:0 0 8px 0; font-size:1.2rem; color:#2c3e8c;">Audience Selector</h2>
+          <p style="font-size:0.8rem; color:#666; margin-bottom:16px;">
+             Previewing targeted audience for: <br/>
+             <strong id="{section_id}-audience-target" style="color:#111; font-size:0.95rem; display:inline-block; margin-top:4px;">Auto-Send ({active_label}) Schedule</strong>
+          </p>
+          
+          <div style="border:1px solid #e1e8f5; border-radius:4px; overflow:hidden;">
+              <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+                <thead>
+                    <tr style="background:#e8efff; color:#2c3e8c; font-weight:bold; text-align:left;">
+                       <th style="padding:10px 8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /> ALL</th>
+                       <th style="padding:10px 8px;">FULL NAME</th>
+                       <th style="padding:10px 8px;">BILLING ADDRESS</th>
+                       <th style="padding:10px 8px;">EMAIL</th>
+                    </tr>
+                </thead>
+                <tbody style="color:#e74c3c;">
+                    <tr style="border-bottom:1px solid #f0f0f0;">
+                       <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                       <td style="padding:8px;">Demooo Demooo</td>
+                       <td style="padding:8px;">890 Mountain Ave</td>
+                       <td style="padding:8px;">test@webcodegenie.net</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;">
+                       <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                       <td style="padding:8px;">Webcodegenie</td>
+                       <td style="padding:8px;">676 N St Clair St</td>
+                       <td style="padding:8px;">sakshi.b@webcodegenie.com</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;">
+                       <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                       <td style="padding:8px;">Multi Tier Product Test</td>
+                       <td style="padding:8px;">3456 Shadeland Ave</td>
+                       <td style="padding:8px;">tier@webcodegenie.net</td>
+                    </tr>
+                    <tr>
+                       <td style="padding:8px;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                       <td style="padding:8px;">Demo Testing</td>
+                       <td style="padding:8px;">5465 Windward Pkwy</td>
+                       <td style="padding:8px;">Demo.test@webcodegenie.net</td>
+                    </tr>
+                </tbody>
+              </table>
+          </div>
+       </div>
+    </div>
+    """
+
     return f"""
-<div id="{section_id}" style="padding:16px; display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; { "display:none;" if section_id == "cfg-sms" else ""}">
-{cards_html}
+<div id="{section_id}" style="padding:16px; display:flex; gap:24px; align-items:flex-start; { "display:none;" if section_id == "cfg-sms" else ""}">
+    <div style="flex:2.2; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        {cards_html}
+    </div>
+    {audience_html}
 </div>"""
 
 
-email_layout = generate_layout("cfg-email", "Email", 5)
-sms_layout = generate_layout("cfg-sms", "SMS", 5)
+email_layout = generate_layout("cfg-email", "Email", 4)
+sms_layout = generate_layout("cfg-sms", "SMS", 4)
 
 js_functions = """
 // ── Schedule N-Card Expansion Logic ──────────────────────────────
