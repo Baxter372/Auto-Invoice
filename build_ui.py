@@ -188,10 +188,18 @@ function resetRadio(groupName) {
 }
 // ── Schedule ON/OFF Interaction ──────────────────────────────
 function toggleCardStatus(btn, state) {
-    // Traverse DOM up to parent card wrapper -> div(btn) -> div(toggle wrapper) -> div(header info) -> div(card header) -> div(card itself)
     const btnContainer = btn.parentElement; 
     const headerRow = btnContainer.parentElement.parentElement;
     const cardWrapper = headerRow.parentElement;
+    
+    const cardId = cardWrapper.id;
+    if (state === 'on' && cardId) {
+        const placeholder = document.getElementById(cardId + '-placeholder');
+        if (placeholder && placeholder.style.display !== 'none') {
+            alert("Please click 'Add Another Schedule' before enabling this campaign.");
+            return;
+        }
+    }
     
     const offBtn = btnContainer.children[0];
     const onBtn = btnContainer.children[1];

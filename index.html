@@ -23,6 +23,15 @@ function toggleCardStatus(btn, state) {
     const headerRow = btnContainer.parentElement.parentElement;
     const cardWrapper = headerRow.parentElement;
     
+    const cardId = cardWrapper.id;
+    if (state === 'on' && cardId) {
+        const placeholder = document.getElementById(cardId + '-placeholder');
+        if (placeholder && placeholder.style.display !== 'none') {
+            alert("Please click 'Add Another Schedule' before enabling this campaign.");
+            return;
+        }
+    }
+    
     const offBtn = btnContainer.children[0];
     const onBtn = btnContainer.children[1];
     
@@ -2241,6 +2250,15 @@ function toggleCardStatus(btn, state) {
     const headerRow = btnContainer.parentElement.parentElement;
     const cardWrapper = headerRow.parentElement;
     
+    const cardId = cardWrapper.id;
+    if (state === 'on' && cardId) {
+        const placeholder = document.getElementById(cardId + '-placeholder');
+        if (placeholder && placeholder.style.display !== 'none') {
+            alert("Please click 'Add Another Schedule' before enabling this campaign.");
+            return;
+        }
+    }
+    
     const offBtn = btnContainer.children[0];
     const onBtn = btnContainer.children[1];
     
@@ -2784,6 +2802,15 @@ function toggleCardStatus(btn, state) {
     const btnContainer = btn.parentElement; 
     const headerRow = btnContainer.parentElement.parentElement;
     const cardWrapper = headerRow.parentElement;
+    
+    const cardId = cardWrapper.id;
+    if (state === 'on' && cardId) {
+        const placeholder = document.getElementById(cardId + '-placeholder');
+        if (placeholder && placeholder.style.display !== 'none') {
+            alert("Please click 'Add Another Schedule' before enabling this campaign.");
+            return;
+        }
+    }
     
     const offBtn = btnContainer.children[0];
     const onBtn = btnContainer.children[1];
