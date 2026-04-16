@@ -104,73 +104,73 @@ def get_fields(type_str):
       </div>
 """
 
-def generate_layout(section_id, active_label):
-    card1 = f"""
-    <!-- Card 1 -->
-    <div style="border:1px solid #2c3e8c; border-radius:4px; padding:16px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:520px; overflow-y:auto;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:16px;">
-        <h2 style="margin:0; font-size:1.4rem; color:#111; font-weight:normal;">Auto-Send Invoice</h2>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:0.85rem; color:#333;">Activation Status</span>
+def generate_layout(section_id, active_label, count=5):
+    cards_html = ""
+    for i in range(1, count + 1):
+        if i == 1:
+            # Active Card
+            card = f"""
+    <!-- Card {i} -->
+    <div style="border:1px solid #2c3e8c; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:480px; overflow-y:auto; font-size:0.8rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
+        <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send Invoice</h2>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:0.75rem; color:#333;">Status</span>
           <div style="display:flex; border-radius:2px; overflow:hidden;">
-            <button style="background:#f0f0f0; color:#888; border:none; padding:4px 10px; font-size:0.7rem; font-weight:bold; cursor:pointer;">OFF</button>
-            <button style="background:#27ae60; color:#fff; border:none; padding:4px 10px; font-size:0.7rem; font-weight:bold; cursor:pointer;">ON</button>
+            <button style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
+            <button style="background:#27ae60; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
           </div>
         </div>
       </div>
-      {get_fields(active_label + "_c1")}
+      {get_fields(active_label + f"_c{i}")}
     </div>
-    """
-
-    card2 = f"""
-    <!-- Card 2 -->
-    <div id="{section_id}-c2" style="border:1px solid #2c3e8c; border-radius:4px; padding:16px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:520px; max-height:520px; overflow-y:auto; display:flex; flex-direction:column;">
-      <div id="{section_id}-c2-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:16px;">
-        <h2 style="margin:0; font-size:1.4rem; color:#111; font-weight:normal;">Auto-Send Invoice</h2>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:0.85rem; color:#333;">Activation Status</span>
+            """
+        else:
+            # Placeholder Card
+            card = f"""
+    <!-- Card {i} -->
+    <div id="{section_id}-c{i}" style="border:1px solid #2c3e8c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem;">
+      <div id="{section_id}-c{i}-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
+        <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send Invoice</h2>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:0.75rem; color:#333;">Status</span>
           <div style="display:flex; border-radius:2px; overflow:hidden;">
-            <button style="background:#e74c3c; color:#fff; border:none; padding:4px 10px; font-size:0.7rem; font-weight:bold; cursor:pointer;">OFF</button>
-            <button style="background:#f0f0f0; color:#888; border:none; padding:4px 10px; font-size:0.7rem; font-weight:bold; cursor:pointer;">ON</button>
+            <button style="background:#e74c3c; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
+            <button style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
           </div>
         </div>
       </div>
 
       <!-- State 1: Placeholder/Collapsed -->
-      <div id="{section_id}-c2-placeholder" style="flex:1; display:flex; flex-direction:column; align-items:center; padding-top:40px; cursor:pointer;" onclick="expandSecondSchedule('{section_id}')">
-         <div style="display:flex; align-items:center; gap:12px; font-size:1.1rem; color:#111;">
-            <i data-lucide="plus-circle" style="width:28px; height:28px; color:#3f51b5;"></i>
+      <div id="{section_id}-c{i}-placeholder" style="flex:1; display:flex; flex-direction:column; align-items:center; padding-top:60px; cursor:pointer;" onclick="expandCard('{section_id}-c{i}')">
+         <div style="display:flex; align-items:center; gap:10px; font-size:1rem; color:#111; font-weight:bold;">
+            <i data-lucide="plus-circle" style="width:24px; height:24px; color:#3f51b5;"></i>
             Add Another Schedule
          </div>
       </div>
 
       <!-- State 2: Expanded Fields -->
-      <div id="{section_id}-c2-full" style="display:none; flex:1; flex-direction:column;">
-         <div style="margin-bottom:16px; border-bottom:1px solid #ddd; padding-bottom:12px;">
-            <span style="font-size:0.8rem; color:#888; display:flex; align-items:center; justify-content:space-between;">
-               <span style="display:flex; align-items:center; gap:4px;"><i data-lucide="plus-circle" style="width:14px; height:14px; color:#3f51b5;"></i> Add Another Schedule</span>
-               <a href="javascript:void(0)" onclick="revertSecondSchedule('{section_id}')" style="color:#0277bd; text-decoration:underline;">Revert to no Schedule</a>
+      <div id="{section_id}-c{i}-full" style="display:none; flex:1; flex-direction:column;">
+         <div style="margin-bottom:12px; border-bottom:1px solid #ddd; padding-bottom:8px;">
+            <span style="font-size:0.75rem; color:#888; display:flex; align-items:center; justify-content:space-between;">
+               <span style="display:flex; align-items:center; gap:4px;"><i data-lucide="plus-circle" style="width:12px; height:12px; color:#3f51b5;"></i> Add Another Schedule</span>
+               <a href="javascript:void(0)" onclick="revertCard('{section_id}-c{i}')" style="color:#0277bd; text-decoration:underline;">Revert to no Schedule</a>
             </span>
          </div>
-         {get_fields(active_label + "_c2")}
+         {get_fields(active_label + f"_c{i}")}
       </div>
     </div>
-    """
-
-    card3 = card2.replace('-c2', '-c3')
-    card4 = card2.replace('-c2', '-c4')
+            """
+        cards_html += card
 
     return f"""
-<div id="{section_id}" style="padding:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px; { "display:none;" if section_id == "cfg-sms" else ""}">
-{card1}
-{card2}
-{card3}
-{card4}
+<div id="{section_id}" style="padding:16px; display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; { "display:none;" if section_id == "cfg-sms" else ""}">
+{cards_html}
 </div>"""
 
 
-email_layout = generate_layout("cfg-email", "Email")
-sms_layout = generate_layout("cfg-sms", "SMS")
+email_layout = generate_layout("cfg-email", "Email", 5)
+sms_layout = generate_layout("cfg-sms", "SMS", 5)
 
 js_functions = """
 // ── Schedule 2-Card Expansion Logic ──────────────────────────────
