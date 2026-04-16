@@ -1584,6 +1584,7 @@ function previewSmsTpl(key){
       const tailHtml = `\n<!-- Tail -->\n<svg fill="none" style="position:absolute;bottom:0;right:-8px;width:16px;height:14px;" viewbox="0 0 16 14" xmlns="http://www.w3.org/2000/svg"><path d="M0 14C3.86599 14 7 10.866 7 7V0H16C16 7.73199 9.73199 14 2 14H0Z" fill="#34c759"></path></svg>`;
       msgDiv.innerHTML = smsTemplatesData[key] + tailHtml;
   }
+}
 
 // Handle exclusive 'ACTIVE' logic for templates
 function toggleActiveTpl(cb, type) {
