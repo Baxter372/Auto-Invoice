@@ -575,18 +575,18 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       </tbody>
    </table>
 </div>
-<!-- CSS Donut Chart -->
-<div style="display:flex; justify-content:center; margin-bottom:30px;">
-<div style="width:140px; height:140px; border-radius:50%; background:conic-gradient(#006c8a 0% 75%, #008ba3 75% 85%, #00a4c9 85% 100%); border:1px solid #fff; position:relative; display:flex; align-items:center; justify-content:center;">
-<!-- Donut Hole -->
-<div style="width:70px; height:70px; background:#fff; border-radius:50%;"><div style="display:flex; height:100%; align-items:center; justify-content:center; font-weight:bold; color:#006c8a; font-size:1.1rem;">75%</div></div>
-</div>
+<!-- Dynamic Chart.js Bar Chart -->
+<div style="font-weight:bold; color:#555; text-transform:uppercase; font-size:0.8rem; text-align:left; margin-bottom:12px; letter-spacing:0.5px; display:flex; align-items:center; gap:6px;"><i data-lucide="bar-chart-2" style="width:14px; height:14px;"></i> SMS Sent Over Time</div>
+<div style="width:100%; height:250px; margin-bottom:20px; padding:0 10px;">
+    <canvas id="smsHistoryChart"></canvas>
 </div>
 <!-- Legend -->
-<div style="display:flex; justify-content:center; gap:16px; font-size:0.7rem; color:#666; flex-wrap:wrap;">
-<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#006c8a;display:inline-block;"></span> Delivered <b>(75%)</b></span>
-<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#008ba3;display:inline-block;"></span> Failed <b>(10%)</b></span>
-<span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;background:#00a4c9;display:inline-block;"></span> Pending <b>(15%)</b></span>
+<div style="display:flex; justify-content:center; gap:16px; font-size:0.75rem; color:#666; flex-wrap:wrap;">
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:rgba(180, 185, 190, 1);display:inline-block;"></span> Pending</span>
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:rgba(80, 170, 230, 1);display:inline-block;"></span> Delivered</span>
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:rgba(140, 210, 140, 1);display:inline-block;"></span> Clicked</span>
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:rgba(230, 100, 100, 1);display:inline-block;"></span> Failed</span>
+   <span style="display:flex;align-items:center;gap:6px;"><span style="width:16px;height:3px;background:rgba(255, 165, 0, 1);display:inline-block;"></span> Target Benchmark</span>
 </div>
 </div>
 </div>
@@ -2742,6 +2742,82 @@ document.addEventListener('DOMContentLoaded', () => {
                 scales: {
                     x: { stacked: false, grid: { display: false } },
                     y: { stacked: false, beginAtZero: true, suggestedMax: 60, grid: { color: '#f0f0f0' } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { mode: 'index', intersect: false }
+                }
+            }
+        });
+    }
+
+    // Chart.js Configuration Arrays (SMS/TXT)
+    const ctxSms = document.getElementById('smsHistoryChart');
+    if (ctxSms) {
+        const smsLabels = [];
+        const pendingData = [];
+        const smsDeliveredData = [];
+        const clickedData = [];
+        const failedData = [];
+        const smsTargetData = [];
+        
+        let bDate = new Date('2026-03-18T00:00:00');
+        for (let i = 0; i < 30; i++) {
+            let d = new Date(bDate);
+            d.setDate(d.getDate() + i);
+            smsLabels.push(d.toISOString().split('T')[0]);
+            
+            // Scaled randomized distribution mimicking SMS intervals bounded to <40 peak explicitly
+            pendingData.push(Math.floor(Math.random() * 3));
+            smsDeliveredData.push(Math.floor(Math.random() * 20) + 10);
+            clickedData.push(Math.floor(Math.random() * 15) + 5);
+            failedData.push(Math.floor(Math.random() * 2));
+            smsTargetData.push(16); 
+        }
+        
+        new Chart(ctxSms.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: smsLabels,
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Target Baseline',
+                        data: smsTargetData,
+                        borderColor: 'rgba(255, 165, 0, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointBackgroundColor: 'rgba(255, 165, 0, 1)',
+                        pointRadius: 0
+                    },
+                    {
+                        label: 'Pending',
+                        data: pendingData,
+                        backgroundColor: 'rgba(180, 185, 190, 0.9)'
+                    },
+                    {
+                        label: 'Delivered',
+                        data: smsDeliveredData,
+                        backgroundColor: 'rgba(80, 170, 230, 0.9)'
+                    },
+                    {
+                        label: 'Clicked',
+                        data: clickedData,
+                        backgroundColor: 'rgba(140, 210, 140, 0.9)'
+                    },
+                    {
+                        label: 'Failed',
+                        data: failedData,
+                        backgroundColor: 'rgba(230, 100, 100, 0.9)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: false, grid: { display: false } },
+                    y: { stacked: false, beginAtZero: true, suggestedMax: 40, grid: { color: '#f0f0f0' } }
                 },
                 plugins: {
                     legend: { display: false },
