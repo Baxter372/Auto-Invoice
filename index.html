@@ -5,13 +5,13 @@
 <script>
 
 // ── Schedule 2-Card Expansion Logic ──────────────────────────────
-function expandSecondSchedule(sectionId) {
-    document.getElementById(sectionId+'-c2-placeholder').style.display = 'none';
-    document.getElementById(sectionId+'-c2-full').style.display = 'flex';
+function expandCard(cardId) {
+    document.getElementById(cardId+'-placeholder').style.display = 'none';
+    document.getElementById(cardId+'-full').style.display = 'flex';
 }
-function revertSecondSchedule(sectionId) {
-    document.getElementById(sectionId+'-c2-full').style.display = 'none';
-    document.getElementById(sectionId+'-c2-placeholder').style.display = 'flex';
+function revertCard(cardId) {
+    document.getElementById(cardId+'-full').style.display = 'none';
+    document.getElementById(cardId+'-placeholder').style.display = 'flex';
 }
 function resetRadio(groupName) {
     let radios = document.querySelectorAll(`input[name="${groupName}"]`);
@@ -2198,13 +2198,13 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <script>
 
 // ── Schedule 2-Card Expansion Logic ──────────────────────────────
-function expandSecondSchedule(sectionId) {
-    document.getElementById(sectionId+'-c2-placeholder').style.display = 'none';
-    document.getElementById(sectionId+'-c2-full').style.display = 'flex';
+function expandCard(cardId) {
+    document.getElementById(cardId+'-placeholder').style.display = 'none';
+    document.getElementById(cardId+'-full').style.display = 'flex';
 }
-function revertSecondSchedule(sectionId) {
-    document.getElementById(sectionId+'-c2-full').style.display = 'none';
-    document.getElementById(sectionId+'-c2-placeholder').style.display = 'flex';
+function revertCard(cardId) {
+    document.getElementById(cardId+'-full').style.display = 'none';
+    document.getElementById(cardId+'-placeholder').style.display = 'flex';
 }
 function resetRadio(groupName) {
     let radios = document.querySelectorAll(`input[name="${groupName}"]`);
@@ -2719,13 +2719,13 @@ function closeSmsPreview(){ document.getElementById('sms-preview-modal').style.d
 <script>
 
 // ── Schedule 2-Card Expansion Logic ──────────────────────────────
-function expandSecondSchedule(sectionId) {
-    document.getElementById(sectionId+'-c2-placeholder').style.display = 'none';
-    document.getElementById(sectionId+'-c2-full').style.display = 'flex';
+function expandCard(cardId) {
+    document.getElementById(cardId+'-placeholder').style.display = 'none';
+    document.getElementById(cardId+'-full').style.display = 'flex';
 }
-function revertSecondSchedule(sectionId) {
-    document.getElementById(sectionId+'-c2-full').style.display = 'none';
-    document.getElementById(sectionId+'-c2-placeholder').style.display = 'flex';
+function revertCard(cardId) {
+    document.getElementById(cardId+'-full').style.display = 'none';
+    document.getElementById(cardId+'-placeholder').style.display = 'flex';
 }
 function resetRadio(groupName) {
     let radios = document.querySelectorAll(`input[name="${groupName}"]`);
