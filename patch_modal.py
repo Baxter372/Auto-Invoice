@@ -18,7 +18,7 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
          <div style="display:flex; gap:24px;">
             <div id="modal-tab-head-filter" onclick="switchModalTab('filter')" style="padding-bottom:12px; border-bottom:2px solid #3f51b5; color:#3f51b5; font-size:1.1rem; cursor:pointer;">Filter</div>
             <div id="modal-tab-head-schedule" onclick="switchModalTab('schedule')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Schedule</div>
-            <div id="modal-tab-head-results" onclick="switchModalTab('results')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Results</div>
+            <div id="modal-tab-head-results" onclick="switchModalTab('results')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Results (212)</div>
          </div>
       </div>
 
