@@ -111,14 +111,14 @@ def generate_layout(section_id, active_label, count=5):
             # Active Card
             card = f"""
     <!-- Card {i} -->
-    <div style="border:1px solid #2c3e8c; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:480px; overflow-y:auto; font-size:0.8rem;">
+    <div style="border:1px solid #2c3e8c; border-top:4px solid #27ae60; border-radius:4px; padding:12px; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.05); max-height:480px; overflow-y:auto; font-size:0.8rem; transition: border-top 0.2s;">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send Invoice</h2>
         <div style="display:flex; align-items:center; gap:6px;">
           <span style="font-size:0.75rem; color:#333;">Status</span>
           <div style="display:flex; border-radius:2px; overflow:hidden;">
-            <button style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
-            <button style="background:#27ae60; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
+            <button onclick="toggleCardStatus(this, 'off')" style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
+            <button onclick="toggleCardStatus(this, 'on')" style="background:#27ae60; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
           </div>
         </div>
       </div>
@@ -129,14 +129,14 @@ def generate_layout(section_id, active_label, count=5):
             # Placeholder Card
             card = f"""
     <!-- Card {i} -->
-    <div id="{section_id}-c{i}" style="border:1px solid #2c3e8c; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem;">
+    <div id="{section_id}-c{i}" style="border:1px solid #2c3e8c; border-top:4px solid transparent; border-radius:4px; padding:12px; background:#fff; position:relative; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-height:480px; max-height:480px; overflow-y:auto; display:flex; flex-direction:column; font-size:0.8rem; transition: border-top 0.2s;">
       <div id="{section_id}-c{i}-header" style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #2c3e8c; padding-bottom:8px; margin-bottom:12px;">
         <h2 style="margin:0; font-size:1.1rem; color:#111; font-weight:bold;">Auto-Send Invoice</h2>
         <div style="display:flex; align-items:center; gap:6px;">
           <span style="font-size:0.75rem; color:#333;">Status</span>
           <div style="display:flex; border-radius:2px; overflow:hidden;">
-            <button style="background:#e74c3c; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
-            <button style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
+            <button onclick="toggleCardStatus(this, 'off')" style="background:#e74c3c; color:#fff; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">OFF</button>
+            <button onclick="toggleCardStatus(this, 'on')" style="background:#f0f0f0; color:#888; border:none; padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">ON</button>
           </div>
         </div>
       </div>
@@ -185,6 +185,32 @@ function revertSecondSchedule(sectionId) {
 function resetRadio(groupName) {
     let radios = document.querySelectorAll(`input[name="${groupName}"]`);
     radios.forEach(r => r.checked = false);
+}
+// ── Schedule ON/OFF Interaction ──────────────────────────────
+function toggleCardStatus(btn, state) {
+    // Traverse DOM up to parent card wrapper -> div(btn) -> div(toggle wrapper) -> div(header info) -> div(card header) -> div(card itself)
+    const btnContainer = btn.parentElement; 
+    const headerRow = btnContainer.parentElement.parentElement;
+    const cardWrapper = headerRow.parentElement;
+    
+    const offBtn = btnContainer.children[0];
+    const onBtn = btnContainer.children[1];
+    
+    if (state === 'on') {
+        offBtn.style.background = '#f0f0f0';
+        offBtn.style.color = '#888';
+        onBtn.style.background = '#27ae60';
+        onBtn.style.color = '#fff';
+        cardWrapper.style.borderTop = '4px solid #27ae60';
+    } else {
+        offBtn.style.background = '#e74c3c';
+        offBtn.style.color = '#fff';
+        onBtn.style.background = '#f0f0f0';
+        onBtn.style.color = '#888';
+        // Reset card top layer
+        cardWrapper.style.borderTop = '4px solid transparent'; 
+        // Note: For active Card 1, returning to transparent might lose its blue top edge if it was generic, but our transparent border preserves layout shift
+    }
 }
 // Dynamic Add/Delete Row Logic
 function addScheduleRow(btn) {
