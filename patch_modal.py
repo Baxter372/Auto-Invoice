@@ -9,8 +9,8 @@ modal_html = """<!-- ── SCHEDULE EDIT MODAL ── -->
       
       <!-- HEADER -->
       <div style="background:#fff; padding:16px 20px 0 20px; border-bottom:1px solid #ddd; flex-shrink:0;">
-         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h2 style="margin:0; font-size:1.3rem; font-weight:normal; color:#3f51b5;">Pending Payment Customers</h2>
+         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+            <h2 style="margin:0; font-size:1.3rem; font-weight:bold; color:#777;">Pending Payment Customers</h2>
             <i data-lucide="x" style="width:24px; height:24px; cursor:pointer; color:#888;" onclick="document.getElementById('schedule-edit-modal').style.display='none'"></i>
          </div>
          
