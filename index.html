@@ -802,9 +802,9 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div id="tpl-panel-email">
 <div style="padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee;">
 <div style="font-size:0.85rem; color:#777;">Manage automatically triggered email templates for invoices and renewals.</div>
-<button style="background:#2c3e8c; color:#fff; border:none; border-radius:4px; padding:8px 16px; font-weight:bold; font-size:0.8rem; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 4px rgba(44,62,140,0.2);">
+<button onclick="document.getElementById('email-template-create-modal').style.display='flex'" style="background:#2c3e8c; color:#fff; border:none; border-radius:4px; padding:8px 16px; font-weight:bold; font-size:0.8rem; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 4px rgba(44,62,140,0.2); transition:background 0.2s;" onmouseenter="this.style.background='#1e2a6e'" onmouseleave="this.style.background='#2c3e8c'">
 <i data-lucide="plus" style="width:14px; height:14px;"></i> Create Template
-                   </button>
+</button>
 </div>
 <div style="padding:16px 20px; background:#fafafa; border-bottom:1px solid #eee; display:flex; gap:16px; align-items:center;">
 <span style="font-weight:bold; color:#555; font-size:0.85rem;"><i data-lucide="filter" style="width:14px; height:14px; position:relative; top:2px;"></i> Filters:</span>
@@ -861,9 +861,9 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div id="tpl-panel-sms" style="display:none;">
 <div style="padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee;">
 <div style="font-size:0.85rem; color:#777;">Manage automatically triggered SMS text templates.</div>
-<button style="background:#2c3e8c; color:#fff; border:none; border-radius:4px; padding:8px 16px; font-weight:bold; font-size:0.8rem; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 4px rgba(44,62,140,0.2);">
+<button onclick="document.getElementById('email-template-create-modal').style.display='flex'" style="background:#2c3e8c; color:#fff; border:none; border-radius:4px; padding:8px 16px; font-weight:bold; font-size:0.8rem; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 4px rgba(44,62,140,0.2); transition:background 0.2s;" onmouseenter="this.style.background='#1e2a6e'" onmouseleave="this.style.background='#2c3e8c'">
 <i data-lucide="plus" style="width:14px; height:14px;"></i> Create Template
-                   </button>
+</button>
 </div>
 <div style="padding:16px 20px; background:#fafafa; border-bottom:1px solid #eee; display:flex; gap:16px; align-items:center;">
 <span style="font-weight:bold; color:#555; font-size:0.85rem;"><i data-lucide="filter" style="width:14px; height:14px; position:relative; top:2px;"></i> Filters:</span>
@@ -2808,6 +2808,173 @@ document.addEventListener('DOMContentLoaded', () => {
     const faqEl = document.getElementById("faq-window");
     if(faqEl) dragElement(faqEl);
 });
+</script>
+
+<!-- ── ADD CUSTOM TEMPLATE MODAL ── -->
+<div id="email-template-create-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:999999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+    <div style="background:#fff; border-radius:12px; width:900px; max-width:95vw; height:85vh; max-height:800px; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 12px 48px rgba(0,0,0,0.4);">
+        
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg, #1e2a6e, #2c3e8c); padding:16px 24px; color:#fff; display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-size:1.3rem; font-weight:bold; display:flex; align-items:center; gap:8px;">
+                <i data-lucide="mail"></i> Add Custom Template
+                <i data-lucide="info" style="width:16px; height:16px; opacity:0.8; margin-left:4px;"></i>
+            </div>
+            <i data-lucide="x" style="width:24px; height:24px; cursor:pointer; opacity:0.8; transition:0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'" onclick="document.getElementById('email-template-create-modal').style.display='none'"></i>
+        </div>
+
+        <!-- Body Scrollable Content -->
+        <div style="padding:24px; overflow-y:auto; flex:1; background:#fdfdfd;">
+            
+            <!-- Radios & Selects Grid -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px;">
+                
+                <!-- Left: Toggle & Select Template -->
+                <div>
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+                        <label style="display:flex; align-items:center; gap:8px; color:#444; font-size:0.95rem; cursor:pointer;">
+                            <input type="radio" name="template-mode" value="copy" onchange="toggleTemplateCopyMode(true)" style="accent-color:#3f51b5; width:16px; height:16px;"/> Copy an existing Template?
+                        </label>
+                        <label style="display:flex; align-items:center; gap:8px; color:#444; font-size:0.95rem; cursor:pointer;">
+                            <input type="radio" name="template-mode" value="new" checked onchange="toggleTemplateCopyMode(false)" style="accent-color:#3f51b5; width:16px; height:16px;"/> Create a new Template?
+                        </label>
+                    </div>
+                    
+                    <div id="template-copy-dropdown" style="opacity:0.4; pointer-events:none; transition:0.2s;">
+                        <div style="font-weight:bold; color:#d32f2f; font-size:0.85rem; margin-bottom:4px;">Select Template*</div>
+                        <select style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; font-size:0.95rem; color:#555; outline:none; background:#fff;">
+                            <option>Select Template</option>
+                            <option>Past Due Invoice Warning</option>
+                            <option>Card Expired Auto-Pay Alert</option>
+                            <option>Welcome Notification</option>
+                            <option>Renewal Campaign Array</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Right: Type Dropdown -->
+                <div>
+                     <div style="font-weight:bold; color:#d32f2f; font-size:0.85rem; margin-bottom:4px;">Add Email Type*</div>
+                     <select style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; font-size:0.95rem; color:#555; outline:none; background:#fff;">
+                            <option>Select Template Type</option>
+                            <option>Invoice Alert</option>
+                            <option>Past-Due Notice</option>
+                            <option>Renewal Campaign</option>
+                            <option>Account Status</option>
+                     </select>
+                </div>
+            </div>
+
+            <!-- Inputs -->
+            <div style="margin-bottom:24px;">
+                <div style="font-weight:bold; color:#d32f2f; font-size:0.85rem; margin-bottom:4px;">Title Template*</div>
+                <input type="text" style="width:100%; padding:10px 0; border:none; border-bottom:1px solid #999; font-size:1rem; color:#333; outline:none; background:transparent; transition:border 0.2s;" onfocus="this.style.borderBottom='2px solid #3f51b5'" onblur="this.style.borderBottom='1px solid #999'"/>
+            </div>
+
+            <div style="margin-bottom:24px;">
+                <div style="font-weight:bold; color:#d32f2f; font-size:0.85rem; margin-bottom:4px;">Add an Email Subject Line*</div>
+                <input type="text" style="width:100%; padding:10px 0; border:none; border-bottom:1px solid #999; font-size:1rem; color:#333; outline:none; background:transparent; transition:border 0.2s;" onfocus="this.style.borderBottom='2px solid #3f51b5'" onblur="this.style.borderBottom='1px solid #999'"/>
+            </div>
+
+            <div style="margin-bottom:28px;">
+                <div style="font-size:0.95rem; color:#555; margin-bottom:8px;">Choose & Upload Image (Optional)</div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <label style="background:#f0f0f0; border:1px solid #ccc; padding:6px 12px; border-radius:4px; font-size:0.85rem; cursor:pointer; color:#333; transition:background 0.2s;" onmouseenter="this.style.background='#e4e4e4'" onmouseleave="this.style.background='#f0f0f0'">
+                        <input type="file" style="display:none;"/>
+                        Choose File
+                    </label>
+                    <span style="font-size:0.85rem; color:#888;">No file chosen</span>
+                </div>
+            </div>
+
+            <!-- WYSIWYG Editor Mock -->
+            <div>
+                <div style="font-weight:bold; color:#d32f2f; font-size:0.85rem; margin-bottom:4px;">HTML Body Content*</div>
+                <div style="border:1px solid #ccc; border-radius:4px; overflow:hidden; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                    
+                    <!-- Editor Toolbar -->
+                    <div style="background:#f9f9f9; padding:8px 12px; display:flex; gap:16px; border-bottom:1px solid #ccc; flex-wrap:wrap; align-items:center;">
+                        <div style="display:flex; gap:12px; color:#555; border-right:1px solid #ddd; padding-right:16px;">
+                            <i data-lucide="scissors" style="width:16px; height:16px; cursor:pointer; opacity:0.5;"></i>
+                            <i data-lucide="copy" style="width:16px; height:16px; cursor:pointer; opacity:0.5;"></i>
+                            <i data-lucide="clipboard" style="width:16px; height:16px; cursor:pointer; opacity:0.5;"></i>
+                        </div>
+                        <div style="display:flex; gap:12px; color:#555; border-right:1px solid #ddd; padding-right:16px;">
+                            <i data-lucide="undo" style="width:16px; height:16px; cursor:pointer; opacity:0.5;"></i>
+                            <i data-lucide="redo" style="width:16px; height:16px; cursor:pointer; opacity:0.5;"></i>
+                        </div>
+                        <div style="display:flex; gap:12px; color:#555; border-right:1px solid #ddd; padding-right:16px;">
+                            <i data-lucide="bold" style="width:16px; height:16px; cursor:pointer;"></i>
+                            <i data-lucide="italic" style="width:16px; height:16px; cursor:pointer;"></i>
+                            <i data-lucide="strikethrough" style="width:16px; height:16px; cursor:pointer;"></i>
+                        </div>
+                        <div style="display:flex; gap:12px; color:#555; border-right:1px solid #ddd; padding-right:16px;">
+                            <i data-lucide="list" style="width:16px; height:16px; cursor:pointer;"></i>
+                            <i data-lucide="list-ordered" style="width:16px; height:16px; cursor:pointer;"></i>
+                        </div>
+                        <div style="display:flex; gap:12px; color:#555; border-right:1px solid #ddd; padding-right:16px;">
+                            <i data-lucide="link" style="width:16px; height:16px; cursor:pointer;"></i>
+                            <i data-lucide="image" style="width:16px; height:16px; cursor:pointer;"></i>
+                            <i data-lucide="table" style="width:16px; height:16px; cursor:pointer;"></i>
+                        </div>
+                        <div style="display:flex; gap:12px; color:#555; font-size:0.85rem; font-weight:bold;">
+                            <span style="cursor:pointer; display:flex; align-items:center; gap:4px; padding:4px 8px; border-radius:4px; transition:0.2s" onmouseenter="this.style.background='#ebebeb'" onmouseleave="this.style.background='transparent'"><i data-lucide="code" style="width:14px; height:14px;"></i> Source</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Copy/Paste Variables -->
+                    <div style="background:#eef2ff; padding:12px 16px; border-bottom:1px solid #ccc; font-size:0.8rem; color:#2c3e8c;">
+                        <strong style="display:block; margin-bottom:8px; font-size:0.9rem;"><i data-lucide="database" style="width:14px; height:14px; position:relative; top:2px;"></i> Available Tracking Variables:</strong>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                           <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%RECEIVER_NAME%</code> <span style="color:#555; margin-left:4px;">Full name of Customer</span></div>
+                           <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%SUBSCRIPTION_EXTEND_LINK%</code> <span style="color:#555; margin-left:4px;">Dynamic Invoice Gateway Rows</span></div>
+                           <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%RECEIVER_ADDRESS%</code> <span style="color:#555; margin-left:4px;">Address of Customer</span></div>
+                           <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%FLAG_ADDRESSES%</code> <span style="color:#555; margin-left:4px;">Flag Service Physical Address</span></div>
+                           <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%BUSINESS_NAME%</code> <span style="color:#555; margin-left:4px;">Commercial Target Title</span></div>
+                           <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%UPLOAD_IMAGE%</code> <span style="color:#555; margin-left:4px;">Locate / display active image</span></div>
+                           <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%RENEWAL_LINK%</code> <span style="color:#555; margin-left:4px;">Magic Shopping Cart Routing</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Editor Canvas -->
+                    <textarea style="width:100%; height:250px; border:none; padding:16px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:0.95rem; color:#333; outline:none; resize:none; line-height:1.5;" placeholder="Type your template layout here or paste HTML source..."></textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div style="background:#f9f9f9; padding:16px 24px; border-top:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+            <button style="background:transparent; border:1px solid #ddd; color:#555; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.95rem; transition:0.2s" onmouseenter="this.style.background='#eee'" onmouseleave="this.style.background='transparent'" onclick="document.getElementById('email-template-create-modal').style.display='none'">Close</button>
+            <div style="display:flex; gap:12px;">
+                <button style="background:#3f51b5; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.95rem; box-shadow:0 2px 4px rgba(63,81,181,0.3); transition:transform 0.2s" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='translateY(0)'">Preview Template</button>
+                <button style="background:#27ae60; color:#fff; border:none; padding:10px 24px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.95rem; box-shadow:0 2px 4px rgba(39,174,96,0.3); transition:transform 0.2s" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='translateY(0)'" onclick="document.getElementById('email-template-create-modal').style.display='none'">Save & Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function toggleTemplateCopyMode(isCopy) {
+    const dropdown = document.getElementById('template-copy-dropdown');
+    if (dropdown) {
+        if (isCopy) {
+            dropdown.style.opacity = '1';
+            dropdown.style.pointerEvents = 'auto';
+        } else {
+            dropdown.style.opacity = '0.4';
+            dropdown.style.pointerEvents = 'none';
+        }
+    }
+}
+
+// Initialize FAQ drag logic mapping safely upon load loop boundaries
+document.addEventListener('DOMContentLoaded', () => {
+    const faqEl = document.getElementById("faq-window");
+    if(faqEl) dragElement(faqEl);
+});
+
 function switchModalTab(tab) {
     // Hide all bodies
     document.getElementById('modal-body-filter').style.display = 'none';
