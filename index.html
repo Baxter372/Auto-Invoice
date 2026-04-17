@@ -1882,8 +1882,13 @@ function switchSub(type){
   curSub = type;
   document.getElementById('panel-email').style.display = type==='email' ? '' : 'none';
   document.getElementById('panel-sms').style.display   = type==='sms'   ? '' : 'none';
-  document.getElementById('btn-email').className = 'sub-tab '+(type==='email'?'active':'inactive');
-  document.getElementById('btn-sms').className   = 'sub-tab '+(type==='sms'  ?'active':'inactive');
+  
+  const mBtnEmail = document.getElementById('btn-email');
+  const mBtnSms = document.getElementById('btn-sms');
+  mBtnEmail.className = 'sub-tab '+(type==='email'?'active':'inactive');
+  mBtnSms.className   = 'sub-tab '+(type==='sms'  ?'active':'inactive');
+  mBtnSms.style.background = type==='sms' ? '#bacff5' : 'transparent';
+  mBtnSms.style.borderColor = type==='sms' ? '#a0bdf0' : 'transparent';
 }
 function switchListMode(mode){
   curMode = mode;
@@ -1951,7 +1956,7 @@ function switchCfgTab(tab){
   eBtn.style.background    = tab==='email' ? '#eef2fa' : '#f9f9f9';
   eBtn.style.color         = tab==='email' ? '#3f51b5' : '#888';
   eBtn.style.borderBottom  = 'none';
-  sBtn.style.background    = tab==='sms'   ? '#eef2fa' : '#f9f9f9';
+  sBtn.style.background    = tab==='sms'   ? '#bacff5' : '#f9f9f9';
   sBtn.style.color         = tab==='sms'   ? '#3f51b5' : '#888';
   sBtn.style.borderBottom  = 'none';
 }
