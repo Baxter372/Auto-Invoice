@@ -373,6 +373,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div style="color:#555; font-size:0.9rem; max-width:800px; line-height:1.4;">Put your customer outreach on autopilot. Build custom delivery schedules, apply smart audience filters, and monitor your automated Email and SMS engagement all in one place. Admins can set up multiple schedules to run concurrently.</div>
 </div>
 <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
+<button onclick="document.getElementById('faq-window').style.display='flex'" style="background:#f0f3f8;color:#555;border:1px solid #ccc;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;transition:0.2s;" onmouseenter="this.style.background='#e2e8f0'" onmouseleave="this.style.background='#f0f3f8'"><i data-lucide="help-circle" style="width:16px; height:16px;"></i> FAQ</button>
 <button id="header-toggle-btn" onclick="const p = document.getElementById('premium-dropdown'); p.style.display = p.style.display === 'none' ? 'block' : 'none';" style="background:linear-gradient(135deg,#1e2a6e,#2c3e8c);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(44,62,140,0.3);transition:all 0.2s;"><i data-lucide="zap" style="width:16px; height:16px;"></i> Turn On Auto Comms <span id="header-power-led" style="width:10px;height:10px;border-radius:50%;background:#e74c3c;box-shadow:0 0 6px rgba(231,76,60,0.6);margin-left:6px;transition:0.3s;"></span></button>
 </div>
 <div id="premium-dropdown" style="display:none;position:absolute;top:calc(100% + 15px);right:20px;width:380px;z-index:2000;">
@@ -2706,7 +2707,84 @@ function toggleActiveTpl(cb, type) {
    </div>
 </div>
 
+<!-- ── DRAGGABLE FAQ WINDOW ── -->
+<div id="faq-window" style="display:none; position:fixed; top:100px; left:calc(50vw - 250px); width:500px; max-height:80vh; background:#fff; z-index:9999999; border-radius:12px; box-shadow:0 12px 48px rgba(0,0,0,0.3); overflow:hidden; flex-direction:column; border:1px solid #ccc;">
+    
+    <!-- Drag Header -->
+    <div id="faq-window-header" style="background:#2c3e8c; padding:12px 16px; cursor:move; color:#fff; display:flex; justify-content:space-between; align-items:center; user-select:none;">
+        <div style="font-weight:bold; display:flex; align-items:center; gap:8px;"><i data-lucide="help-circle" style="width:16px; height:16px;"></i> Auto Comms FAQ</div>
+        <i data-lucide="x" style="width:18px; height:18px; cursor:pointer; opacity:0.8; transition:0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'" onclick="document.getElementById('faq-window').style.display='none'"></i>
+    </div>
+
+    <!-- Body Content -->
+    <div style="padding:24px; overflow-y:auto; flex:1; background:#f9fbfc;">
+        <style>
+            .faq-q { color:#1e2a6e; font-weight:bold; margin-bottom:6px; font-size:1.05rem; }
+            .faq-a { color:#555; font-size:0.95rem; margin-bottom:20px; line-height:1.5; padding-left:12px; border-left:3px solid #eef2ff;}
+        </style>
+        
+        <div class="faq-q">What is the core difference between the Email and SMS engine?</div>
+        <div class="faq-a">Email allows for complex logic attachments (like raw PDFs directly appended) and HTML structuring. Standard SMS operates purely physically on text-based blocks limited strictly physically by cellular telecom properties.</div>
+
+        <div class="faq-q">How does SMS Billing explicitly work?</div>
+        <div class="faq-a">SMS tracking is considered a Premium function. Every standard physical telecom message block consists strictly of 160 characters. Any layout structurally exceeding that is dynamically split logically mapping into multiple block charges billed linearly at $0.05 per chunk.</div>
+
+        <div class="faq-q">Can I legally deploy logic constraints running multiple active schedules exactly simultaneously?</div>
+        <div class="faq-a">Yes. Administrators natively possess full architecture rights to configure concurrent schedules tracking actively bounding distinct constraint subsets exactly tracking entirely completely simultaneously safely.</div>
+
+        <div class="faq-q">How do dynamic logic constraints filter Audience parameters natively?</div>
+        <div class="faq-a">Inside exactly overlapping physical Schedule modals, administrators define rules excluding parameters specifically filtering arrays mapping 'Auto-Pay logic sets', 'Expired Credit logic elements', or distinct target nodes tracking 'Billing address explicitly' against standard logins.</div>
+
+        <div class="faq-q">Is the actual Invoice file natively physically attached to the literal text message?</div>
+        <div class="faq-a">The SMS logic strictly natively embeds a secure URL gateway redirect physically linking into the standalone gateway system instead of actively attaching native array files (which behaves conditionally identical natively).</div>
+
+        <div class="faq-q">What exactly does 'Pending', 'Delivered', and 'Failed' mean dynamically tracking Dashboard logic cards natively?</div>
+        <div class="faq-a">Delivered nodes explicitly bind to successfully executed server handshakes structurally mapping telecom responses. Failed sequences natively intercept drop-logic packets identically rejecting execution. Pending explicitly governs states queued internally inside boundaries structurally awaiting active transmission cycles dynamically.</div>
+
+    </div>
+</div>
+
 <script>
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  var header = document.getElementById(elmnt.id + "-header");
+  if (header) {
+    header.onmousedown = dragMouseDown;
+  } else {
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+// Initialize FAQ drag logic mapping safely upon load loop boundaries
+document.addEventListener('DOMContentLoaded', () => {
+    const faqEl = document.getElementById("faq-window");
+    if(faqEl) dragElement(faqEl);
+});
 function switchModalTab(tab) {
     // Hide all bodies
     document.getElementById('modal-body-filter').style.display = 'none';
