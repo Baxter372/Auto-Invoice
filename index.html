@@ -1052,18 +1052,19 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
     </div>
 </div>
 
+<div class="filter-bar" style="margin: 0 20px 0 20px;">
+    <label style="font-weight:bold;color:#2c3e8c;font-size:0.85rem;white-space:nowrap;display:flex; align-items:center; gap: 4px;"><i data-lucide="filter" style="width: 14px; height: 14px;"></i> Schedule Filter:</label>
+    <input id="schedule-name-filter" onkeyup="filterScheduleTable()" placeholder="Find by Schedule Name..." type="text" style="flex:1; max-width:400px; padding:8px 12px; border:1px solid #ccc; border-radius:4px; font-size:0.9rem; outline:none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#3f51b5'" onblur="this.style.borderColor='#ccc'" />
+    <select style="padding:8px 12px; border:1px solid #ccc; border-radius:4px; font-size:0.9rem; color:#444; outline:none; cursor:pointer; transition: border-color 0.2s;" onfocus="this.style.borderColor='#3f51b5'" onblur="this.style.borderColor='#ccc'">
+        <option selected>Any Date Range</option>
+        <option>Next 7 Days</option>
+        <option>Next 30 Days</option>
+        <option>Next 90 Days</option>
+    </select>
+    <button class="btn-apply" onclick="filterScheduleTable()">Apply</button>
+    <button class="btn-reset" onclick="document.getElementById('schedule-name-filter').value=''; filterScheduleTable();">Reset</button>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-    
     
     
     <div id="cfg-email" style="padding:20px; background:#fff; ">
@@ -2873,7 +2874,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    }
 });
+
+function filterScheduleTable() {
+    const filterValue = document.getElementById('schedule-name-filter').value.toLowerCase();
+    const tables = ['cfg-email', 'cfg-sms'];
+    
+    tables.forEach(id => {
+        const table = document.getElementById(id);
+        if (table) {
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const nameCell = row.cells[1];
+                if (nameCell) {
+                    const textContent = nameCell.textContent || nameCell.innerText;
+                    row.style.display = textContent.toLowerCase().indexOf(filterValue) > -1 ? '' : 'none';
+                }
+            });
+        }
+    });
+}
 </script>
 </body>
 </html>
