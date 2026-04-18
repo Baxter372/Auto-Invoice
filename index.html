@@ -2826,30 +2826,30 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Body Scrollable Content -->
         <div style="padding:24px; overflow-y:auto; flex:1; background:#fdfdfd;">
             
-            <!-- Radios & Selects Grid -->
+            <!-- Mode Toggle Row -->
+            <div style="margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #eee; display:flex; gap:24px; align-items:center;">
+                <div style="font-weight:bold; color:#444; font-size:0.95rem; display:flex; align-items:center; gap:6px;"><i data-lucide="layers" style="width:16px; height:16px;"></i> Base Configuration:</div>
+                <label style="display:flex; align-items:center; gap:6px; color:#444; font-size:0.95rem; cursor:pointer;">
+                    <input type="radio" name="template-mode" value="new" checked onchange="toggleTemplateCopyMode(false)" style="accent-color:#3f51b5; width:16px; height:16px;"/> Create a new Template
+                </label>
+                <label style="display:flex; align-items:center; gap:6px; color:#444; font-size:0.95rem; cursor:pointer;">
+                    <input type="radio" name="template-mode" value="copy" onchange="toggleTemplateCopyMode(true)" style="accent-color:#3f51b5; width:16px; height:16px;"/> Copy an existing Template
+                </label>
+            </div>
+
+            <!-- Selects Grid -->
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px;">
                 
-                <!-- Left: Toggle & Select Template -->
-                <div>
-                    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
-                        <label style="display:flex; align-items:center; gap:8px; color:#444; font-size:0.95rem; cursor:pointer;">
-                            <input type="radio" name="template-mode" value="copy" onchange="toggleTemplateCopyMode(true)" style="accent-color:#3f51b5; width:16px; height:16px;"/> Copy an existing Template?
-                        </label>
-                        <label style="display:flex; align-items:center; gap:8px; color:#444; font-size:0.95rem; cursor:pointer;">
-                            <input type="radio" name="template-mode" value="new" checked onchange="toggleTemplateCopyMode(false)" style="accent-color:#3f51b5; width:16px; height:16px;"/> Create a new Template?
-                        </label>
-                    </div>
-                    
-                    <div id="template-copy-dropdown" style="opacity:0.4; pointer-events:none; transition:0.2s;">
-                        <div style="font-weight:bold; color:#d32f2f; font-size:0.85rem; margin-bottom:4px;">Select Template*</div>
-                        <select style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; font-size:0.95rem; color:#555; outline:none; background:#fff;">
-                            <option>Select Template</option>
-                            <option>Past Due Invoice Warning</option>
-                            <option>Card Expired Auto-Pay Alert</option>
-                            <option>Welcome Notification</option>
-                            <option>Renewal Campaign Array</option>
-                        </select>
-                    </div>
+                <!-- Left: Select Template -->
+                <div id="template-copy-dropdown" style="opacity:0.4; pointer-events:none; transition:0.2s;">
+                    <div style="font-weight:bold; color:#d32f2f; font-size:0.85rem; margin-bottom:4px;">Select Template*</div>
+                    <select style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; font-size:0.95rem; color:#555; outline:none; background:#fff;">
+                        <option>Select Template</option>
+                        <option>Past Due Invoice Warning</option>
+                        <option>Card Expired Auto-Pay Alert</option>
+                        <option>Welcome Notification</option>
+                        <option>Renewal Campaign Array</option>
+                    </select>
                 </div>
 
                 <!-- Right: Type Dropdown -->
