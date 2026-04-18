@@ -2418,8 +2418,7 @@ function toggleActiveTpl(cb, type) {
          
          <!-- TABS -->
          <div style="display:flex; gap:24px;">
-            <div id="modal-tab-head-filter" onclick="switchModalTab('filter')" style="padding-bottom:12px; border-bottom:2px solid #3f51b5; color:#3f51b5; font-size:1.1rem; cursor:pointer;">Filter</div>
-            <div id="modal-tab-head-results" onclick="switchModalTab('results')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Audience (<span style="color:#3f51b5;">212</span>)</div>
+            <div id="modal-tab-head-filter" onclick="switchModalTab('filter')" style="padding-bottom:12px; border-bottom:2px solid #3f51b5; color:#3f51b5; font-size:1.1rem; cursor:pointer;">Audience Filter (<span style="color:#3f51b5;">212</span>)</div>
             <div id="modal-tab-head-schedule" onclick="switchModalTab('schedule')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Schedule</div>
             <div id="modal-tab-head-activate" onclick="switchModalTab('activate')" style="padding-bottom:12px; border-bottom:2px solid transparent; color:#111; font-size:1.1rem; cursor:pointer;">Test & Activate</div>
          </div>
@@ -2496,6 +2495,51 @@ function toggleActiveTpl(cb, type) {
                    <label style="display:flex; align-items:center; gap:6px; font-size:0.95rem; color:#3f51b5; font-weight:bold;"><input type="radio" name="modal-attach" checked style="accent-color:#3f51b5;"/> No</label>
                 </div>
             </div>
+
+            <!-- AUDIENCE RESULTS INJECTED HERE -->
+            <div style="margin-top:24px;">
+                <div style="font-size:1.1rem; color:#111; margin-bottom:16px;">Total Email Count: <span style="color:#3f51b5; font-weight:bold;">212</span></div>
+                
+                <div style="border:1px solid #e1e8f5; border-radius:4px; overflow:hidden;">
+                     <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+                       <thead>
+                           <tr style="background:#eef2fa; color:#3f51b5; font-weight:bold; text-align:left;">
+                              <th style="padding:12px; width:60px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /><br/>ALL</th>
+                              <th style="padding:12px;">FULL NAME</th>
+                              <th style="padding:12px;">BILLING ADDRESS</th>
+                              <th style="padding:12px;">EMAIL</th>
+                           </tr>
+                       </thead>
+                       <tbody style="color:#e74c3c;">
+                           <tr style="border-bottom:1px solid #f0f0f0;">
+                              <td style="padding:12px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                              <td style="padding:12px;">Demooo Demooo</td>
+                              <td style="padding:12px;">890 Mountain Ave</td>
+                              <td style="padding:12px;">test@webcodegenie.net</td>
+                           </tr>
+                           <tr style="border-bottom:1px solid #f0f0f0;">
+                              <td style="padding:12px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                              <td style="padding:12px;">Webcodegenie</td>
+                              <td style="padding:12px;">676 N St Clair St</td>
+                              <td style="padding:12px;">sakshi.b@webcodegenie.com</td>
+                           </tr>
+                           <tr style="border-bottom:1px solid #f0f0f0;">
+                              <td style="padding:12px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                              <td style="padding:12px;">Multi Tier Product Test</td>
+                              <td style="padding:12px;">3456 Shadeland Ave</td>
+                              <td style="padding:12px;">tier@webcodegenie.net</td>
+                           </tr>
+                           <tr>
+                              <td style="padding:12px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
+                              <td style="padding:12px;">Demo Testing</td>
+                              <td style="padding:12px;">5465 Windward Pkwy</td>
+                              <td style="padding:12px;">Demo.test@webcodegenie.net</td>
+                           </tr>
+                       </tbody>
+                     </table>
+                 </div>
+            </div>
+
          </div>
          <script>
             function toggleAccountFilters(isAll) {
@@ -2569,50 +2613,7 @@ function toggleActiveTpl(cb, type) {
             </div>
          </div>
 
-         <!-- BODY: RESULTS -->
-         <div id="modal-body-results" style="display:none;">
-            <div style="font-size:1.1rem; color:#111; margin-bottom:16px;">Total Email Count: <span style="color:#3f51b5; font-weight:bold;">212</span></div>
-            
-            <div style="border:1px solid #e1e8f5; border-radius:4px; overflow:hidden;">
-                 <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
-                   <thead>
-                       <tr style="background:#eef2fa; color:#3f51b5; font-weight:bold; text-align:left;">
-                          <th style="padding:12px; width:60px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /><br/>ALL</th>
-                          <th style="padding:12px;">FULL NAME</th>
-                          <th style="padding:12px;">BILLING ADDRESS</th>
-                          <th style="padding:12px;">EMAIL</th>
-                       </tr>
-                   </thead>
-                   <tbody style="color:#e74c3c;">
-                       <tr style="border-bottom:1px solid #f0f0f0;">
-                          <td style="padding:12px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
-                          <td style="padding:12px;">Demooo Demooo</td>
-                          <td style="padding:12px;">890 Mountain Ave</td>
-                          <td style="padding:12px;">test@webcodegenie.net</td>
-                       </tr>
-                       <tr style="border-bottom:1px solid #f0f0f0;">
-                          <td style="padding:12px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
-                          <td style="padding:12px;">Webcodegenie</td>
-                          <td style="padding:12px;">676 N St Clair St</td>
-                          <td style="padding:12px;">sakshi.b@webcodegenie.com</td>
-                       </tr>
-                       <tr style="border-bottom:1px solid #f0f0f0;">
-                          <td style="padding:12px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
-                          <td style="padding:12px;">Multi Tier Product Test</td>
-                          <td style="padding:12px;">3456 Shadeland Ave</td>
-                          <td style="padding:12px;">tier@webcodegenie.net</td>
-                       </tr>
-                       <tr>
-                          <td style="padding:12px; text-align:center;"><input type="checkbox" checked style="accent-color:#0277bd;" /></td>
-                          <td style="padding:12px;">Demo Testing</td>
-                          <td style="padding:12px;">5465 Windward Pkwy</td>
-                          <td style="padding:12px;">Demo.test@webcodegenie.net</td>
-                       </tr>
-                   </tbody>
-                 </table>
-             </div>
-         </div>
-         
+
          <!-- BODY: ACTIVATE -->
          <div id="modal-body-activate" style="display:none;">
             <div style="font-weight:bold; font-size:1.15rem; color:#111; margin-bottom:16px;">Test & Activate Configuration</div>
@@ -3163,11 +3164,10 @@ function switchModalTab(tab) {
     // Hide all bodies
     document.getElementById('modal-body-filter').style.display = 'none';
     document.getElementById('modal-body-schedule').style.display = 'none';
-    document.getElementById('modal-body-results').style.display = 'none';
     document.getElementById('modal-body-activate').style.display = 'none';
     
     // Reset all headers
-    ['filter', 'schedule', 'results', 'activate'].forEach(t => {
+    ['filter', 'schedule', 'activate'].forEach(t => {
         let el = document.getElementById('modal-tab-head-' + t);
         el.style.borderBottom = '2px solid transparent';
         el.style.color = '#111';
@@ -3186,7 +3186,7 @@ function switchModalTab(tab) {
         actionBtn.onclick = function() { document.getElementById('schedule-edit-modal').style.display='none'; };
     } else {
         actionBtn.innerText = 'Save & Next';
-        let nextTab = tab === 'filter' ? 'results' : (tab === 'results' ? 'schedule' : 'activate');
+        let nextTab = tab === 'filter' ? 'schedule' : 'activate';
         actionBtn.onclick = function() { switchModalTab(nextTab); };
     }
 }
