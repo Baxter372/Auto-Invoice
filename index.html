@@ -2925,7 +2925,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <i data-lucide="table" style="width:16px; height:16px; cursor:pointer;"></i>
                         </div>
                         <div style="display:flex; gap:12px; color:#555; font-size:0.85rem; font-weight:bold;">
-                            <span style="cursor:pointer; display:flex; align-items:center; gap:4px; padding:4px 8px; border-radius:4px; transition:0.2s" onmouseenter="this.style.background='#ebebeb'" onmouseleave="this.style.background='transparent'"><i data-lucide="code" style="width:14px; height:14px;"></i> Source</span>
+                            <span id="btn-wysiwyg-source" onclick="toggleWysiwygSource()" style="cursor:pointer; display:flex; align-items:center; gap:4px; padding:4px 8px; border-radius:4px; transition:0.2s" onmouseenter="this.style.background='#ebebeb'" onmouseleave="this.style.background='transparent'"><i data-lucide="code" style="width:14px; height:14px;"></i> Source</span>
                         </div>
                     </div>
                     
@@ -2944,7 +2944,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                     <!-- Editor Canvas -->
-                    <textarea id="template-wysiwyg-editor" style="width:100%; height:250px; border:none; padding:16px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:0.95rem; color:#333; outline:none; resize:none; line-height:1.5;" placeholder="Type your template layout here or paste HTML source..."></textarea>
+                    <div id="wysiwyg-canvas-container" style="position:relative; width:100%; height:250px; background:#fff;">
+                         <!-- Live Visual Preview (Default) -->
+                         <div id="template-wysiwyg-preview" style="position:absolute; top:0; left:0; width:100%; height:100%; padding:16px; overflow-y:auto; box-sizing:border-box;">
+                             <div style="font-family:sans-serif; color:#aaa; font-style:italic;">Visual layout preview will display here...</div>
+                         </div>
+                         
+                         <!-- Raw HTML Textarea (Hidden by default) -->
+                         <textarea id="template-wysiwyg-editor" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:none; padding:16px; font-family:monospace; font-size:0.9rem; color:#333; outline:none; resize:none; line-height:1.5; background:#f4f5f7; box-sizing:border-box;" placeholder="Type your template layout here or paste HTML source..."></textarea>
+                    </div>
                 </div>
             </div>
 
@@ -3015,6 +3023,29 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script>
+let wysiwygSourceMode = false;
+function toggleWysiwygSource() {
+    wysiwygSourceMode = !wysiwygSourceMode;
+    const preview = document.getElementById('template-wysiwyg-preview');
+    const editor = document.getElementById('template-wysiwyg-editor');
+    const btn = document.getElementById('btn-wysiwyg-source');
+
+    if(wysiwygSourceMode) {
+        // Switching to Source Mode
+        editor.style.display = 'block';
+        preview.style.display = 'none';
+        btn.style.background = '#dbeafe'; 
+        btn.style.color = '#1e40af';
+    } else {
+        // Switching to Visual Mode
+        editor.style.display = 'none';
+        preview.style.display = 'block';
+        btn.style.background = 'transparent';
+        btn.style.color = '#555';
+        preview.innerHTML = editor.value || '<div style="font-family:sans-serif; color:#aaa; font-style:italic;">Visual layout preview will display here...</div>';
+    }
+}
+
 function executeGeminiMock() {
     const overlay = document.getElementById('ai-loading-overlay');
     overlay.style.display = 'flex';
@@ -3024,10 +3055,11 @@ function executeGeminiMock() {
         overlay.style.display = 'none';
         document.getElementById('ask-ai-prompt-modal').style.display = 'none';
         
-        // Populate the WYSIWYG editor textarea
-        const wysiwyg = document.getElementById('template-wysiwyg-editor');
-        if(wysiwyg) {
-            wysiwyg.value = `<div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">\n` +
+        // Populate the WYSIWYG editor textarea AND Visual Preview Mode
+        const wysiwygTextarea = document.getElementById('template-wysiwyg-editor');
+        const wysiwygPreview = document.getElementById('template-wysiwyg-preview');
+        
+        const mockHTML = `<div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">\n` +
 `    <div style="background: #2c3e8c; padding: 24px; text-align: center; color: #ffffff;">\n` +
 `        <h1 style="margin: 0; font-size: 24px;">Action Required: Invoice Alert</h1>\n` +
 `    </div>\n` +
@@ -3046,6 +3078,19 @@ function executeGeminiMock() {
 `        </div>\n` +
 `    </div>\n` +
 `</div>`;
+
+        if(wysiwygTextarea) wysiwygTextarea.value = mockHTML;
+        if(wysiwygPreview) {
+             wysiwygPreview.innerHTML = mockHTML;
+             // Ensure we demonstrate Visual Display by default
+             wysiwygSourceMode = false;
+             wysiwygTextarea.style.display = 'none';
+             wysiwygPreview.style.display = 'block';
+             const btn = document.getElementById('btn-wysiwyg-source');
+             if(btn) {
+                 btn.style.background = 'transparent';
+                 btn.style.color = '#555';
+             }
         }
     }, 1500);
 }
