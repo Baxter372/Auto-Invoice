@@ -2743,11 +2743,44 @@ function toggleActiveTpl(cb, type) {
             <button style="padding:14px 32px; background:linear-gradient(135deg, #2ecc71, #27ae60); color:#fff; border:none; border-radius:8px; font-weight:bold; font-size:1rem; cursor:pointer; box-shadow:0 4px 16px rgba(46,204,113,0.3); transition:transform 0.2s;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'" onclick="document.getElementById('marketing-promo-modal').style.display='none'">Activate Free Trial</button>
             <button style="padding:14px 24px; background:transparent; color:#888; border:none; border-radius:8px; font-weight:600; font-size:0.95rem; cursor:pointer; transition:color 0.2s;" onmouseenter="this.style.color='#333'" onmouseleave="this.style.color='#888'" onclick="document.getElementById('marketing-promo-modal').style.display='none'">Remind me Later</button>
          </div>
+         
+         <div style="margin-top:28px;">
+             <a href="#" onclick="togglePromoDetails(); return false;" style="color:#3f51b5; font-weight:600; font-size:0.95rem; text-decoration:none; transition:0.2s; display:inline-flex; align-items:center; gap:4px;" onmouseenter="this.style.textDecoration='underline'" onmouseleave="this.style.textDecoration='none'">Learn More about Auto Comms <i data-lucide="arrow-right" style="width:14px; height:14px;"></i></a>
+         </div>
       </div>
 
       <!-- Right Flex Pane (Visual Asset) -->
-      <div style="flex:1; background:#f0f0f0; position:relative;">
-         <img src="marketing_beach.png" alt="Marketing Promo" style="width:100%; height:100%; object-fit:cover; display:block;" />
+      <div style="flex:1; background:#f0f0f0; position:relative; display:flex; align-items:stretch; overflow:hidden;">
+         <img id="promo-image-layer" src="marketing_beach.png" alt="Marketing Promo" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block; transition:opacity 0.4s ease; opacity:1; z-index:2;" />
+         
+         <div id="promo-details-layer" style="position:absolute; top:0; left:0; width:100%; height:100%; background:#fff; z-index:1; padding:48px; overflow-y:auto; opacity:0; transition:opacity 0.4s ease; pointer-events:none;">
+             <h2 style="color:#e74c3c; font-size:1.2rem; margin-top:0; border-bottom:1px solid #eee; padding-bottom:8px;">Account & Pricing</h2>
+             
+             <div style="margin-top:16px;">
+                 <h3 style="color:#1e2a6e; font-size:1rem; margin:0 0 4px 0;">How much does it cost?</h3>
+                 <p style="color:#555; font-size:0.95rem; line-height:1.5; margin:0; border-left:2px solid #e1e8f5; padding-left:12px;">Auto Comms costs $10 per month, billed monthly. However, sending text messages (SMS) costs an additional $0.05 cents per message block.</p>
+             </div>
+             
+             <div style="margin-top:16px;">
+                 <h3 style="color:#1e2a6e; font-size:1rem; margin:0 0 4px 0;">How long does the subscription last?</h3>
+                 <p style="color:#555; font-size:0.95rem; line-height:1.5; margin:0; border-left:2px solid #e1e8f5; padding-left:12px;">Subscriptions run on a straightforward month-to-month basis. Your account will automatically renew at the start of each cycle.</p>
+             </div>
+             
+             <div style="margin-top:16px; margin-bottom:32px;">
+                 <h3 style="color:#1e2a6e; font-size:1rem; margin:0 0 4px 0;">Can I turn it off at any time?</h3>
+                 <p style="color:#555; font-size:0.95rem; line-height:1.5; margin:0; border-left:2px solid #e1e8f5; padding-left:12px;">Yes, you can turn off Auto Comms whenever you want! Just keep in mind that you will still be billed through the end of your current month.</p>
+             </div>
+
+             <h2 style="color:#27ae60; font-size:1.2rem; margin-top:0; border-bottom:1px solid #eee; padding-bottom:8px;">Core System Features</h2>
+             
+             <ul style="color:#555; font-size:0.95rem; line-height:1.6; padding-left:20px; margin:16px 0 0 0;">
+                 <li style="margin-bottom:8px;"><strong>Automated Email Blasts:</strong> Launch wide-scale emails instantly using our pre-built, professional templates.</li>
+                 <li style="margin-bottom:8px;"><strong>Automated SMS/Text Blasts:</strong> Reach your customers directly on their phones using pre-built text message templates.</li>
+                 <li style="margin-bottom:8px;"><strong>Fully Customizable Templates:</strong> Personalize your messaging to match your brand for a true white-label look.</li>
+                 <li style="margin-bottom:8px;"><strong>Comprehensive Performance Metrics:</strong> Leverage our full suite of real-time data tracking to make better delivery decisions.</li>
+                 <li style="margin-bottom:0;"><strong>Granular Audience Control:</strong> Target exactly who receives your messages using custom audience filters for the best possible results.</li>
+             </ul>
+         </div>
       </div>
 
    </div>
@@ -3151,6 +3184,27 @@ function toggleTemplateCopyMode(isCopy) {
             dropdown.style.opacity = '0.4';
             dropdown.style.pointerEvents = 'none';
         }
+    }
+}
+
+// Added JS logic for Marketing cross-fade
+let promoDetailsActive = false;
+function togglePromoDetails() {
+    promoDetailsActive = !promoDetailsActive;
+    const imgLayer = document.getElementById('promo-image-layer');
+    const txtLayer = document.getElementById('promo-details-layer');
+    if(promoDetailsActive) {
+        imgLayer.style.opacity = '0';
+        imgLayer.style.pointerEvents = 'none';
+        txtLayer.style.opacity = '1';
+        txtLayer.style.pointerEvents = 'auto';
+        txtLayer.style.zIndex = '3';
+    } else {
+        imgLayer.style.opacity = '1';
+        imgLayer.style.pointerEvents = 'auto';
+        txtLayer.style.opacity = '0';
+        txtLayer.style.pointerEvents = 'none';
+        txtLayer.style.zIndex = '1';
     }
 }
 
