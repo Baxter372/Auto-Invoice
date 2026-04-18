@@ -2465,8 +2465,35 @@ function toggleActiveTpl(cb, type) {
                    <label style="display:flex; align-items:center; gap:8px; font-size:0.95rem; color:#888;"><input type="radio" name="modal-address"/> Customer Login Only</label>
                 </div>
 
-                <div style="background:#fff; border:1px solid #eee; padding:16px; border-radius:4px; color:#3f51b5; display:flex; align-items:center; gap:6px; cursor:pointer;">
-                   Advanced Filters <i data-lucide="chevron-down" style="width:16px; height:16px;"></i>
+                <div style="background:#fff; border:1px solid #eee; padding:16px; border-radius:4px;">
+                   <div style="color:#3f51b5; display:flex; align-items:center; gap:6px; cursor:pointer; font-weight:bold; font-size:0.95rem; margin-bottom:16px;">
+                       Advanced Filters <i data-lucide="chevron-up" style="width:16px; height:16px;"></i>
+                   </div>
+                   <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px 24px;">
+                       <input type="text" placeholder="Name or address" style="border:none; border-bottom:1px solid #ccc; width:100%; padding:8px 0; outline:none; font-size:0.9rem; color:#333;"/>
+                       <input type="text" placeholder="Email Address" style="border:none; border-bottom:1px solid #ccc; width:100%; padding:8px 0; outline:none; font-size:0.9rem; color:#333;"/>
+                       
+                       <input type="text" placeholder="Enter Neighborhood" style="border:none; border-bottom:1px solid #ccc; width:100%; padding:8px 0; outline:none; font-size:0.9rem; color:#333;"/>
+                       <select style="border:1px solid #ccc; border-radius:4px; width:100%; padding:8px; outline:none; font-size:0.9rem; color:#555; background:#fff;">
+                           <option>Select Team</option>
+                       </select>
+                       
+                       <select style="border:1px solid #ccc; border-radius:4px; width:100%; padding:8px; outline:none; font-size:0.9rem; color:#555; background:#fff;">
+                           <option>Select Route</option>
+                       </select>
+                       <select style="border:1px solid #ccc; border-radius:4px; width:100%; padding:8px; outline:none; font-size:0.9rem; color:#555; background:#fff;">
+                           <option>Select Product</option>
+                       </select>
+                   </div>
+                </div>
+            </div>
+
+            <!-- Moved Attach Invoice section to the end of the Filter body, outside of the conditional grey-out block -->
+            <div style="background:#fff; border:1px solid #eee; padding:16px; margin-top:16px; border-radius:4px;">
+                <div style="font-weight:bold; font-size:0.95rem; color:#555; margin-bottom:12px;">Attach Invoice to each Customer's Email?</div>
+                <div style="display:flex; gap:16px;">
+                   <label style="display:flex; align-items:center; gap:6px; font-size:0.95rem; color:#888;"><input type="radio" name="modal-attach"/> Yes</label>
+                   <label style="display:flex; align-items:center; gap:6px; font-size:0.95rem; color:#3f51b5; font-weight:bold;"><input type="radio" name="modal-attach" checked style="accent-color:#3f51b5;"/> No</label>
                 </div>
             </div>
          </div>
@@ -2482,13 +2509,6 @@ function toggleActiveTpl(cb, type) {
 
          <!-- BODY: SCHEDULE -->
          <div id="modal-body-schedule" style="display:none;">
-            <div style="background:#fff; border:1px solid #eee; padding:16px; margin-bottom:24px; border-radius:4px;">
-                <div style="font-weight:bold; font-size:0.95rem; color:#111; margin-bottom:12px;">Attach Invoice to each Customer's Notice?</div>
-                <div style="display:flex; gap:16px;">
-                   <label style="display:flex; align-items:center; gap:6px; font-size:0.95rem; color:#888;"><input type="radio" name="modal-attach"/> Yes</label>
-                   <label style="display:flex; align-items:center; gap:6px; font-size:0.95rem; color:#111; font-weight:bold;"><input type="radio" name="modal-attach" checked style="accent-color:#3f51b5;"/> No</label>
-                </div>
-            </div>
 
             <div style="font-weight:bold; font-size:1.1rem; color:#111; margin-bottom:16px;">Schedule Details</div>
             
