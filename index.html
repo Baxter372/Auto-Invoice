@@ -348,6 +348,47 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 .ai-tooltip { display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: rgba(15,15,30,0.96); color: #fff; font-size: 0.72rem; line-height: 1.5; padding: 8px 12px; border-radius: 6px; width: 210px; text-align: left; z-index: 999; pointer-events: none; box-shadow: 0 4px 14px rgba(0,0,0,0.4); }
 .ai-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: rgba(15,15,30,0.96); }
 .ai-feature-row:hover .ai-tooltip { display: block; }
+
+        .premium-tooltip { position: relative; }
+        .premium-tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            background: #111;
+            color: #fff;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-family: inherit;
+        }
+        .premium-tooltip::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            border-width: 4px;
+            border-style: solid;
+            border-color: #111 transparent transparent transparent;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s;
+            z-index: 1000;
+        }
+        .premium-tooltip:hover::after,
+        .premium-tooltip:hover::before {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
 </style>
 </head>
 <body>
@@ -802,7 +843,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div id="tpl-panel-email">
 <div style="padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee;">
 <div style="font-size:0.85rem; color:#777;">Manage automatically triggered email templates for invoices and renewals.</div>
-<button title="Create New Template" onclick="document.getElementById('email-template-create-modal').style.display='flex'" style="background:#2c3e8c; color:#fff; border:none; border-radius:50%; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 4px rgba(44,62,140,0.2); transition:background 0.2s, transform 0.2s;" onmouseenter="this.style.background='#1e2a6e'; this.style.transform='scale(1.05)';" onmouseleave="this.style.background='#2c3e8c'; this.style.transform='scale(1)';">
+<button class="premium-tooltip" data-tooltip="Create New Template" onclick="document.getElementById('email-template-create-modal').style.display='flex'" style="background:#2c3e8c; color:#fff; border:none; border-radius:50%; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 4px rgba(44,62,140,0.2); transition:background 0.2s, transform 0.2s;" onmouseenter="this.style.background='#1e2a6e'; this.style.transform='scale(1.05)';" onmouseleave="this.style.background='#2c3e8c'; this.style.transform='scale(1)';">
 <i data-lucide="plus" style="width:18px; height:18px;"></i>
 </button>
 </div>
@@ -861,7 +902,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div id="tpl-panel-sms" style="display:none;">
 <div style="padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee;">
 <div style="font-size:0.85rem; color:#777;">Manage automatically triggered SMS text templates.</div>
-<button title="Create New Template" onclick="document.getElementById('email-template-create-modal').style.display='flex'" style="background:#2c3e8c; color:#fff; border:none; border-radius:50%; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 4px rgba(44,62,140,0.2); transition:background 0.2s, transform 0.2s;" onmouseenter="this.style.background='#1e2a6e'; this.style.transform='scale(1.05)';" onmouseleave="this.style.background='#2c3e8c'; this.style.transform='scale(1)';">
+<button class="premium-tooltip" data-tooltip="Create New Template" onclick="document.getElementById('email-template-create-modal').style.display='flex'" style="background:#2c3e8c; color:#fff; border:none; border-radius:50%; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 4px rgba(44,62,140,0.2); transition:background 0.2s, transform 0.2s;" onmouseenter="this.style.background='#1e2a6e'; this.style.transform='scale(1.05)';" onmouseleave="this.style.background='#2c3e8c'; this.style.transform='scale(1)';">
 <i data-lucide="plus" style="width:18px; height:18px;"></i>
 </button>
 </div>
@@ -1049,7 +1090,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
       <button id="cfg-tab-email" onclick="switchCfgTab('email')" style="padding:8px 32px; font-weight:normal; font-size:0.95rem; background:#eef2fa; color:#3f51b5; border:none; border-radius:4px; cursor:pointer; transition: background 0.2s;">Email</button>
       <button id="cfg-tab-sms" onclick="switchCfgTab('sms')" style="padding:8px 32px; font-weight:normal; font-size:0.95rem; background:#f9f9f9; color:#888; border:none; border-radius:4px; cursor:pointer; transition: background 0.2s;">SMS/Text</button>
     </div>
-    <div style="background:#3f51b5; color:#fff; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(63,81,181,0.3);" onclick="document.getElementById('schedule-select-modal').style.display='flex'">
+    <div class="premium-tooltip" data-tooltip="Create New Schedule" style="background:#3f51b5; color:#fff; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(63,81,181,0.3); transition:transform 0.2s;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'" onclick="document.getElementById('schedule-select-modal').style.display='flex'">
        <i data-lucide="plus" style="width:20px; height:20px; stroke-width:3;"></i>
     </div>
 </div>
