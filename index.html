@@ -391,6 +391,19 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+
+        /* AI Wizard Chat Styles */
+        .ai-chat-bubble-ai { background: #f0f4f8; border-radius: 16px 16px 16px 4px; padding: 12px 16px; color: #333; font-size: 0.95rem; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 16px; align-self: flex-start; max-width: 85%; position: relative; border: 1px solid #e1e8ed; animation: fadeUpIn 0.3s ease forwards; }
+        .ai-chat-bubble-user { background: linear-gradient(135deg, #3f51b5, #5c6bc0); border-radius: 16px 16px 4px 16px; padding: 12px 16px; color: #fff; font-size: 0.95rem; line-height: 1.5; box-shadow: 0 4px 12px rgba(63,81,181,0.25); margin-bottom: 16px; align-self: flex-end; max-width: 85%; animation: fadeUpIn 0.3s ease forwards; }
+        .ai-typing-indicator { display: flex; gap: 4px; padding: 8px 0; }
+        .ai-typing-indicator span { width: 6px; height: 6px; background: #888; border-radius: 50%; animation: bounceSync 1.2s infinite ease-in-out both; }
+        .ai-typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .ai-typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounceSync { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        @keyframes fadeUpIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .ai-chat-btn { background: #fff; border: 1px solid #c5d0f6; border-radius: 20px; padding: 8px 16px; font-size: 0.85rem; color: #3f51b5; font-weight: 600; cursor: pointer; transition: 0.2s; white-space: nowrap; }
+        .ai-chat-btn:hover { background: #eef2ff; border-color: #3f51b5; }
+
 </style>
 </head>
 <body>
@@ -3704,5 +3717,255 @@ function filterScheduleTable() {
     });
 }
 </script>
+
+<!-- ── AI WIZARD CHAT WIDGET ── -->
+<div id="ai-wizard-fab" onclick="openAiWizard()" class="premium-tooltip" data-tooltip="Start Guided Setup"
+     style="position:fixed; bottom:30px; right:30px; width:64px; height:64px; background:linear-gradient(135deg, #8e44ad, #4a148c); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 8px 24px rgba(142,68,173,0.4), 0 0 0 4px rgba(255,255,255,0.2); cursor:pointer; z-index:9990; transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" 
+     onmouseenter="this.style.transform='scale(1.1) rotate(5deg)'; this.style.boxShadow='0 12px 32px rgba(142,68,173,0.6), 0 0 0 6px rgba(142,68,173,0.1)';" 
+     onmouseleave="this.style.transform='scale(1) rotate(0deg)'; this.style.boxShadow='0 8px 24px rgba(142,68,173,0.4), 0 0 0 4px rgba(255,255,255,0.2)';">
+    <i data-lucide="bot" style="width:32px; height:32px;"></i>
+    <div style="position:absolute; top:-2px; right:-2px; width:16px; height:16px; background:#2ecc71; border:3px solid #fff; border-radius:50%;"></div>
+</div>
+
+<!-- ── AI WIZARD CHAT MODAL ── -->
+<div id="ai-wizard-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:9999999; align-items:flex-end; justify-content:flex-end; backdrop-filter:blur(3px);">
+    
+    <div style="background:#fff; width:450px; max-width:95vw; height:80vh; max-height:750px; border-radius:16px 16px 0 0; display:flex; flex-direction:column; overflow:visible; box-shadow:0 -12px 48px rgba(0,0,0,0.4); margin-right:20px; margin-bottom:0; font-family:Arial, sans-serif; position:relative; animation: fadeUpIn 0.3s ease;">
+        
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg, #1e2a6e, #2c3e8c); padding:16px 20px; color:#fff; display:flex; justify-content:space-between; align-items:center; border-radius:16px 16px 0 0; flex-shrink:0;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center;">
+                    <i data-lucide="bot" style="width:20px; height:20px;"></i>
+                </div>
+                <div>
+                    <div style="font-weight:bold; font-size:1.1rem; letter-spacing:0.5px;">Auto Setup Assistant</div>
+                    <div style="font-size:0.75rem; color:#a5b1ea; display:flex; align-items:center; gap:4px;"><span style="width:6px; height:6px; background:#2ecc71; border-radius:50%; display:inline-block;"></span> Online &bull; Powered by Gemini AI</div>
+                </div>
+            </div>
+            <i data-lucide="x" style="width:20px; height:20px; cursor:pointer; opacity:0.8; transition:0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'" onclick="document.getElementById('ai-wizard-modal').style.display='none'"></i>
+        </div>
+
+        <!-- Scrollable Messages Container -->
+        <div id="ai-chat-body" style="flex:1; background:#f9fafc; overflow-y:auto; padding:20px; display:flex; flex-direction:column;">
+            <div style="text-align:center; font-size:0.8rem; color:#aaa; margin-bottom:20px; text-transform:uppercase; letter-spacing:1px; font-weight:bold;">Today</div>
+            
+            <div class="ai-chat-bubble-ai">
+                Hi! I can help you automate your communications quickly, bypassing the manual configuration screens entirely. Are we setting up an <strong>Email</strong> or an <strong>SMS/Text</strong> campaign today?
+            </div>
+            
+            <div id="ai-quick-replies" style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-self:flex-start;">
+                <button class="ai-chat-btn" onclick="aiUserClickReply('Email')">Email</button>
+                <button class="ai-chat-btn" onclick="aiUserClickReply('SMS')">SMS/Text</button>
+            </div>
+            
+            <div id="ai-typing-indicator-container" style="display:none; align-self:flex-start; background:#f0f4f8; padding:10px 16px; border-radius:16px 16px 16px 4px; border:1px solid #e1e8ed;">
+                <div class="ai-typing-indicator"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+
+        <!-- Input Footer -->
+        <div style="background:#fff; padding:16px; border-top:1px solid #eee; display:flex; align-items:center; gap:12px; flex-shrink:0;">
+            <input type="text" id="ai-chat-input" placeholder="Type a message..." style="flex:1; border:1px solid #ccc; border-radius:24px; padding:12px 16px; outline:none; font-size:0.95rem; font-family:inherit; background:#f4f6f8; transition:border-color 0.2s;" onfocus="this.style.borderColor='#3f51b5'; this.style.background='#fff'" onblur="this.style.borderColor='#ccc'; this.style.background='#f4f6f8'" onkeydown="if(event.key==='Enter') aiUserSubmitMessage()" />
+            <div onclick="aiUserSubmitMessage()" style="width:40px; height:40px; border-radius:50%; background:#3f51b5; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; transition:0.2s; box-shadow:0 4px 12px rgba(63,81,181,0.3);" onmouseenter="this.style.transform='scale(1.1)'" onmouseleave="this.style.transform='scale(1)'">
+                <i data-lucide="send" style="width:16px; height:16px; margin-left:2px;"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// --- AI WIZARD STATE MACHINE ---
+let aiState = 0;
+// 0 = Initial (Waiting for Channel)
+// 1 = Waiting for Campaign Concept
+// 2 = Waiting for Audience
+// 3 = Waiting for Test Email
+// 4 = Waiting for Approve
+
+let aiMemory = {
+    channel: '',
+    campaign: '',
+    audience: '',
+    email: ''
+};
+
+function openAiWizard() {
+    document.getElementById('ai-wizard-modal').style.display = 'flex';
+    // Small timeout ensures lucide icons inside chat populate correctly if they hadn't
+    setTimeout(() => { if(window.lucide) window.lucide.createIcons(); }, 50);
+}
+
+function aiUserClickReply(text) {
+    document.getElementById('ai-quick-replies').style.display = 'none';
+    appendUserMessage(text);
+    processAiLogic(text);
+}
+
+function aiUserSubmitMessage() {
+    const input = document.getElementById('ai-chat-input');
+    const text = input.value.trim();
+    if(!text) return;
+    input.value = '';
+    
+    // Hide quick replies if they exist independently
+    const qr = document.getElementById('ai-quick-replies');
+    if(qr) qr.style.display = 'none';
+    
+    appendUserMessage(text);
+    processAiLogic(text);
+}
+
+function appendUserMessage(text) {
+    const body = document.getElementById('ai-chat-body');
+    const indicator = document.getElementById('ai-typing-indicator-container');
+    
+    const div = document.createElement('div');
+    div.className = 'ai-chat-bubble-user';
+    div.textContent = text;
+    
+    body.insertBefore(div, indicator);
+    body.scrollTop = body.scrollHeight;
+}
+
+function appendAiMessage(htmlContent, quickReplies = []) {
+    const body = document.getElementById('ai-chat-body');
+    const indicator = document.getElementById('ai-typing-indicator-container');
+    
+    indicator.style.display = 'none'; // stop typing
+    
+    const div = document.createElement('div');
+    div.className = 'ai-chat-bubble-ai';
+    div.innerHTML = htmlContent;
+    body.insertBefore(div, indicator);
+    
+    if (quickReplies.length > 0) {
+        const qrContainer = document.createElement('div');
+        qrContainer.id = 'ai-quick-replies';
+        qrContainer.style = 'display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-self:flex-start;';
+        quickReplies.forEach(r => {
+            const btn = document.createElement('button');
+            btn.className = 'ai-chat-btn';
+            btn.textContent = r;
+            btn.onclick = () => aiUserClickReply(r);
+            qrContainer.appendChild(btn);
+        });
+        body.insertBefore(qrContainer, indicator);
+    }
+    
+    body.scrollTop = body.scrollHeight;
+}
+
+function processAiLogic(userText) {
+    const body = document.getElementById('ai-chat-body');
+    const indicator = document.getElementById('ai-typing-indicator-container');
+    
+    // Show typing
+    indicator.style.display = 'block';
+    body.scrollTop = body.scrollHeight;
+    
+    const textStr = userText.toLowerCase();
+    
+    setTimeout(() => {
+        // Fallback Protocol Check
+        if(textStr.includes('custom') || textStr.includes('design my own')) {
+            appendAiMessage(`No problem! If you'd like to build an entirely custom template from scratch, I can't set that up via chat yet. Please navigate to the <b>Templates Tab</b> on the dashboard, click the blue plus button, and build your own layout visually!`, []);
+            aiState = 0; // reset
+            return;
+        }
+
+        if (aiState === 0) {
+            // Looking for Email vs SMS
+            if (textStr.includes('sms') || textStr.includes('text')) {
+                // Force back to email for logic demo branch
+                appendAiMessage(`SMS messages are restricted to pure text by telecom carriers, so we can't fully utilize visual styling schedules. Should we switch this to an <b>Email</b> so we have more power?`, ['Switch to Email', 'Stick to SMS (cancel)']);
+                return;
+            } else if (textStr.includes('email')) {
+                aiMemory.channel = 'Email';
+                aiState = 1;
+                appendAiMessage(`Perfect! We'll use Email. What kind of sequence are we building? Are you looking to set up an <b>Invoice Reminder</b> or a <b>Renewal Notification</b>?`, ['Invoice Reminder', 'Renewal Notification']);
+            } else {
+                appendAiMessage(`Sorry, I didn't catch that. Do you want to build an <b>Email</b> or <b>SMS</b> schedule?`, ['Email', 'SMS']);
+            }
+        } 
+        else if (aiState === 1) {
+            // Campaign Concept
+            if(textStr.includes('invoice')) {
+                aiMemory.campaign = 'Invoice Reminder';
+            } else {
+                aiMemory.campaign = 'General Outreach';
+            }
+            aiState = 2;
+            appendAiMessage(`I've loaded the standard ${aiMemory.campaign} template blueprint. Who receives this schedule? Specifically, are we targeting <b>This Year's</b> customers, or <b>Last Year's</b>?`, ["This Year's Customers", "Last Year's Customers"]);
+        }
+        else if (aiState === 2) {
+            // Audience
+            aiMemory.audience = textStr.includes('last') ? "Last Year's Customers" : "2026 Active Setup";
+            aiState = 3;
+            appendAiMessage(`I'm officially ready to queue this up. Before I flip the switch, please type an admin email address so I can shoot you a live test preview for approval!`, []);
+        }
+        else if (aiState === 3) {
+            // Email address
+            if(textStr.includes('@')) {
+                aiMemory.email = userText;
+                aiState = 4;
+                appendAiMessage(`<i>Sending test...</i> ✔️ <b>Test Sent to ${aiMemory.email}!</b><br><br>If everything looks exactly how you want it, simply reply <b>Approve</b> and I will launch the automated schedule!`, ['Approve', 'Cancel']);
+            } else {
+                appendAiMessage(`That doesn't look like a valid email. Could you type your email address?`);
+            }
+        }
+        else if (aiState === 4) {
+            // Approve
+            if(textStr.includes('approve') || textStr.includes('yes')) {
+                appendAiMessage(`<b>Schedule Activated! 🎉</b><br>I've inserted the new ${aiMemory.campaign} schedule directly into your configuration grids. Feel free to close this chat!`, []);
+                aiState = 5;
+                
+                // --- INJECT LIVE DASHBOARD ROW ---
+                injectScheduleToDashboard();
+                
+            } else {
+                appendAiMessage(`Setup aborted! You can close this window, or say <b>Email</b> to start over.`, ['Email']);
+                aiState = 0;
+            }
+        }
+    }, 1200 + Math.random() * 800); // simulate 1-2s thinking time
+}
+
+function injectScheduleToDashboard() {
+    const tbody = document.querySelector('#cfg-email tbody');
+    if(!tbody) return;
+    
+    // Switch to Config tab visually so user sees it updating
+    if(typeof switchMainTab === 'function') switchMainTab('config');
+    if(typeof switchCfgTab === 'function') switchCfgTab('email');
+    
+    const tr = document.createElement('tr');
+    tr.style.background = '#fafffa'; // slight green highlight
+    tr.innerHTML = `
+        <td style="padding:16px; border-bottom:1px solid #eee;">
+            <div style="font-weight:bold; color:#111;">${aiMemory.campaign} (AI Auto)</div>
+            <div style="font-size:0.8rem; color:#888;">Rule: Net 0 Days</div>
+        </td>
+        <td style="padding:16px; border-bottom:1px solid #eee;">
+            <div style="display:flex; align-items:center; gap:6px;">
+                <div style="width:8px; height:8px; border-radius:50%; background:#2ecc71;"></div>
+                <span style="font-size:0.85rem; color:#555;">Live Template</span>
+            </div>
+        </td>
+        <td style="padding:16px; border-bottom:1px solid #eee; font-size:0.85rem; color:#555;">${aiMemory.audience}</td>
+        <td style="padding:16px; border-bottom:1px solid #eee; text-align:right;">
+            <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+                <i data-lucide="power" style="width:16px; height:16px; color:#2ecc71; cursor:pointer;" onclick="this.style.color=this.style.color==='rgb(46, 204, 113)'?'#e74c3c':'#2ecc71'"></i>
+                <i data-lucide="trash-2" style="width:16px; height:16px; color:#e74c3c; cursor:pointer;" onclick="this.closest('tr').remove();"></i>
+            </div>
+        </td>
+    `;
+    
+    // Insert at top
+    tbody.insertBefore(tr, tbody.firstChild);
+    if(window.lucide) window.lucide.createIcons();
+}
+</script>
+
 </body>
 </html>
