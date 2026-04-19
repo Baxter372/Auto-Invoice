@@ -4124,14 +4124,26 @@ function injectScheduleToDashboard() {
 function toggleAccordion(id) {
     const el = document.getElementById(id);
     const icon = document.getElementById('icon-' + id);
+    const headerDiv = el.previousElementSibling;
+    
+    if(headerDiv) {
+        const radio = headerDiv.querySelector('input[type="radio"]');
+        if(radio && !radio.checked) {
+            radio.checked = true;
+            radio.dispatchEvent(new Event('change'));
+        }
+    }
+
     if(el.style.display === 'none') {
         el.style.display = 'block';
         icon.setAttribute('data-lucide', 'chevron-up');
         el.parentElement.style.borderColor = '#3f51b5';
+        if(headerDiv) headerDiv.style.background = '#f4f6fc';
     } else {
         el.style.display = 'none';
         icon.setAttribute('data-lucide', 'chevron-down');
         el.parentElement.style.borderColor = '#ddd';
+        if(headerDiv) headerDiv.style.background = '#fafafa';
     }
     if(window.lucide && window.lucide.createIcons) window.lucide.createIcons();
 }
