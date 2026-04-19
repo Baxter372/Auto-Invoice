@@ -2973,33 +2973,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             
             <div style="font-weight:bold; color:#d32f2f; font-size:0.9rem; margin-bottom:8px;">Required Custom Instructions*</div>
-            <textarea placeholder="Example: Always wrap the primary body content inside a <div style='background:#f4f4f4'>. Always inject the %RECEIVER_NAME% variable directly into the opening greeting. Never use fonts other than Roboto..." style="width:100%; height:200px; padding:16px; border:1px solid #ccc; border-radius:6px; font-family:'Segoe UI', Tahoma, Geneva, sans-serif; font-size:0.95rem; line-height:1.6; color:#333; outline:none; resize:none; transition:border 0.2s;" onfocus="this.style.borderColor='#3f51b5'" onblur="this.style.borderColor='#ccc'"></textarea>
-        </div>
-        <div style="background:#fff; padding:16px 24px; border-top:1px solid #eee; display:flex; justify-content:flex-end; gap:12px;">
-            <button style="background:transparent; border:1px solid #ddd; color:#555; padding:8px 16px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; transition:0.2s;" onmouseenter="this.style.background='#f4f4f4'" onmouseleave="this.style.background='transparent'" onclick="document.getElementById('ai-brand-rules-modal').style.display='none'">Cancel</button>
-            <button style="background:#3f51b5; color:#fff; border:none; padding:8px 24px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; box-shadow:0 2px 4px rgba(63,81,181,0.3); transition:0.2s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='translateY(0)'" onclick="document.getElementById('ai-brand-rules-modal').style.display='none'">Save Global Rules</button>
-        </div>
-    </div>
-</div>
-
-<!-- ── GLOBAL AI BRAND RULES MODAL ── -->
-<div id="ai-brand-rules-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:9999999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
-    <div style="background:#fff; width:600px; border-radius:8px; overflow:hidden; box-shadow:0 12px 48px rgba(0,0,0,0.4); display:flex; flex-direction:column;">
-        <div style="background:linear-gradient(135deg, #2c3e8c, #3f51b5); padding:16px 20px; color:#fff; display:flex; justify-content:space-between; align-items:center;">
-            <div style="font-weight:bold; font-size:1.1rem; display:flex; align-items:center; gap:8px;">
-                <i data-lucide="sparkles" style="width:20px; height:20px;"></i> Global AI Brand Intelligence
-            </div>
-            <i data-lucide="x" style="width:20px; height:20px; cursor:pointer; opacity:0.8; transition:0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'" onclick="document.getElementById('ai-brand-rules-modal').style.display='none'"></i>
-        </div>
-        <div style="padding:24px; background:#f9faff;">
-            <div style="background:#eef2ff; border:1px solid #c5d0f6; padding:12px; border-radius:6px; margin-bottom:20px; display:flex; gap:12px; align-items:flex-start;">
-                <i data-lucide="info" style="width:20px; height:20px; color:#3f51b5; flex-shrink:0;"></i>
-                <div style="font-size:0.9rem; color:#2c3e8c; line-height:1.4;">
-                    Establish persistent styles, HTML structures, or required variables that Gemini will automatically adhere to on <strong>every template it generates.</strong>
-                </div>
-            </div>
-            
-            <div style="font-weight:bold; color:#d32f2f; font-size:0.9rem; margin-bottom:8px;">Required Custom Instructions*</div>
             <textarea placeholder="Example: Always wrap the primary body content inside a <div style='background:#f4f4f4'>. Always inject the %RECEIVER_NAME% variable directly into the opening greeting. Never use fonts other than Roboto..." style="width:100%; height:200px; padding:16px; border:1px solid #ccc; border-radius:6px; font-family:'Segoe UI', Tahoma, Geneva, sans-serif; font-size:0.95rem; line-height:1.6; color:#333; outline:none; resize:none; transition:border 0.2s;" onfocus="this.style.borderColor='#3f51b5'" onblur="this.style.borderColor='#ccc'">GLOBAL BRANDING GUIDELINES:
 You are an expert email template designer. Whenever you generate a new email template, you MUST strictly adhere to the following HTML structural and branding rules:
 
