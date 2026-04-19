@@ -2957,7 +2957,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- ── GLOBAL AI BRAND RULES MODAL ── -->
 <div id="ai-brand-rules-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:9999999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
-    <div style="background:#fff; width:600px; border-radius:8px; overflow:hidden; box-shadow:0 12px 48px rgba(0,0,0,0.4); display:flex; flex-direction:column;">
+    <div style="background:#fff; width:900px; max-width:95vw; border-radius:8px; overflow:hidden; box-shadow:0 12px 48px rgba(0,0,0,0.4); display:flex; flex-direction:column;">
         <div style="background:linear-gradient(135deg, #2c3e8c, #3f51b5); padding:16px 20px; color:#fff; display:flex; justify-content:space-between; align-items:center;">
             <div style="font-weight:bold; font-size:1.1rem; display:flex; align-items:center; gap:8px;">
                 <i data-lucide="sparkles" style="width:20px; height:20px;"></i> Global AI Brand Intelligence
@@ -2972,8 +2972,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             
+            
+            <div style="font-weight:bold; color:#111; font-size:0.95rem; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;">
+                <span>Select an AI Instruction Preset</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:24px;">
+                
+                <!-- PRESET 1: Classic Minimalist -->
+                <div id="ai-preset-1" onclick="selectAIPreset(1)" style="border:2px solid #ccc; border-radius:8px; overflow:hidden; cursor:pointer; background:#fff; transition:all 0.2s;" onmouseenter="if(this.style.borderColor!=='#3f51b5') this.style.borderColor='#999'" onmouseleave="if(this.style.borderColor!=='#3f51b5') this.style.borderColor='#ccc'">
+                    <div style="height:140px; background:#f4f5f6; display:flex; align-items:center; justify-content:center; padding:16px; flex-direction:column; gap:8px;">
+                        <div style="background:#fff; width:100%; height:80px; border:1px solid #ddd; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.05); display:flex; flex-direction:column; padding:8px;">
+                            <div style="width:40%; height:8px; background:#ccc; border-radius:2px; margin:0 auto 12px auto;"></div>
+                            <div style="width:100%; flex:1; background:#f9f9f9; border:1px dashed #ddd; border-radius:2px;"></div>
+                        </div>
+                    </div>
+                    <div style="padding:12px; text-align:center; font-weight:bold; font-size:0.9rem; color:#444; border-top:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                        Classic Minimalist <i id="ai-check-1" data-lucide="check-circle-2" style="width:16px; height:16px; color:#3f51b5; opacity:0; transition:0.2s;"></i>
+                    </div>
+                </div>
+
+                <!-- PRESET 2: Bold Corporate Header -->
+                <div id="ai-preset-2" onclick="selectAIPreset(2)" style="border:2px solid #ccc; border-radius:8px; overflow:hidden; cursor:pointer; background:#fff; transition:all 0.2s;" onmouseenter="if(this.style.borderColor!=='#3f51b5') this.style.borderColor='#999'" onmouseleave="if(this.style.borderColor!=='#3f51b5') this.style.borderColor='#ccc'">
+                    <div style="height:140px; background:#eceff1; display:flex; align-items:center; justify-content:center; padding:16px; flex-direction:column; gap:0;">
+                        <div style="background:#fff; width:100%; height:90px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); display:flex; flex-direction:column; overflow:hidden;">
+                            <div style="width:100%; height:28px; background:#2c3e8c; display:flex; align-items:center; justify-content:center;">
+                                <div style="width:30%; height:4px; background:#fff; border-radius:2px; opacity:0.8;"></div>
+                            </div>
+                            <div style="width:100%; flex:1; padding:10px; display:flex; flex-direction:column; gap:6px;">
+                                <div style="width:80%; height:6px; background:#e0e0e0; border-radius:2px;"></div>
+                                <div style="width:60%; height:6px; background:#e0e0e0; border-radius:2px;"></div>
+                                <div style="width:40%; height:14px; background:#27ae60; border-radius:10px; margin-top:auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:12px; text-align:center; font-weight:bold; font-size:0.9rem; color:#444; border-top:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                        Bold Corporate <i id="ai-check-2" data-lucide="check-circle-2" style="width:16px; height:16px; color:#3f51b5; opacity:0; transition:0.2s;"></i>
+                    </div>
+                </div>
+
+                <!-- PRESET 3: Modern Card / Dark Accents -->
+                <div id="ai-preset-3" onclick="selectAIPreset(3)" style="border:2px solid #ccc; border-radius:8px; overflow:hidden; cursor:pointer; background:#fff; transition:all 0.2s;" onmouseenter="if(this.style.borderColor!=='#3f51b5') this.style.borderColor='#999'" onmouseleave="if(this.style.borderColor!=='#3f51b5') this.style.borderColor='#ccc'">
+                    <div style="height:140px; background:#212121; display:flex; align-items:center; justify-content:center; padding:20px; flex-direction:column; gap:8px;">
+                        <div style="background:#333; width:100%; height:75px; border:1px solid #444; border-radius:8px; display:flex; flex-direction:column; padding:12px; gap:8px;">
+                            <div style="display:flex; justify-content:space-between;">
+                                <div style="width:40%; height:6px; background:#666; border-radius:2px;"></div>
+                                <div style="width:20%; height:6px; background:#4caf50; border-radius:2px;"></div>
+                            </div>
+                            <div style="width:100%; height:1px; background:#444;"></div>
+                            <div style="display:flex; gap:6px;">
+                                <div style="width:50%; height:20px; background:#2c2c2c; border-radius:4px;"></div>
+                                <div style="width:50%; height:20px; background:#2c2c2c; border-radius:4px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:12px; text-align:center; font-weight:bold; font-size:0.9rem; color:#444; border-top:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                        Modern Dark <i id="ai-check-3" data-lucide="check-circle-2" style="width:16px; height:16px; color:#3f51b5; opacity:0; transition:0.2s;"></i>
+                    </div>
+                </div>
+
+            </div>
             <div style="font-weight:bold; color:#111; font-size:0.9rem; margin-bottom:8px;">Required Custom Instructions*</div>
-            <textarea placeholder="Example: Always wrap the primary body content inside a <div style='background:#f4f4f4'>. Always inject the %RECEIVER_NAME% variable directly into the opening greeting. Never use fonts other than Roboto..." style="width:100%; height:200px; padding:16px; border:1px solid #ccc; border-radius:6px; font-family:'Segoe UI', Tahoma, Geneva, sans-serif; font-size:0.95rem; line-height:1.6; color:#333; outline:none; resize:none; transition:border 0.2s;" onfocus="this.style.borderColor='#3f51b5'" onblur="this.style.borderColor='#ccc'">GLOBAL BRANDING GUIDELINES:
+            <textarea id="ai-instructions-textarea" placeholder="Example: Always wrap the primary body content inside a <div style='background:#f4f4f4'>. Always inject the %RECEIVER_NAME% variable directly into the opening greeting. Never use fonts other than Roboto..." style="width:100%; height:200px; padding:16px; border:1px solid #ccc; border-radius:6px; font-family:'Segoe UI', Tahoma, Geneva, sans-serif; font-size:0.95rem; line-height:1.6; color:#333; outline:none; resize:none; transition:border 0.2s;" onfocus="this.style.borderColor='#3f51b5'" onblur="this.style.borderColor='#ccc'">GLOBAL BRANDING GUIDELINES:
 You are an expert email template designer. Whenever you generate a new email template, you MUST strictly adhere to the following HTML structural and branding rules:
 
 1. GLOBAL CONTAINER & LAYOUT:
@@ -3015,6 +3074,72 @@ You are an expert email template designer. Whenever you generate a new email tem
         </div>
     </div>
 </div>
+
+
+<script>
+const aiPresetData = {
+    1: `GLOBAL BRANDING GUIDELINES (Classic Minimalist):
+You are an expert email template designer building a "Classic Minimalist" email template.
+1. GLOBAL CONTAINER: Use a simple '#f4f5f6' background wrapper. The main card must be pure white ('#ffffff') with a subtle '1px solid #e5e7eb' border, max-width 600px.
+2. HEADER: Inject a centered gray logo and simple horizontal rule. No heavy color blocks.
+3. TYPOGRAPHY: Use standard sans-serif (Arial, Helvetica). Keep text color subtle ('#4a4a4a').
+4. VARIABLES: Embed all fields like %VARIABLE_NAME%.
+5. FOOTER: Center-aligned very small gray text with Unsubscribe | Help | Privacy options.`,
+
+    2: `GLOBAL BRANDING GUIDELINES (Bold Corporate):
+You are an expert email template designer building a "Bold Corporate" layout.
+1. GLOBAL CONTAINER: Wrapping background should be solid '#eceff1'. The inner reading frame must be an elevated white card with heavy 'box-shadow: 0 4px 16px rgba(0,0,0,0.1)' and rounded '8px' corners.
+2. COLOR HEADER: The top 20% of the card must be a heavy filled block using brand color ('#2c3e8c') containing a white logo and white intro header text.
+3. TYPOGRAPHY: Use a bold structural hierarchy. H1 should be highly visible.
+4. VARIABLES: Use bold colors to render variables like <span style="color:#2c3e8c"><strong>%AMOUNT_DUE%</strong></span>.
+5. CTA BUTTON: Create a massive, block-width button with a solid '#27ae60' background and white text.`,
+
+    3: `GLOBAL BRANDING GUIDELINES (Modern Dark Mode):
+You are an expert email template designer generating a "Modern Dark Mode" email.
+1. GLOBAL CONTAINER: Background wrapper must be very dark ('#121212'). Inner main card is '#212121' with sharp borders '1px solid #333'.
+2. TYPOGRAPHY: All paragraph text must be soft light gray ('#b3b3b3'). Headers must be pure white ('#ffffff').
+3. ACCENT HIGHLIGHTS: Any positive numerical amounts or dates must be highlighted in green ('#4caf50'). Any negative or alerts in red ('#e53935').
+4. STRUCTURE: Use multiple 2-column small cards painted '#2c2c2c' within the layout to display invoice data dynamically.
+5. CTA: Use a transparent outline button ('border: 2px solid #8e44ad; color: #8e44ad; border-radius:0px').`
+};
+
+function selectAIPreset(id) {
+    for(let i=1; i<=3; i++) {
+        const el = document.getElementById('ai-preset-'+i);
+        if(el) {
+            el.style.borderColor = '#ccc';
+            el.style.boxShadow = 'none';
+            el.style.background = '#fff';
+        }
+        const chk = document.getElementById('ai-check-'+i);
+        if(chk) chk.style.opacity = '0';
+    }
+    
+    const activeEl = document.getElementById('ai-preset-'+id);
+    if(activeEl) {
+        activeEl.style.borderColor = '#3f51b5';
+        activeEl.style.boxShadow = '0 0 0 2px rgba(63,81,181,0.2)';
+        activeEl.style.background = '#f9faff';
+    }
+    
+    const activeChk = document.getElementById('ai-check-'+id);
+    if(activeChk) activeChk.style.opacity = '1';
+    
+    if(aiPresetData[id]) {
+        const ta = document.getElementById('ai-instructions-textarea');
+        if(ta) {
+            ta.value = aiPresetData[id];
+            ta.style.background = '#eef2ff';
+            ta.style.borderColor = '#3f51b5';
+            setTimeout(() => {
+                ta.style.background = '#fff';
+                ta.style.borderColor = '#ccc';
+            }, 300);
+        }
+    }
+    try { lucide.createIcons(); } catch(e){}
+}
+</script>
 
 <!-- ── ADD CUSTOM TEMPLATE MODAL ── -->
 <div id="email-template-create-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.25); z-index:999999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
