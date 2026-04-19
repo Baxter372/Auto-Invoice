@@ -2960,7 +2960,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div style="background:#fff; width:900px; max-width:95vw; border-radius:8px; overflow:hidden; box-shadow:0 12px 48px rgba(0,0,0,0.4); display:flex; flex-direction:column;">
         <div style="background:linear-gradient(135deg, #2c3e8c, #3f51b5); padding:16px 20px; color:#fff; display:flex; justify-content:space-between; align-items:center;">
             <div style="font-weight:bold; font-size:1.1rem; display:flex; align-items:center; gap:8px;">
-                <i data-lucide="sparkles" style="width:20px; height:20px;"></i> Global AI Brand Intelligence
+                <i data-lucide="sparkles" style="width:20px; height:20px;"></i> Club AI Brand Intelligence <i data-lucide="info" class="premium-tooltip" data-tooltip="Select a visual layout on the left to automatically map standard brand constraints directing the Gemini AI engine." style="width:16px; height:16px; cursor:help; margin-left:4px; opacity:0.8;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'"></i>
             </div>
             <i data-lucide="x" style="width:20px; height:20px; cursor:pointer; opacity:0.8; transition:0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'" onclick="document.getElementById('ai-brand-rules-modal').style.display='none'"></i>
         </div>
@@ -3070,7 +3070,7 @@ You are an expert email template designer. Whenever you generate a new email tem
         </div>
         <div style="background:#fff; padding:16px 24px; border-top:1px solid #eee; display:flex; justify-content:flex-end; gap:12px;">
             <button style="background:transparent; border:1px solid #ddd; color:#555; padding:8px 16px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; transition:0.2s;" onmouseenter="this.style.background='#f4f4f4'" onmouseleave="this.style.background='transparent'" onclick="document.getElementById('ai-brand-rules-modal').style.display='none'">Cancel</button>
-            <button style="background:#3f51b5; color:#fff; border:none; padding:8px 24px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; box-shadow:0 2px 4px rgba(63,81,181,0.3); transition:0.2s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='translateY(0)'" onclick="document.getElementById('ai-brand-rules-modal').style.display='none'">Save Global Rules</button>
+            <button style="background:#3f51b5; color:#fff; border:none; padding:8px 24px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; box-shadow:0 2px 4px rgba(63,81,181,0.3); transition:0.2s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='translateY(0)'" onclick="document.getElementById('ai-brand-rules-modal').style.display='none'">Save Club Rules</button>
         </div>
     </div>
 </div>
@@ -3233,7 +3233,7 @@ function selectAIPreset(id) {
                          <button onclick="document.getElementById('ask-ai-prompt-modal').style.display='flex'" style="background:linear-gradient(135deg, #8e44ad, #9b59b6); color:#fff; border:none; padding:8px 16px; border-radius:6px; font-size:0.85rem; font-weight:bold; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(142,68,173,0.3); transition:transform 0.2s;" onmouseenter="this.style.transform='scale(1.02)'" onmouseleave="this.style.transform='scale(1)'">
                              <i data-lucide="sparkles" style="width:16px; height:16px;"></i> Generate with Gemini AI
                          </button>
-                         <button class="premium-tooltip" data-tooltip="Global AI Brand Rules" onclick="document.getElementById('ai-brand-rules-modal').style.display='flex'" style="background:#fff; border:1px solid #ccc; color:#555; width:34px; height:34px; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,0.05); transition:all 0.2s;" onmouseenter="this.style.background='#f4f4f4'; this.style.borderColor='#999';" onmouseleave="this.style.background='#fff'; this.style.borderColor='#ccc';">
+                         <button class="premium-tooltip" data-tooltip="Club AI Brand Rules" onclick="document.getElementById('ai-brand-rules-modal').style.display='flex'" style="background:#fff; border:1px solid #ccc; color:#555; width:34px; height:34px; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,0.05); transition:all 0.2s;" onmouseenter="this.style.background='#f4f4f4'; this.style.borderColor='#999';" onmouseleave="this.style.background='#fff'; this.style.borderColor='#ccc';">
                              <i data-lucide="settings-2" style="width:18px; height:18px;"></i>
                          </button>
                      </div>
@@ -3320,7 +3320,7 @@ function selectAIPreset(id) {
         <!-- Header -->
         <div style="background:linear-gradient(135deg, #4a148c, #6a1b9a); padding:16px 20px; color:#fff; display:flex; justify-content:space-between; align-items:center;">
             <div style="font-size:1.15rem; font-weight:bold; display:flex; align-items:center; gap:8px;">
-                <i data-lucide="sparkles"></i> Design with Gemini AI
+                <i data-lucide="sparkles"></i> Design with Gemini AI <i data-lucide="info" class="premium-tooltip" data-tooltip="Simply type out the email you want to build and let Gemini Auto-Engineer the HTML structure for you." style="width:16px; height:16px; cursor:help; margin-left:4px; opacity:0.8;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'"></i>
             </div>
             <i data-lucide="x" style="width:20px; height:20px; cursor:pointer; opacity:0.8; transition:0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'" onclick="document.getElementById('ask-ai-prompt-modal').style.display='none'"></i>
         </div>
