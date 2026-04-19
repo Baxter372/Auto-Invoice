@@ -761,94 +761,182 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 </div></div>
 </div>
 <div id="main-panel-history">
-<div class="sub-tab-bar" style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; margin-bottom: 12px;">
-<div style="display:flex;gap:6px;">
-<button class="sub-tab active" id="btn-email" onclick="switchSub('email')">Email List</button>
-<button class="sub-tab inactive" id="btn-sms" onclick="switchSub('sms')">SMS/Text List</button>
-</div>
-<div class="export-btns" style="display:flex;gap:6px;">
-<button class="export-btn excel" style="background:#1e7e34;width:32px;height:32px;border-radius:50%;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(30,126,52,0.3);" title="Export Excel"><i data-lucide="file-spreadsheet" style="width:14px;height:14px;"></i></button>
-<button class="export-btn pdf" style="background:#c0392b;width:32px;height:32px;border-radius:50%;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(192,57,43,0.3);" title="Export PDF"><i data-lucide="file-text" style="width:14px;height:14px;"></i></button>
-</div>
-</div>
-<div class="filter-bar">
-<label style="font-weight:bold;color:#2c3e8c;font-size:0.85rem;white-space:nowrap;display:flex; align-items:center; gap: 4px;"><i data-lucide="calendar" style="width: 14px; height: 14px;"></i> Year:</label>
-<select id="year-filter" onchange="switchYear(this.value)" style="padding:7px 10px;border:2px solid #2c3e8c;border-radius:4px;font-size:0.82rem;font-weight:bold;color:#2c3e8c;background:#f0f4ff;cursor:pointer;max-width:90px;">
-<option selected="" value="2026">2026</option>
-<option value="2025">2025</option>
-</select>
-<input placeholder="Enter Business or Customer Name" type="text"/>
-<select><option>Select Date Range</option><option>Last 7 Days</option><option>Last 30 Days</option><option>Last 90 Days</option></select>
-<div style="display:flex; align-items:center; gap: 12px; background:#f9faff; padding:4px 14px; border-radius:6px; border:1px solid #eee;">
-<span style="font-weight:bold; color:#2c3e8c; font-size:0.85rem; display:flex; align-items:center; gap:4px;"><i data-lucide="clipboard-list" style="width:14px; height:14px;"></i> View:</span>
-<label style="color:#2c3e8c; display:flex; align-items:center; gap:4px; cursor:pointer; font-size:0.85rem; font-weight:bold;"><input checked="" name="listMode" onchange="switchListMode('sent')" style="accent-color:#2c3e8c;" type="radio" value="sent"/> Sent Delivery</label>
-<label style="color:#e67e22; display:flex; align-items:center; gap:4px; cursor:pointer; font-size:0.85rem; font-weight:bold;"><input name="listMode" onchange="switchListMode('scheduled')" style="accent-color:#e67e22;" type="radio" value="scheduled"/> Scheduled Delivery</label>
-</div>
-<button class="btn-apply">Apply</button>
-<button class="btn-reset">Reset</button>
-</div>
-<div class="filter-active" id="filter-banner">
-<i data-lucide="alert-triangle" style="width: 16px; height: 16px; color:#e74c3c;"></i> <span><strong>Filtered:</strong> Showing customers who ignored all notices.</span>
-<button onclick="clearIgnoredFilter()">✕ Clear</button>
-</div>
-<div id="panel-email">
-<div class="table-wrap">
-<table id="email-table">
-<thead>
-<tr>
-<th class="sortable" onclick="sortTable('email',0)" style="text-align:center;">Status<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',1)" style="text-align:left;">Recipient<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',2)" style="text-align:center;">Send Date<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',3)" style="text-align:left;">Subject<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('email',4)" style="text-align:center;">Type<span class="sort-icon"></span></th>
-<th style="text-align:center;">Opened</th>
-<th style="text-align:center;">Clicked</th>
-<th class="sortable" onclick="sortTable('email',7)" style="text-align:center;">Sent Qty<span class="sort-icon"></span></th>
-<th style="text-align:center;">Action</th>
-</tr>
-<tr class="filter-row-tr" id="email-filter-row">
-<th><select onchange="applyColFilter('email')"><option value="">All</option><option>Sent</option><option>Failed</option><option>Pending</option></select></th>
-<th><input oninput="applyColFilter('email')" placeholder="Name/Email..." type="text"/></th>
-<th><input oninput="applyColFilter('email')" placeholder="Date..." type="text"/></th>
-<th><input oninput="applyColFilter('email')" placeholder="Subject..." type="text"/></th>
-<th><select onchange="applyColFilter('email')"><option value="">All</option><option>Expiration</option><option>Renewal</option><option>Final</option></select></th>
-<th><select onchange="applyColFilter('email')"><option value="">All</option><option>Yes</option><option>—</option></select></th>
-<th><select onchange="applyColFilter('email')"><option value="">All</option><option>Yes</option><option>—</option></select></th>
-<th><select onchange="applyColFilter('email')"><option value="">All</option><option>1</option><option>2</option><option>3</option></select></th>
-<th></th>
-</tr>
-</thead>
-<tbody id="email-tbody"></tbody>
-</table>
-</div>
-</div>
-<div id="panel-sms" style="display:none;">
-<div class="table-wrap">
-<table id="sms-table">
-<thead>
-<tr>
-<th class="sortable" onclick="sortTable('sms',0)" style="text-align:center;">Status<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('sms',1)" style="text-align:left;">Recipient<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('sms',2)" style="text-align:center;">Send Date<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('sms',3)" style="text-align:center;">Segments<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('sms',4)" style="text-align:center;">Club Cost<span class="sort-icon"></span></th>
-<th class="sortable" onclick="sortTable('sms',5)" style="text-align:center;">Sent Qty<span class="sort-icon"></span></th>
-<th style="text-align:center;">Action</th>
-</tr>
-<tr class="filter-row-tr" id="sms-filter-row">
-<th><select onchange="applyColFilter('sms')"><option value="">All</option><option>Delivered</option><option>Failed</option><option>Pending</option><option>Opted Out</option></select></th>
-<th><input oninput="applyColFilter('sms')" placeholder="Name/Phone..." type="text"/></th>
-<th><input oninput="applyColFilter('sms')" placeholder="Date..." type="text"/></th>
-<th><select onchange="applyColFilter('sms')"><option value="">All</option><option>1</option><option>2</option><option>3</option></select></th>
-<th></th>
-<th><select onchange="applyColFilter('sms')"><option value="">All</option><option>1</option><option>2</option><option>3</option></select></th>
-<th></th>
-</tr>
-</thead>
-<tbody id="sms-tbody"></tbody>
-</table>
-</div>
-</div>
+  <div style="display:grid; grid-template-columns:1fr 400px; gap:24px; align-items:start;">
+    <!-- LEFT COLUMN: Lists -->
+    <div style="background:#fff; border:1px solid #ddd; border-radius:8px; display:flex; flex-direction:column; overflow:hidden;">
+        <div class="sub-tab-bar" style="background:#f9faff; border-bottom:1px solid #ddd; padding:12px 16px; display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex;gap:6px;">
+                <button class="sub-tab active" id="btn-email" onclick="switchSub('email')" style="background:#fff; border:1px solid #ccc; font-weight:bold; color:#2c3e8c;">Email List</button>
+                <button class="sub-tab inactive" id="btn-sms" onclick="switchSub('sms')" style="background:transparent; border:none; color:#888;">SMS/Text List</button>
+            </div>
+            <div class="export-btns" style="display:flex;gap:6px;">
+                <button class="export-btn excel" style="background:#1e7e34;width:32px;height:32px;border-radius:50%;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(30,126,52,0.3);" title="Export Excel"><i data-lucide="file-spreadsheet" style="width:14px;height:14px;"></i></button>
+                <button class="export-btn pdf" style="background:#c0392b;width:32px;height:32px;border-radius:50%;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(192,57,43,0.3);" title="Export PDF"><i data-lucide="file-text" style="width:14px;height:14px;"></i></button>
+            </div>
+        </div>
+        <div class="filter-bar" style="padding:16px; border-bottom:1px solid #eee; display:flex; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <label style="font-weight:bold;color:#2c3e8c;font-size:0.85rem;display:flex; align-items:center; gap: 4px;"><i data-lucide="calendar" style="width: 14px; height: 14px;"></i> Year:</label>
+                <select id="year-filter" onchange="switchYear(this.value)" style="padding:7px 10px;border:2px solid #2c3e8c;border-radius:4px;font-size:0.82rem;font-weight:bold;color:#2c3e8c;background:#f0f4ff;cursor:pointer;">
+                    <option selected="" value="2026">2026</option>
+                    <option value="2025">2025</option>
+                </select>
+            </div>
+            <input placeholder="Search Customer Name (Auto-expands schedule)" type="text" style="padding:8px; border:1px solid #ccc; border-radius:4px; flex:1; min-width:200px;"/>
+            <div style="display:flex; align-items:center; gap: 12px; background:#f9faff; padding:6px 14px; border-radius:6px; border:1px solid #eee;">
+                <label style="color:#2c3e8c; display:flex; align-items:center; gap:4px; cursor:pointer; font-size:0.85rem; font-weight:bold;"><input checked="" name="listMode" onchange="switchListMode('sent')" style="accent-color:#2c3e8c;" type="radio" value="sent"/> Sent Delivery</label>
+                <label style="color:#e67e22; display:flex; align-items:center; gap:4px; cursor:pointer; font-size:0.85rem; font-weight:bold;"><input name="listMode" onchange="switchListMode('scheduled')" style="accent-color:#e67e22;" type="radio" value="scheduled"/> Scheduled</label>
+            </div>
+        </div>
+
+        <div id="panel-email" style="padding:16px;">
+            <!-- Accordion 1 -->
+            <div class="schedule-accordion" style="border:2px solid #3f51b5; border-radius:6px; margin-bottom:16px; overflow:hidden;">
+                <div style="background:#f4f6fc; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="toggleAccordion('e-acc-1')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <input type="radio" name="history_schedule_sel" checked onchange="updateHistoryChart('Latest Outreach (AI Built)')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
+                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Latest Outreach (AI Built)</div>
+                        <div style="font-size:0.85rem; color:#888; margin-left:8px;">Created: Apr 19, 2026</div>
+                    </div>
+                    <i id="icon-e-acc-1" data-lucide="chevron-up" style="color:#555;"></i>
+                </div>
+                <div id="e-acc-1" style="display:block;">
+                    <div class="table-wrap" style="border-radius:0; border:none; border-top:1px solid #c5cbf0; margin:0;">
+                        <table style="width:100%; border-collapse:collapse; margin:0; font-size:0.85rem;">
+                            <thead style="background:#fafafa;">
+                            <tr style="border-bottom:1px solid #ddd;">
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Status</th>
+                                <th style="padding:10px;text-align:left; font-weight:bold; font-size:0.8rem; color:#555;">Recipient</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Date</th>
+                                <th style="padding:10px;text-align:left; font-weight:bold; font-size:0.8rem; color:#555;">Subject</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Type</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Opened</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="email-tbody-acc-1"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion 2 -->
+            <div class="schedule-accordion" style="border:1px solid #ddd; border-radius:6px; overflow:hidden;">
+                <div style="background:#fafafa; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="toggleAccordion('e-acc-2')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <input type="radio" name="history_schedule_sel" onchange="updateHistoryChart('Spring Renewal Sequence')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
+                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Spring Renewal Sequence</div>
+                        <div style="font-size:0.85rem; color:#888; margin-left:8px;">Created: Mar 01, 2026</div>
+                    </div>
+                    <i id="icon-e-acc-2" data-lucide="chevron-down" style="color:#555;"></i>
+                </div>
+                <div id="e-acc-2" style="display:none;">
+                    <div class="table-wrap" style="border-radius:0; border:none; border-top:1px solid #eee; margin:0;">
+                        <table style="width:100%; border-collapse:collapse; margin:0; font-size:0.85rem;">
+                            <thead style="background:#fafafa;">
+                            <tr style="border-bottom:1px solid #ddd;">
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Status</th>
+                                <th style="padding:10px;text-align:left; font-weight:bold; font-size:0.8rem; color:#555;">Recipient</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Date</th>
+                                <th style="padding:10px;text-align:left; font-weight:bold; font-size:0.8rem; color:#555;">Subject</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Type</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Opened</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="email-tbody-acc-2"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panel-sms" style="display:none; padding:16px;">
+            <!-- Accordion SMS 1 -->
+            <div class="schedule-accordion" style="border:2px solid #3f51b5; border-radius:6px; margin-bottom:16px; overflow:hidden;">
+                <div style="background:#f4f6fc; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="toggleAccordion('s-acc-1')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <input type="radio" name="history_schedule_sel_sms" checked onchange="updateHistoryChart('Direct SMS Protocol')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
+                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Direct SMS Protocol</div>
+                        <div style="font-size:0.85rem; color:#888; margin-left:8px;">Created: Feb 14, 2026</div>
+                    </div>
+                    <i id="icon-s-acc-1" data-lucide="chevron-up" style="color:#555;"></i>
+                </div>
+                <div id="s-acc-1" style="display:block;">
+                    <div class="table-wrap" style="border-radius:0; border:none; border-top:1px solid #c5cbf0; margin:0;">
+                        <table style="width:100%; border-collapse:collapse; margin:0; font-size:0.85rem;">
+                            <thead style="background:#fafafa;">
+                            <tr style="border-bottom:1px solid #ddd;">
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Status</th>
+                                <th style="padding:10px;text-align:left; font-weight:bold; font-size:0.8rem; color:#555;">Recipient</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Date</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Segments</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Cost</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="sms-tbody-acc-1"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion SMS 2 -->
+            <div class="schedule-accordion" style="border:1px solid #ddd; border-radius:6px; overflow:hidden;">
+                <div style="background:#fafafa; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="toggleAccordion('s-acc-2')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <input type="radio" name="history_schedule_sel_sms" onchange="updateHistoryChart('Legacy Text Promos')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
+                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Legacy Text Promos</div>
+                        <div style="font-size:0.85rem; color:#888; margin-left:8px;">Created: Jan 05, 2026</div>
+                    </div>
+                    <i id="icon-s-acc-2" data-lucide="chevron-down" style="color:#555;"></i>
+                </div>
+                <div id="s-acc-2" style="display:none;">
+                    <div class="table-wrap" style="border-radius:0; border:none; border-top:1px solid #eee; margin:0;">
+                        <table style="width:100%; border-collapse:collapse; margin:0; font-size:0.85rem;">
+                            <thead style="background:#fafafa;">
+                            <tr style="border-bottom:1px solid #ddd;">
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Status</th>
+                                <th style="padding:10px;text-align:left; font-weight:bold; font-size:0.8rem; color:#555;">Recipient</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Date</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Segments</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Cost</th>
+                                <th style="padding:10px;text-align:center; font-weight:bold; font-size:0.8rem; color:#555;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="sms-tbody-acc-2"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Chart -->
+    <div style="position:sticky; top:24px;">
+        <div style="background:#fff; border:1px solid #ddd; border-top:8px solid #3f51b5; border-radius:8px; padding:32px 24px; box-shadow:0 2px 10px rgba(0,0,0,0.03); text-align:center;">
+            <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:8px;">
+                <i data-lucide="bar-chart-2" style="width:20px; height:20px; color:#3f51b5;"></i>
+                <div style="font-weight:bold; font-size:1.1rem; color:#444;">Schedule Performance</div>
+            </div>
+            <div id="hist-chart-title" style="font-size:0.9rem; color:#888; margin-bottom:16px;">Latest Outreach (AI Built)</div>
+            
+            <div style="width:100%; height:220px; display:flex; align-items:center; justify-content:center; position:relative;">
+                <canvas id="historyChartCanvas"></canvas>
+            </div>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:24px;">
+                <div style="background:#f9faff; padding:16px 12px; border-radius:6px; border:1px solid #eee;">
+                   <div style="font-size:0.8rem; color:#555; text-transform:uppercase; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:4px;"><div style="width:8px; height:8px; background:#2ecc71; border-radius:50%;"></div> Delivered</div>
+                   <div id="hist-metric-del" style="font-size:1.6rem; color:#111; font-weight:bold; margin-top:4px;">98.2%</div>
+                </div>
+                <div style="background:#fff5f5; padding:16px 12px; border-radius:6px; border:1px solid #eee;">
+                   <div style="font-size:0.8rem; color:#555; text-transform:uppercase; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:4px;"><div style="width:8px; height:8px; background:#e74c3c; border-radius:50%;"></div> Bounced</div>
+                   <div id="hist-metric-bnc" style="font-size:1.6rem; color:#111; font-weight:bold; margin-top:4px;">1.8%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
 </div> <!-- /#main-panel-history -->
 <div id="main-panel-templates" style="display:none;">
 <div style="display:grid; grid-template-columns:1fr 400px; gap:24px; align-items:start;">
@@ -1869,13 +1957,33 @@ function renderTables(){
   const d = yearData[curYear];
   window._eRows = curMode==='scheduled' ? scheduledEmailRows : (isFiltered ? ignoredEmailRows : d.emailRows);
   window._sRows = curMode==='scheduled' ? scheduledSmsRows  : (isFiltered ? ignoredSmsRows  : d.smsRows);
-  document.getElementById('email-tbody').innerHTML = window._eRows.map((r,i)=>
-    `<tr>${r.map((c,idx)=>`<td${(idx===1 || idx===3) ? ' style="text-align:left"' : ''}>${c}</td>`).join('')}<td><a href="#" onclick="openEmailPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`
-  ).join('');
-  document.getElementById('sms-tbody').innerHTML = window._sRows.map((r,i)=>{
-    const cost = (r[3]*RATE).toFixed(4);
-    return `<tr><td>${r[0]}</td><td style="text-align:left">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>$${cost}</td><td>${r[4]}</td><td><a href="#" onclick="openSmsPreviewIdx(${i});return false;" style="color:#2c3e8c;font-size:0.78rem;">View</a></td></tr>`;
-  }).join('');
+  
+  const eRows = window._eRows || [];
+  const sRows = window._sRows || [];
+  
+  const eMid = Math.ceil(eRows.length / 2);
+  const sMid = Math.ceil(sRows.length / 2);
+  
+  const e1 = eRows.slice(0, eMid);
+  const e2 = eRows.slice(eMid);
+  const s1 = sRows.slice(0, sMid);
+  const s2 = sRows.slice(sMid);
+  
+  const renderERow = (r,i) => `<tr>${r.map((c,idx)=>`<td${(idx===1 || idx===3) ? ' style="text-align:left"' : ''}>${c}</td>`).join('')}<td><a href="#" onclick="openEmailPreviewIdx(${i});return false;" style="color:#3f51b5;font-weight:bold;font-size:0.75rem;">View</a></td></tr>`;
+  const renderSRow = (r,i) => {
+     const cost = (typeof RATE !== 'undefined' ? r[3]*RATE : r[3]*0.012).toFixed(4);
+     return `<tr><td>${r[0]}</td><td style="text-align:left">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>$${cost}</td><td>${r[4]}</td><td><a href="#" onclick="openSmsPreviewIdx(${i});return false;" style="color:#3f51b5;font-weight:bold;font-size:0.75rem;">View</a></td></tr>`;
+  };
+
+  const et1 = document.getElementById('email-tbody-acc-1');
+  if(et1) et1.innerHTML = e1.map(renderERow).join('');
+  const et2 = document.getElementById('email-tbody-acc-2');
+  if(et2) et2.innerHTML = e2.map((r,i) => renderERow(r, i + eMid)).join('');
+
+  const st1 = document.getElementById('sms-tbody-acc-1');
+  if(st1) st1.innerHTML = s1.map(renderSRow).join('');
+  const st2 = document.getElementById('sms-tbody-acc-2');
+  if(st2) st2.innerHTML = s2.map((r,i) => renderSRow(r, i + sMid)).join('');
 }
 
 // ── Year switch ──────────────────────────────────────────────────
@@ -3964,6 +4072,65 @@ function injectScheduleToDashboard() {
     tbody.insertBefore(tr, tbody.firstChild);
     if(window.lucide) window.lucide.createIcons();
 }
+
+// --- History Accordion & Graph Logic ---
+function toggleAccordion(id) {
+    const el = document.getElementById(id);
+    const icon = document.getElementById('icon-' + id);
+    if(el.style.display === 'none') {
+        el.style.display = 'block';
+        icon.setAttribute('data-lucide', 'chevron-up');
+        el.parentElement.style.borderColor = '#3f51b5';
+    } else {
+        el.style.display = 'none';
+        icon.setAttribute('data-lucide', 'chevron-down');
+        el.parentElement.style.borderColor = '#ddd';
+    }
+    if(window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+}
+
+let histChartInst = null;
+function updateHistoryChart(scheduleName) {
+    const titleEl = document.getElementById('hist-chart-title');
+    if(!titleEl) return;
+    titleEl.innerText = scheduleName;
+    
+    // Simulate minor variations in chart data based on schedule selection
+    const isAi = scheduleName.includes('AI');
+    const delLabel = isAi ? '98.2%' : (Math.floor(Math.random() * 8) + 85) + '.' + Math.floor(Math.random() * 9) + '%';
+    const blabel = isAi ? '1.8%' : (100 - parseFloat(delLabel)).toFixed(1) + '%';
+    document.getElementById('hist-metric-del').innerText = delLabel;
+    document.getElementById('hist-metric-bnc').innerText = blabel;
+    
+    if(histChartInst) histChartInst.destroy();
+    
+    const canvas = document.getElementById('historyChartCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    const dVal = parseFloat(delLabel);
+    const bVal = parseFloat(blabel);
+    
+    histChartInst = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Delivered', 'Bounced'],
+            datasets: [{
+                data: [dVal, bVal],
+                backgroundColor: ['#2ecc71', '#e74c3c'],
+                borderWidth: 0,
+                cutout: '75%'
+            }]
+        },
+        options: { 
+           plugins: { legend: { display:false } }, 
+           responsive:true, 
+           maintainAspectRatio:false 
+        }
+    });
+}
+// Init History Graphic
+setTimeout(() => { if(document.getElementById('historyChartCanvas')) updateHistoryChart('Latest Outreach (AI Built)'); }, 800);
 </script>
 
 </body>
