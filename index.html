@@ -3868,7 +3868,7 @@ function processAiLogic(userText) {
     
     setTimeout(() => {
         // Fallback Protocol Check
-        if(textStr.includes('custom') || textStr.includes('design my own')) {
+        if(/\bcustom\b/.test(textStr) || textStr.includes('design my own')) {
             appendAiMessage(`No problem! If you'd like to build an entirely custom template from scratch, I can't set that up via chat yet. Please navigate to the <b>Templates Tab</b> on the dashboard, click the blue plus button, and build your own layout visually!`, []);
             aiState = 0; // reset
             return;
