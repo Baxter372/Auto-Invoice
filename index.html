@@ -3273,9 +3273,11 @@ function selectAIPreset(id) {
                     </div>
                     
                     <!-- Dynamic Copy/Paste Variables -->
-                    <div style="background:#eef2ff; padding:12px 16px; border-bottom:1px solid #ccc; font-size:0.8rem; color:#2c3e8c;">
-                        <strong style="display:block; margin-bottom:8px; font-size:0.9rem;"><i data-lucide="database" style="width:14px; height:14px; position:relative; top:2px;"></i> Available Tracking Variables:</strong>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <details style="background:#eef2ff; padding:12px 16px; border-bottom:1px solid #ccc; font-size:0.8rem; color:#2c3e8c;">
+                        <summary style="font-weight:bold; font-size:0.9rem; user-select:none; cursor:pointer;">
+                            <i data-lucide="database" style="width:14px; height:14px; position:relative; top:2px; margin-right:4px;"></i> Available Tracking Variables
+                        </summary>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
                            <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%RECEIVER_NAME%</code> <span style="color:#555; margin-left:4px;">Full name of Customer</span></div>
                            <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%SUBSCRIPTION_EXTEND_LINK%</code> <span style="color:#555; margin-left:4px;">Dynamic Invoice Gateway Rows</span></div>
                            <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%RECEIVER_ADDRESS%</code> <span style="color:#555; margin-left:4px;">Address of Customer</span></div>
@@ -3284,7 +3286,7 @@ function selectAIPreset(id) {
                            <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%UPLOAD_IMAGE%</code> <span style="color:#555; margin-left:4px;">Locate / display active image</span></div>
                            <div><code style="background:#fff; padding:3px 6px; border-radius:3px; border:1px solid #c5d0f6; user-select:all; cursor:pointer;">%RENEWAL_LINK%</code> <span style="color:#555; margin-left:4px;">Magic Shopping Cart Routing</span></div>
                         </div>
-                    </div>
+                    </details>
 
                     <!-- Editor Canvas -->
                     <div id="wysiwyg-canvas-container" style="position:relative; width:100%; height:250px; background:#fff;">
