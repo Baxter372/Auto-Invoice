@@ -3941,21 +3941,22 @@ function injectScheduleToDashboard() {
     
     const tr = document.createElement('tr');
     tr.style.background = '#fafffa'; // slight green highlight
+    tr.style.borderBottom = '1px solid #eee';
     tr.innerHTML = `
-        <td style="padding:16px; border-bottom:1px solid #eee;">
-            <div style="font-weight:bold; color:#111;">${aiMemory.campaign} (AI Auto)</div>
-            <div style="font-size:0.8rem; color:#888;">Rule: Net 0 Days</div>
+        <td style="padding:16px 12px; text-align:center;">
+            <div style="width:16px; height:16px; background:#2ecc71; border-radius:50%; margin:0 auto; box-shadow:0 1px 3px rgba(46,204,113,0.4);"></div>
         </td>
-        <td style="padding:16px; border-bottom:1px solid #eee;">
-            <div style="display:flex; align-items:center; gap:6px;">
-                <div style="width:8px; height:8px; border-radius:50%; background:#2ecc71;"></div>
-                <span style="font-size:0.85rem; color:#555;">Live Template</span>
-            </div>
+        <td style="padding:16px 12px; text-align:left; color:#111;">
+            ${aiMemory.campaign}
+            <span style="display:inline-flex; align-items:center; gap:4px; font-size:0.7rem; background:#eef2ff; color:#3f51b5; padding:2px 8px; border-radius:12px; margin-left:8px; border:1px solid #c5d0f6; font-weight:bold; vertical-align:middle;"><i data-lucide="bot" style="width:12px; height:12px;"></i> AI Built</span>
         </td>
-        <td style="padding:16px; border-bottom:1px solid #eee; font-size:0.85rem; color:#555;">${aiMemory.audience}</td>
-        <td style="padding:16px; border-bottom:1px solid #eee; text-align:right;">
-            <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px;">
-                <i data-lucide="power" style="width:16px; height:16px; color:#2ecc71; cursor:pointer;" onclick="this.style.color=this.style.color==='rgb(46, 204, 113)'?'#e74c3c':'#2ecc71'"></i>
+        <td style="padding:16px 12px; text-align:center; color:#555;">May 01, 2026</td>
+        <td style="padding:16px 12px; text-align:center; color:#555;">Yes</td>
+        <td style="padding:16px 12px; text-align:left; color:#555;">Sequence: ${aiMemory.audience}</td>
+        <td style="padding:16px 12px; text-align:center; color:#111; font-weight:bold;">148</td>
+        <td style="padding:16px 12px; text-align:center;">
+            <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+                <i data-lucide="edit" style="width:16px; height:16px; color:#3f51b5; cursor:pointer;" onclick="document.getElementById('schedule-edit-modal').style.display='flex'"></i>
                 <i data-lucide="trash-2" style="width:16px; height:16px; color:#e74c3c; cursor:pointer;" onclick="this.closest('tr').remove();"></i>
             </div>
         </td>
