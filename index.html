@@ -3000,7 +3000,41 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             
             <div style="font-weight:bold; color:#d32f2f; font-size:0.9rem; margin-bottom:8px;">Required Custom Instructions*</div>
-            <textarea placeholder="Example: Always wrap the primary body content inside a <div style='background:#f4f4f4'>. Always inject the %RECEIVER_NAME% variable directly into the opening greeting. Never use fonts other than Roboto..." style="width:100%; height:200px; padding:16px; border:1px solid #ccc; border-radius:6px; font-family:'Segoe UI', Tahoma, Geneva, sans-serif; font-size:0.95rem; line-height:1.6; color:#333; outline:none; resize:none; transition:border 0.2s;" onfocus="this.style.borderColor='#3f51b5'" onblur="this.style.borderColor='#ccc'"></textarea>
+            <textarea placeholder="Example: Always wrap the primary body content inside a <div style='background:#f4f4f4'>. Always inject the %RECEIVER_NAME% variable directly into the opening greeting. Never use fonts other than Roboto..." style="width:100%; height:200px; padding:16px; border:1px solid #ccc; border-radius:6px; font-family:'Segoe UI', Tahoma, Geneva, sans-serif; font-size:0.95rem; line-height:1.6; color:#333; outline:none; resize:none; transition:border 0.2s;" onfocus="this.style.borderColor='#3f51b5'" onblur="this.style.borderColor='#ccc'">GLOBAL BRANDING GUIDELINES:
+You are an expert email template designer. Whenever you generate a new email template, you MUST strictly adhere to the following HTML structural and branding rules:
+
+1. GLOBAL CONTAINER & LAYOUT:
+- The entire email must be wrapped in a container with a light gray background (`#f4f5f6`).
+- The center content must be a white card (`#ffffff`) with a subtle 1px solid gray border (`#e5e7eb`), centered on the page with a max-width of 600px, and standard box-shadow.
+
+2. STANDARD BRAND HEADER:
+- At the very top (above the white wrapper), you must embed the full-width brand banner image containing the US Flag and the 'F.O.F. Friends of Fairview' logo spanning 100% of the container width.
+
+3. TYPOGRAPHY & COLORS:
+- Font Family: Use standard web-safe sans-serif fonts (Arial, Helvetica). 
+- Primary Text Color: Dark gray (`#4a4a4a`).
+- Primary Brand Blue: Use `#3333cc` for primary links, bold headers, and action text.
+- Header Tags: If generating a primary category header like "Payment Reminder", it MUST be styled with `color: #3333cc`, `font-style: italic`, and `font-weight: bold` with dotted gray borders separating sections.
+
+4. REQUIRED SYSTEM VARIABLES:
+- All system variables must be strictly wrapped like %VARIABLE_NAME%.
+- If generating an invoice/payment notice, you must include a structured 2-column table with a light gray header (`#e0e0e0`) containing 'Statement Period' and 'Current Balance'. The row below it must strictly contain `%STATEMENT_PERIOD%` and `%AMOUNT%`.
+- The customer address block must always include: "To: %RECEIVER_NAME%" and "Address: %RECEIVER_ADDRESS%".
+
+5. CALL TO ACTION (CTA) BUTTONS:
+- The primary payment button MUST be a light blue pill shape (`background: #eef2ff`, `color: #3333cc`, `border: 1px solid #dcdffe`, `border-radius: 4px`). 
+- Include a secondary link immediately beneath it reading: "Pay by Check (less secure and slower)".
+- In the lower section, construct two small square icon buttons featuring dashed gray borders for "Sign In" and "Cancel".
+
+6. GLOBAL MASTER FOOTER:
+- Outside the bottom of the white card, you must construct a centered footer consisting of pipe-separated links: Unsubscribe | Cancel Subscription | Privacy & Cookies | Help.
+- Below the links, inject the definitive contact block, centered, in a small font (`12px`):
+  CONTACT
+  Friends of Fairview
+  (214) 383-8012
+  500 State HWY 5
+  Fairview, TX. 75069
+  info@friendsoffairview.org</textarea>
         </div>
         <div style="background:#fff; padding:16px 24px; border-top:1px solid #eee; display:flex; justify-content:flex-end; gap:12px;">
             <button style="background:transparent; border:1px solid #ddd; color:#555; padding:8px 16px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.9rem; transition:0.2s;" onmouseenter="this.style.background='#f4f4f4'" onmouseleave="this.style.background='transparent'" onclick="document.getElementById('ai-brand-rules-modal').style.display='none'">Cancel</button>
