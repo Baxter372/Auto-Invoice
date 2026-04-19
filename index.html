@@ -4175,32 +4175,40 @@ function updateHistoryChart(scheduleName) {
     if(document.getElementById('hist-next-queue-text')) document.getElementById('hist-next-queue-text').innerText = queueText;
     if(document.getElementById('hist-log-1')) document.getElementById('hist-log-1').innerText = logText;
     
-    if(histChartInst) histChartInst.destroy();
-    
-    const canvas = document.getElementById('historyChartCanvas');
-    if(!canvas) return;
-    const ctx = canvas.getContext('2d');
-    
-    const dVal = parseFloat(delLabel);
-    const bVal = parseFloat(blabel);
-    
-    histChartInst = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Delivered', 'Bounced'],
-            datasets: [{
-                data: [dVal, bVal],
-                backgroundColor: ['#2ecc71', '#e74c3c'],
-                borderWidth: 0,
-                cutout: '75%'
-            }]
-        },
-        options: { 
-           plugins: { legend: { display:false } }, 
-           responsive:true, 
-           maintainAspectRatio:false 
+    try {
+        const canvas = document.getElementById('historyChartCanvas');
+        if(!canvas) return;
+
+        if (typeof Chart !== 'undefined') {
+            let existingChart = Chart.getChart(canvas);
+            if(existingChart) existingChart.destroy();
         }
-    });
+        if(histChartInst) histChartInst.destroy();
+        
+        const ctx = canvas.getContext('2d');
+        const dVal = parseFloat(delLabel);
+        const bVal = parseFloat(blabel);
+        
+        histChartInst = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Delivered', 'Bounced'],
+                datasets: [{
+                    data: [dVal, bVal],
+                    backgroundColor: ['#2ecc71', '#e74c3c'],
+                    borderWidth: 0,
+                    cutout: '75%'
+                }]
+            },
+            options: { 
+               plugins: { legend: { display:false } }, 
+               responsive:true, 
+               maintainAspectRatio:false 
+            }
+        });
+    } catch(err) {
+        console.warn("History Chart rendering deferred: Canvas not ready.", err);
+    }
 }
 // Init History Graphic
 setTimeout(() => { if(document.getElementById('historyChartCanvas')) updateHistoryChart('Latest Outreach (AI Built)'); }, 800);
