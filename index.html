@@ -491,11 +491,16 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
 <div class="page-body">
 <!-- LEFT -->
 <div id="main-left-col" style="flex:1; min-width:0; width:100%;">
-<div class="main-tab-bar" style="width: 100%;">
+<div class="main-tab-bar" style="width: 100%; align-items:center;">
 <button class="main-tab" id="mtab-dashboard" onclick="switchMainTab('dashboard')">Dashboard</button>
 <button class="main-tab active" id="mtab-history" onclick="switchMainTab('history')">Message History</button>
 <button class="main-tab" id="mtab-templates" onclick="switchMainTab('templates')">Templates</button>
 <button class="main-tab" id="mtab-config" onclick="switchMainTab('config')">Schedule</button>
+<!-- Inline AI Guided Setup Toolbar Action -->
+<div onclick="openAiWizard()" class="premium-tooltip" data-tooltip="Start AI Assistant" style="margin-left:16px; margin-bottom:4px; display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #8e44ad, #4a148c); padding:6px 16px; border-radius:24px; color:#fff; font-size:0.85rem; font-weight:bold; cursor:pointer; box-shadow:0 4px 12px rgba(142,68,173,0.3); transition:all 0.2s;" onmouseenter="this.style.transform='scale(1.05)';" onmouseleave="this.style.transform='scale(1)';">
+    <i data-lucide="bot" style="width:16px; height:16px;"></i> AI Guided Setup
+    <span style="width:6px; height:6px; background:#2ecc71; border-radius:50%; margin-left:2px; box-shadow:0 0 4px #2ecc71;"></span>
+</div>
 </div>
 <div id="main-panel-dashboard" style="display:none;">
 <div style="display:grid; grid-template-columns:2fr 1fr; gap:24px;">
@@ -3718,14 +3723,7 @@ function filterScheduleTable() {
 }
 </script>
 
-<!-- ── AI WIZARD CHAT WIDGET ── -->
-<div id="ai-wizard-fab" onclick="openAiWizard()" class="premium-tooltip" data-tooltip="Start Guided Setup"
-     style="position:fixed; bottom:30px; right:30px; width:64px; height:64px; background:linear-gradient(135deg, #8e44ad, #4a148c); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 8px 24px rgba(142,68,173,0.4), 0 0 0 4px rgba(255,255,255,0.2); cursor:pointer; z-index:9990; transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);" 
-     onmouseenter="this.style.transform='scale(1.1) rotate(5deg)'; this.style.boxShadow='0 12px 32px rgba(142,68,173,0.6), 0 0 0 6px rgba(142,68,173,0.1)';" 
-     onmouseleave="this.style.transform='scale(1) rotate(0deg)'; this.style.boxShadow='0 8px 24px rgba(142,68,173,0.4), 0 0 0 4px rgba(255,255,255,0.2)';">
-    <i data-lucide="bot" style="width:32px; height:32px;"></i>
-    <div style="position:absolute; top:-2px; right:-2px; width:16px; height:16px; background:#2ecc71; border:3px solid #fff; border-radius:50%;"></div>
-</div>
+<!-- Native Chat Widget Relocated to Main Dashboard Tabs inline securely -->
 
 <!-- ── AI WIZARD CHAT MODAL ── -->
 <div id="ai-wizard-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:9999999; align-items:flex-end; justify-content:flex-end; backdrop-filter:blur(3px);">
