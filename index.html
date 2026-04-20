@@ -809,8 +809,8 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
             <div class="schedule-accordion" style="border:2px solid #3f51b5; border-radius:6px; margin-bottom:16px; overflow:hidden;">
                 <div style="background:#f4f6fc; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="toggleAccordion('e-acc-1')">
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <input type="radio" name="history_schedule_sel" checked onchange="updateHistoryChart('Latest Outreach (AI Built)')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
-                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Latest Outreach (AI Built)</div>
+                        <input type="radio" name="history_schedule_sel" checked onchange="updateHistoryChart('Latest Outreach Schedule (AI Built)')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
+                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Latest Outreach Schedule (AI Built)</div>
                         <div style="font-size:0.85rem; color:#888; margin-left:8px;">Created: Apr 19, 2026</div>
                     </div>
                     <i id="icon-e-acc-1" data-lucide="chevron-up" style="color:#555;"></i>
@@ -865,8 +865,8 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
             <div class="schedule-accordion" style="border:1px solid #ddd; border-radius:6px; overflow:hidden;">
                 <div style="background:#fafafa; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="toggleAccordion('e-acc-2')">
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <input type="radio" name="history_schedule_sel" onchange="updateHistoryChart('Spring Renewal Sequence')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
-                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Spring Renewal Sequence</div>
+                        <input type="radio" name="history_schedule_sel" onchange="updateHistoryChart('Spring Renewal Sequence Schedule')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
+                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Spring Renewal Sequence Schedule</div>
                         <div style="font-size:0.85rem; color:#888; margin-left:8px;">Created: Mar 01, 2026</div>
                     </div>
                     <i id="icon-e-acc-2" data-lucide="chevron-down" style="color:#555;"></i>
@@ -923,8 +923,8 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
             <div class="schedule-accordion" style="border:2px solid #3f51b5; border-radius:6px; margin-bottom:16px; overflow:hidden;">
                 <div style="background:#f4f6fc; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="toggleAccordion('s-acc-1')">
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <input type="radio" name="history_schedule_sel_sms" checked onchange="updateHistoryChart('Direct SMS Protocol')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
-                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Direct SMS Protocol</div>
+                        <input type="radio" name="history_schedule_sel_sms" checked onchange="updateHistoryChart('Direct SMS Protocol Schedule')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
+                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Direct SMS Protocol Schedule</div>
                         <div style="font-size:0.85rem; color:#888; margin-left:8px;">Created: Feb 14, 2026</div>
                     </div>
                     <i id="icon-s-acc-1" data-lucide="chevron-up" style="color:#555;"></i>
@@ -977,8 +977,8 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
             <div class="schedule-accordion" style="border:1px solid #ddd; border-radius:6px; overflow:hidden;">
                 <div style="background:#fafafa; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="toggleAccordion('s-acc-2')">
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <input type="radio" name="history_schedule_sel_sms" onchange="updateHistoryChart('Legacy Text Promos')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
-                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Legacy Text Promos</div>
+                        <input type="radio" name="history_schedule_sel_sms" onchange="updateHistoryChart('Legacy Text Promos Schedule')" onclick="event.stopPropagation();" style="accent-color:#3f51b5; width:18px; height:18px; cursor:pointer;"/>
+                        <div style="font-weight:bold; color:#111; font-size:1.05rem;">Legacy Text Promos Schedule</div>
                         <div style="font-size:0.85rem; color:#888; margin-left:8px;">Created: Jan 05, 2026</div>
                     </div>
                     <i id="icon-s-acc-2" data-lucide="chevron-down" style="color:#555;"></i>
@@ -1035,7 +1035,7 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
         <div style="background:#fff; border:1px solid #ddd; border-top:8px solid #3f51b5; border-radius:8px; padding:32px 24px; box-shadow:0 2px 10px rgba(0,0,0,0.03); text-align:center;">
             <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:8px;">
                 <i data-lucide="bar-chart-2" style="width:20px; height:20px; color:#3f51b5;"></i>
-                <div id="hist-chart-title" style="font-weight:bold; font-size:1.1rem; color:#444;">Latest Outreach (AI Built)</div>
+                <div id="hist-chart-title" style="font-weight:bold; font-size:1.1rem; color:#444;">Latest Outreach Schedule (AI Built)</div>
             </div>
             <div style="font-size:0.9rem; color:#888; margin-bottom:16px;">Schedule performance graph</div>
             
@@ -4173,7 +4173,7 @@ function updateHistoryChart(scheduleName) {
     }
 }
 // Init History Graphic
-setTimeout(() => { if(document.getElementById('historyChartCanvas')) updateHistoryChart('Latest Outreach (AI Built)'); }, 800);
+setTimeout(() => { if(document.getElementById('historyChartCanvas')) updateHistoryChart('Latest Outreach Schedule (AI Built)'); }, 800);
 </script>
 
 </body>
