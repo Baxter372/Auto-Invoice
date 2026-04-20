@@ -771,9 +771,6 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
                   <option>Next 30 Days</option>
               </select>
           </div>
-          <div class="premium-tooltip" data-tooltip="Create New Schedule" style="background:#3f51b5; color:#fff; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'" onclick="document.getElementById('schedule-select-modal').style.display='flex'">
-             <i data-lucide="plus" style="width:20px; height:20px; stroke-width:3;"></i>
-          </div>
       </div>
   </div>
   <div style="display:grid; grid-template-columns:1fr 400px; gap:24px; align-items:start;">
@@ -784,7 +781,10 @@ tbody td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee;
                 <button class="sub-tab active" id="btn-email" onclick="switchSub('email')" style="background:#fff; border:1px solid #ccc; font-weight:bold; color:#2c3e8c;">Email List</button>
                 <button class="sub-tab inactive" id="btn-sms" onclick="switchSub('sms')" style="background:transparent; border:none; color:#888;">SMS/Text List</button>
             </div>
-            <div class="export-btns" style="display:flex;gap:6px;">
+            <div class="export-btns" style="display:flex;gap:6px;align-items:center;">
+                <div class="premium-tooltip" data-tooltip="Create New Schedule" style="background:#3f51b5; color:#fff; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; margin-right:8px; box-shadow:0 2px 4px rgba(63,81,181,0.3);" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'" onclick="document.getElementById('schedule-select-modal').style.display='flex'">
+                   <i data-lucide="plus" style="width:18px; height:18px; stroke-width:3;"></i>
+                </div>
                 <button class="export-btn excel" style="background:#1e7e34;width:32px;height:32px;border-radius:50%;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(30,126,52,0.3);" title="Export Excel"><i data-lucide="file-spreadsheet" style="width:14px;height:14px;"></i></button>
                 <button class="export-btn pdf" style="background:#c0392b;width:32px;height:32px;border-radius:50%;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(192,57,43,0.3);" title="Export PDF"><i data-lucide="file-text" style="width:14px;height:14px;"></i></button>
             </div>
