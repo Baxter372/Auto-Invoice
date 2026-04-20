@@ -4004,42 +4004,59 @@ function processAiLogic(userText) {
             } else if (textStr.includes('email')) {
                 aiMemory.channel = 'Email';
                 aiState = 1;
-                appendAiMessage(`Perfect! We'll use Email. What kind of sequence are we building? Are you looking to set up an <b>Invoice Reminder</b> or a <b>Renewal Notification</b>?`, ['Invoice Reminder', 'Renewal Notification']);
+                appendAiMessage(`Would you like to use the built in HWF Professional Auto-Invoice Template or another template?`, ['HWF Professional', 'Another Template']);
             } else {
                 appendAiMessage(`Sorry, I didn't catch that. Do you want to build an <b>Email</b> or <b>SMS</b> schedule?`, ['Email', 'SMS']);
             }
         } 
         else if (aiState === 1) {
+            // Template Origin Selection
+            if(textStr.includes('hwf') || textStr.includes('built') || textStr.includes('professional')) {
+                aiState = 2;
+                appendAiMessage(`Which theme would you like to use? Modern, Dark or Professional`, ['Modern', 'Dark', 'Professional']);
+            } else {
+                // Another Template
+                aiState = 3;
+                appendAiMessage(`Perfect! We'll use your custom template. What kind of sequence are we building? Are you looking to set up an <b>Invoice Reminder</b> or a <b>Renewal Notification</b>?`, ['Invoice Reminder', 'Renewal Notification']);
+            }
+        }
+        else if (aiState === 2) {
+            // Theme selection
+            aiMemory.theme = textStr;
+            aiState = 3;
+            appendAiMessage(`Perfect! What kind of sequence are we building? Are you looking to set up an <b>Invoice Reminder</b> or a <b>Renewal Notification</b>?`, ['Invoice Reminder', 'Renewal Notification']);
+        }
+        else if (aiState === 3) {
             // Campaign Concept
             if(textStr.includes('invoice')) {
                 aiMemory.campaign = 'Invoice Reminder';
             } else {
                 aiMemory.campaign = 'General Outreach';
             }
-            aiState = 2;
+            aiState = 4;
             appendAiMessage(`I've loaded the standard ${aiMemory.campaign} template blueprint. Who receives this schedule? Specifically, are we targeting <b>This Year's</b> customers, or <b>Last Year's</b>?`, ["This Year's Customers", "Last Year's Customers"]);
         }
-        else if (aiState === 2) {
+        else if (aiState === 4) {
             // Audience
             aiMemory.audience = textStr.includes('last') ? "Last Year's Customers" : "2026 Active Setup";
-            aiState = 3;
+            aiState = 5;
             appendAiMessage(`I'm officially ready to queue this up. Before I flip the switch, please type an admin email address so I can shoot you a live test preview for approval!`, []);
         }
-        else if (aiState === 3) {
+        else if (aiState === 5) {
             // Email address
             if(textStr.includes('@')) {
                 aiMemory.email = userText;
-                aiState = 4;
+                aiState = 6;
                 appendAiMessage(`<i>Sending test...</i> ✔️ <b>Test Sent to ${aiMemory.email}!</b><br><br>If everything looks exactly how you want it, simply reply <b>Approve</b> and I will launch the automated schedule!`, ['Approve', 'Cancel']);
             } else {
                 appendAiMessage(`That doesn't look like a valid email. Could you type your email address?`);
             }
         }
-        else if (aiState === 4) {
+        else if (aiState === 6) {
             // Approve
             if(textStr.includes('approve') || textStr.includes('yes')) {
                 appendAiMessage(`<b>Schedule Activated! 🎉</b><br>I've inserted the new ${aiMemory.campaign} schedule directly into your configuration grids. Feel free to close this chat!`, []);
-                aiState = 5;
+                aiState = 7;
                 
                 // --- INJECT LIVE DASHBOARD ROW ---
                 injectScheduleToDashboard();
